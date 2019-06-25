@@ -1,0 +1,297 @@
+//引入初始化css
+@import './base.less';
+
+.view {
+  max-width: 540px;
+  min-width: 300px;
+  margin: 0 auto;
+
+  // 头部功能模块
+  .xc-header {
+    .header-top {
+      display: flex;
+      margin-top: 5px; 
+      height: 90px;
+      border-radius: 10px;
+      background: #fa7f50;
+      color: #fff;
+      font-size: 14px;
+      >a {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        flex: 1;
+        border-right: 1px solid #ccc;
+        span {
+          &:last-child {
+            width: 43px;
+            height: 43px;
+            background: url(../images/xc_sprites.png) no-repeat 0px -125px;
+            background-size: 104px 327px;
+          }
+        }
+      }
+      .header-top-tag {
+        flex: 2;
+        display: flex;
+        flex-wrap: wrap;
+        a {
+          width: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &:nth-child(odd) {
+            border-right: 1px solid #fff;
+          }
+          &:nth-child(-n+2) {
+            border-bottom: 1px solid #fff;
+          }
+        }
+      }
+    }
+    .traffic {
+      background: #3d98ff;
+      >a {
+        span {
+          &:last-child {
+            background-position: 0 -290px;
+          }
+        }
+      }
+    }
+    .travel {
+      background: #44c522;
+      >a {
+        span {
+          &:last-child {
+            background-position: 3px -235px;
+          }
+        }
+      }
+    }
+  }
+
+  // 导航功能模块
+  .xc-nav {
+    display: flex;
+    flex-wrap: wrap;
+    height: 110px;
+    margin-top: 5px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 10px;
+    a {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      span {
+        &:first-child {
+          width: 28px;
+          height: 28px;
+          background: url('../images/un_ico_subnav_v7.124@2x.png') no-repeat;
+          background-size: 100%;
+          background-position: 0 5px;
+        }
+      }
+      span.xc-nav-icon2 {
+        background-position: 2px -27px;
+      }
+      span.xc-nav-icon3 {
+        background-position: 2px -60px;
+      }
+      span.xc-nav-icon4 {
+        background-position: 0 -320px;
+      }
+      span.xc-nav-icon5 {
+        background-position: 0 -97px;
+      }
+      span.xc-nav-icon6 {
+        background-position: 5px -160px;
+      }
+      span.xc-nav-icon7 {
+        background-position: 0 -195px;
+      }
+      span.xc-nav-icon8 {
+        background-position: 1px -125px;
+      }
+      span.xc-nav-icon9 {
+        background-position: 0 -225px;
+      }
+      span.xc-nav-icon10 {
+        background-position: 0 -255px;
+      }
+    }
+  }
+  
+  // 特卖功能模块
+  .xc-sale {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    margin-top: 5px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 10px;
+    .xc-sale-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      span {
+        font-style: italic;
+        font-weight: 600;
+        color: #fd3c52;
+        font-size: 16px;
+      }
+      a {
+        padding: 0 8px;
+        background: #ff84d2;
+        color: #fff;
+        line-height: 24px;
+        border-radius: 11px;
+      }
+    }
+    .xc-sale-main {
+      display: flex;
+      .sale-main-left {
+        flex: 1;
+        img {
+          width: 100%;
+        }
+        h5 {
+          height: 40px;
+          overflow: hidden;
+          // text-overflow: ellipsis;
+          // white-space: nowrap;
+          font-weight: normal;
+          font-size: 14px;
+        }
+        p {
+          color: #fe4f5e;
+          font-size: 18px;
+          span {
+            margin-left: 5px;
+            padding: 1px 7px;
+            background: #fe4f5e;
+            color: #fff;
+            font-size: 12px;
+            border-radius: 10px;
+          }
+        }
+      }
+      .sale-main-right {
+        flex: 1;
+        display: flex;
+        flex-wrap: wrap;
+        a {
+          position: relative;
+          height: 48%;
+          margin-bottom: 2%;
+          background: #f9f9f9;
+          &:nth-child(1) {
+            width: 100%;
+            padding: 10px;
+            h4 {
+              font-size: 14px;
+              color: #fd3a51;
+            }
+            img {
+              position: absolute;
+              right: 0;
+              bottom: 0;
+              width: 54px;
+              height: 71px;
+            }
+          }
+          &:nth-last-child(-n+2) {
+            width: 48%;
+            margin-left: 2%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            h4 {
+              color: #6aabff;
+              font-size: 14px;
+            }
+            img {
+              width: 48px;
+              height: 35px;
+            }
+          }
+          &:last-child {
+            color: #68d2bc;
+          }
+        }
+      }
+    }
+  }
+
+  // 热门功能模块
+  .xc-hot {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    padding: 5px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 10px;
+    .xc-hot-top {
+      display: flex;
+      justify-content: space-between;
+      height: 25px;
+      span {
+        font-style: italic;
+        font-weight: 600;
+        color: orange;
+        font-size: 16px;
+      }
+      a {
+        padding: 0 8px;
+        background: #ff84d2;
+        color: #fff;
+        line-height: 24px;
+        border-radius: 11px;
+      }
+    }
+    .xc-hot-main {
+      display: flex;
+      flex-wrap: wrap;
+      .hot-main-div {
+        width: 50%;
+      }
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  // 底部功能模块
+  .xc-footer {
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;   
+    font-size: 20px;
+    color: #000;
+    .footer-tel {
+      display: flex;
+      .footer-tel-box {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    .footer-nav {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  }
+}

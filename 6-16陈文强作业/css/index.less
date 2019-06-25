@@ -1,0 +1,481 @@
+// 引入base.css文件
+@import './base.less';
+
+body {
+  background: #f5f5f5;
+}
+.view {
+
+  /* 页面头部样式 */
+  header {
+    position: fixed;
+    top: 0;
+    display: flex;
+    width: 100%;
+    height: 40px;
+    z-index: 99;
+    background: #c91523;
+    .logo {
+      width: 70px;
+      height: 40px;
+      h1 {
+        a {
+          display: block;
+          margin: 0 auto;
+          width: 56px;
+          height: 40px;
+          background: url(../images/jd-sprites.png) no-repeat 0 -100px;
+          background-size: 200px 200px;
+        }
+      }
+    }
+    .search {
+      flex: 1;
+      padding: 5px 0;
+      position: relative;
+      input {
+        width: 100%;
+        border-radius: 20px;
+        text-indent: 30px;
+        outline: none;
+      }
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        background: url(../images/jd-sprites.png) no-repeat -60px -110px;
+        background-size: 200px 200px;
+        width: 20px;
+        height: 20px;
+        top: 11px;
+        left: 7px;
+
+      }
+    }
+    .login {
+      width: 50px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      font-size: 14px;
+      a {
+        color: #fff;
+      }
+    }
+  }
+
+  /* banner模块 */
+  .banner {
+    margin-top: 40px;
+    ul {
+      li {
+      }
+    }
+  }
+  
+  /* 导航模块 */
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px 0;
+    margin-bottom: 10px;
+    background: #fff;
+    a {
+      display: flex;
+      flex-direction: column;
+      width: 25%;
+      text-align: center;
+      &:nth-child(-n+4) {
+        margin-bottom: 5px;
+      }
+      img {
+        width: 50%;
+        margin: 0 auto;
+      }
+      span {
+        color: #666;
+        font-size: 14px;
+      }
+    }
+  }
+
+  /* 掌上秒杀模块 */
+  .hand-seckill {
+    background: #fff;
+    .hand-seckill-top {
+      display: flex;
+      justify-content: space-between;
+      height: 30px;
+      line-height: 30px;
+      padding: 0 10px;
+      .hand-top-time {
+        display: flex;
+        i {
+          margin-top: 5px;
+          background: url(../images/jd-sprites.png) no-repeat -83px -110px;
+          background-size: 200px 200px;
+          width: 22px;
+          height: 22px;
+        }
+        p {
+          font-size: 20px;
+          color: #c91523;
+          margin: 0 5px;
+        }
+        span {
+          background: #000;
+          padding: 0 2px;
+          font-size: 16px;
+          color: #fff;
+          &:nth-child(3n) {
+            background: transparent;
+            color: #000;
+          }
+        }
+      }
+      .hand-top-more {
+        a {
+          font-size: 14px;
+        }
+      }
+    }
+    .hand-seckill-main {
+      display: flex;
+      a {
+        flex: 1;
+        position: relative;
+        font-size: 14px;
+        text-align: center;
+        img {
+          width: 90%;
+          margin: 0 auto;
+        }
+        p {
+          color: #c91523;
+        }
+        del {
+          color: #666;
+        }
+        span {
+          position: absolute;
+          right: 15%;
+          top: 50%;
+          display: block;
+          padding: 5px 15px;
+          background: #fdb60a;
+          color: #fff;
+          font-size: 14px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  /* 狂撒神券模块 */
+  .coupon {
+    position: relative;
+    >img {
+    }
+    .coupon-main {
+      position: absolute;
+      bottom: 10px;
+      display: flex;
+      justify-content: space-around;
+      >a {
+        width: 47%;
+      }
+      .coupon-right {
+        width: 47%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        a {
+          height: 49%;
+        }
+      }
+    }
+  }
+
+  /* 手机产品模块 */
+  .pro-tel {
+    li {
+      float: left;
+      width: 50%;
+      &:nth-child(-n+3) {
+        width: 33.3333%;
+      }
+    }
+  }
+
+  /* 旅游banner模块 */
+  .travel-banner {
+    background: #fff;
+    padding: 5px 0;
+    img {
+      width: 96%;
+      margin: 0 auto;
+    }
+  }
+
+  /* 特色超市模块 */
+  .market {
+    background: #fff;
+    h4 {
+      color: #c91523;
+      padding: 3px 5px;
+    }
+    .market-main {
+      .market-main-top {
+        display: flex;
+        >a {
+          width: 50%;
+        }
+        .market-top-right {
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          a {
+            height: 50%;
+          }
+        }
+      }
+    }
+    .market-main-bottom {
+      display: flex;
+      a {
+        width: 50%;
+      }
+    }
+  }
+
+  /* 粽子banner模块 */
+  .zongzi-banner {
+    background: #fff;
+    padding: 5px 0;
+    img {
+      width: 96%;
+      margin: 0 auto;
+    }
+  }
+
+  /* 主题街模块 */
+  .theme {
+    background: #fff;
+    h4 {
+      color: #c91523;
+      padding: 3px 5px;
+    }
+    .theme-main {
+      .theme-main-top {
+        display: flex;
+        >a {
+          width: 50%;
+        }
+        .theme-top-right {
+          width: 50%;
+          display: flex;
+          flex-wrap: wrap;
+          a {
+            width: 50%;
+            height: 50%;
+            &:nth-child(1) {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+    .theme-main-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      a {
+        width: 25%;
+      }
+    }
+  }  
+  
+  /* 粽子banner模块 */
+  .laundry-banner {
+    background: #fff;
+    padding: 5px 0;
+    img {
+      width: 96%;
+      margin: 0 auto;
+    }
+  }
+  
+  /* 品牌推荐模块 */
+  .brand {
+    background: #fff;
+    h4 {
+      color: #c91523;
+      padding: 3px 5px;
+    }
+    .brand-main {
+      display: flex;
+      a {
+        flex: 3;
+        &:first-child {
+          flex: 4;
+        }
+      }
+    }
+  }
+
+  /* 奶粉banner模块 */
+  .milk-banner {
+    background: #fff;
+    padding: 5px 0;
+    img {
+      width: 96%;
+      margin: 0 auto;
+    }
+  }
+    
+  /* 猜你喜欢模块 */
+  .like {
+    background: #fff;
+    .like-title {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5px;
+      h4 {
+        color: #c91523;
+        padding: 3px 5px;
+      }
+      a {
+        display: flex;
+        width: inherit;
+        align-items: center;
+        color: #c91523;
+        font-size: 13px;
+        img {
+          padding-top: 2px;
+          margin-right: 5px;
+          width: 25px;
+        }
+      }
+    }
+    .like-main {
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        li {
+          width: 48%;
+          margin-bottom: 10px;
+          padding-bottom: 5px;
+          border-bottom: 1px solid #ccc;
+          .like-main-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            span {
+              color: #c91523;
+              font-size: 20px;
+            }
+            a {
+              width: initial;
+              padding: 0 2px;
+              color: #666;
+              font-size: 13px;
+              border: 1px solid #ccc;
+            }
+          }
+          >a {
+            height: initial;
+          }
+          p {
+            height: 37px;
+            font-size: 13px;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+  }
+
+  /* 点击查看更多模块 */
+  .on-more {
+    background-color: #f3f5f7;
+    font-size: 14px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    border-top: 1px solid #ccc;
+    a {
+      color: #666;
+    }
+  }
+  
+  /* 底部模块 */
+  footer {
+    padding-bottom: 50px;
+    background: #f3f3f3;
+    font-size: 14px;
+    .footer-nav {
+      display: flex;
+      padding: 10px 0;
+      border-top: 1px solid #ccc;
+      a {
+        flex: 1;
+        text-align: center;
+        border-right: 1px solid #000;
+        &:last-child {
+          border: none;
+        }
+      }
+    }
+    .footer-app {
+      display: flex;
+      padding: 10px 0;
+      border-top: 1px solid #ccc;
+      a {
+        flex: 1;
+        text-align: center;
+        color: #666;
+        span {
+          display: block;
+          margin: 0 auto;
+          margin-bottom: 5px;
+          width: 33px;
+          height: 33px;
+          background: url(../images/jd-sprites.png) no-repeat -120px -70px;
+          background-size: 200px 200px;
+          &:nth-child(2) {
+            background-position: -40px -70px;
+          }
+          &:nth-child(3) {
+            background-position: -80px -70px;
+          }
+        }
+      }
+    }
+    .footer-copy {
+      padding: 20px 0;
+      color: #666;
+      text-align: center;
+      border-top: 1px solid #ccc;
+    }
+  }
+
+  /* 底部固定导航 */
+  .fixed-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background: #fff;
+    display: flex;
+    justify-content: space-around;
+    a {
+      width: 20%;
+      height: 50px;
+      img {
+        width: 60px;
+        margin: 0 auto;
+      }
+    }
+  }
+}

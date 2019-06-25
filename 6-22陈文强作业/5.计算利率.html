@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // 本金10000元存入银行，年利率是千分之三，每过1年，将本金和利息相加作为新的本金。计算5年后，获得的本金是多少？
+
+  // 1.定义一个变量盒子用来存储本息,初始本金为10000
+  var benxi = 10000;
+  // 2.每过一年，将本金和利息相加作为新的本金，计算5年后的本金算作一个循环
+  for (var i = 2019; i <= 2023; i++) {
+    // 3.计算一年的本息，每一年的本金为上一年的本息和
+    benxi += benxi * (3 / 1000);
+  }
+  document.write('五年本息为' + benxi);
+
+  // var benxi = 20000;
+  // for (var i = 2019; i <= 2023; i++) {
+  //   benxi = benxi + benxi * (3 / 1000);
+  // }
+  // document.write('五年的本息是' + benxi);
+
+  // var benxi = 30000;
+  // for (var i = 2019; i <= 2023; i++) {
+  //   benxi = benxi + benxi * (3 / 1000);
+  // }
+  // document.write('五年的本息是' + benxi);
+</script>
+
+</html>

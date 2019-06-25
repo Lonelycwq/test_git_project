@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+  body {
+    font-size: 40px;
+    color: #f00;
+    letter-spacing: 10px;
+    line-height: 40px;
+  }
+</style>
+
+<body>
+
+</body>
+<script>
+  // 1.看需求了解需要使用循环，并总共循环9次,每次循环输出一次星星
+  for (var i = 1; i <= 9; i++) {
+    // document.write('⭐')
+    // 2.方阵中每行星星都是呈递增，一行增加一个，再使用一个循环使每行都比下一行多一个星星,让i循环进来的值成为j循环的次数也就是一行的星星数
+    for (var j = 1; j <= i; j++) {
+      document.write('⭐')
+    }
+    //使每次循环显示的结果都换行显示
+    document.write('<br>')
+  }
+
+  // for (var i = 0; i <= 8; i++) {
+  //   for (var j = 0; j <= i; j++) {
+  //     document.write('⭐');
+  //   }
+  //   document.write('<br>')
+  // }
+
+  // for (var i = 0; i <= 8; i++) {
+  //   for (var j = 0; j <= i; j++) {
+  //     document.write('⭐');
+  //   }
+  //   document.write('<br>')
+  // }
+
+
+</script>
+
+</html>

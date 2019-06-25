@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // 1.先定义一个装所有偶数和的变量容器
+  var sum = 0;
+  // 2.先循环输出1-10的所有数字
+  for (var i = 1; i <= 10; i++) {
+    document.write(i + '<br>')
+    // 3.再从所有数字中判断哪些数字是偶数
+    if (i % 2 === 0) {
+      document.write(i + '是偶数///' + '<br>')
+      // 4.再将一次次循环得出来的偶数相加得到的总和存入变量sum中
+      sum += i;
+      document.write('以上偶数的和是' + sum + '<br>')
+    }
+  }
+
+  // var sum = 0;
+  // for (var i = 1; i <= 10; i++) {
+  //   if (i % 2 === 0) {
+  //     sum += i;
+  //   }
+  // }
+  // document.write('1-10所有整数中所有偶数和为' + sum)
+
+  // var sum = 0;
+  // for (var i = 1; i <= 10; i++) {
+  //   if (i % 2 === 0) {
+  //     sum += i;
+  //   }
+  // }
+  // document.write('1-10所有整数中所有偶数和为' + sum)
+</script>
+
+</html>

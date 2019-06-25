@@ -1,0 +1,477 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* 解决点击高亮*/
+  -webkit-tap-highlight-color: transparent;
+}
+input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+img {
+  display: block;
+  width: 100%;
+}
+ul {
+  list-style: none;
+}
+.clearfix:after {
+  display: block;
+  content: '.';
+  clear: both;
+  visibility: hidden;
+  height: 0;
+  line-height: 0;
+}
+body {
+  background: #f5f5f5;
+}
+.view {
+  /* 页面头部样式 */
+  /* banner模块 */
+  /* 导航模块 */
+  /* 掌上秒杀模块 */
+  /* 狂撒神券模块 */
+  /* 手机产品模块 */
+  /* 旅游banner模块 */
+  /* 特色超市模块 */
+  /* 粽子banner模块 */
+  /* 主题街模块 */
+  /* 粽子banner模块 */
+  /* 品牌推荐模块 */
+  /* 奶粉banner模块 */
+  /* 猜你喜欢模块 */
+  /* 点击查看更多模块 */
+  /* 底部模块 */
+  /* 底部固定导航 */
+}
+.view header {
+  position: fixed;
+  top: 0;
+  display: flex;
+  width: 100%;
+  height: 40px;
+  z-index: 99;
+  background: #c91523;
+}
+.view header .logo {
+  width: 70px;
+  height: 40px;
+}
+.view header .logo h1 a {
+  display: block;
+  margin: 0 auto;
+  width: 56px;
+  height: 40px;
+  background: url(../images/jd-sprites.png) no-repeat 0 -100px;
+  background-size: 200px 200px;
+}
+.view header .search {
+  flex: 1;
+  padding: 5px 0;
+  position: relative;
+}
+.view header .search input {
+  width: 100%;
+  border-radius: 20px;
+  text-indent: 30px;
+  outline: none;
+}
+.view header .search::after {
+  content: '';
+  display: block;
+  position: absolute;
+  background: url(../images/jd-sprites.png) no-repeat -60px -110px;
+  background-size: 200px 200px;
+  width: 20px;
+  height: 20px;
+  top: 11px;
+  left: 7px;
+}
+.view header .login {
+  width: 50px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 14px;
+}
+.view header .login a {
+  color: #fff;
+}
+.view .banner {
+  margin-top: 40px;
+}
+.view nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 5px 0;
+  margin-bottom: 10px;
+  background: #fff;
+}
+.view nav a {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  text-align: center;
+}
+.view nav a:nth-child(-n+4) {
+  margin-bottom: 5px;
+}
+.view nav a img {
+  width: 50%;
+  margin: 0 auto;
+}
+.view nav a span {
+  color: #666;
+  font-size: 14px;
+}
+.view .hand-seckill {
+  background: #fff;
+}
+.view .hand-seckill .hand-seckill-top {
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+}
+.view .hand-seckill .hand-seckill-top .hand-top-time {
+  display: flex;
+}
+.view .hand-seckill .hand-seckill-top .hand-top-time i {
+  margin-top: 5px;
+  background: url(../images/jd-sprites.png) no-repeat -83px -110px;
+  background-size: 200px 200px;
+  width: 22px;
+  height: 22px;
+}
+.view .hand-seckill .hand-seckill-top .hand-top-time p {
+  font-size: 20px;
+  color: #c91523;
+  margin: 0 5px;
+}
+.view .hand-seckill .hand-seckill-top .hand-top-time span {
+  background: #000;
+  padding: 0 2px;
+  font-size: 16px;
+  color: #fff;
+}
+.view .hand-seckill .hand-seckill-top .hand-top-time span:nth-child(3n) {
+  background: transparent;
+  color: #000;
+}
+.view .hand-seckill .hand-seckill-top .hand-top-more a {
+  font-size: 14px;
+}
+.view .hand-seckill .hand-seckill-main {
+  display: flex;
+}
+.view .hand-seckill .hand-seckill-main a {
+  flex: 1;
+  position: relative;
+  font-size: 14px;
+  text-align: center;
+}
+.view .hand-seckill .hand-seckill-main a img {
+  width: 90%;
+  margin: 0 auto;
+}
+.view .hand-seckill .hand-seckill-main a p {
+  color: #c91523;
+}
+.view .hand-seckill .hand-seckill-main a del {
+  color: #666;
+}
+.view .hand-seckill .hand-seckill-main a span {
+  position: absolute;
+  right: 15%;
+  top: 50%;
+  display: block;
+  padding: 5px 15px;
+  background: #fdb60a;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 50%;
+}
+.view .coupon {
+  position: relative;
+}
+.view .coupon .coupon-main {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+.view .coupon .coupon-main > a {
+  width: 47%;
+}
+.view .coupon .coupon-main .coupon-right {
+  width: 47%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.view .coupon .coupon-main .coupon-right a {
+  height: 49%;
+}
+.view .pro-tel li {
+  float: left;
+  width: 50%;
+}
+.view .pro-tel li:nth-child(-n+3) {
+  width: 33.3333%;
+}
+.view .travel-banner {
+  background: #fff;
+  padding: 5px 0;
+}
+.view .travel-banner img {
+  width: 96%;
+  margin: 0 auto;
+}
+.view .market {
+  background: #fff;
+}
+.view .market h4 {
+  color: #c91523;
+  padding: 3px 5px;
+}
+.view .market .market-main .market-main-top {
+  display: flex;
+}
+.view .market .market-main .market-main-top > a {
+  width: 50%;
+}
+.view .market .market-main .market-main-top .market-top-right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.view .market .market-main .market-main-top .market-top-right a {
+  height: 50%;
+}
+.view .market .market-main-bottom {
+  display: flex;
+}
+.view .market .market-main-bottom a {
+  width: 50%;
+}
+.view .zongzi-banner {
+  background: #fff;
+  padding: 5px 0;
+}
+.view .zongzi-banner img {
+  width: 96%;
+  margin: 0 auto;
+}
+.view .theme {
+  background: #fff;
+}
+.view .theme h4 {
+  color: #c91523;
+  padding: 3px 5px;
+}
+.view .theme .theme-main .theme-main-top {
+  display: flex;
+}
+.view .theme .theme-main .theme-main-top > a {
+  width: 50%;
+}
+.view .theme .theme-main .theme-main-top .theme-top-right {
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.view .theme .theme-main .theme-main-top .theme-top-right a {
+  width: 50%;
+  height: 50%;
+}
+.view .theme .theme-main .theme-main-top .theme-top-right a:nth-child(1) {
+  width: 100%;
+}
+.view .theme .theme-main-bottom {
+  display: flex;
+  flex-wrap: wrap;
+}
+.view .theme .theme-main-bottom a {
+  width: 25%;
+}
+.view .laundry-banner {
+  background: #fff;
+  padding: 5px 0;
+}
+.view .laundry-banner img {
+  width: 96%;
+  margin: 0 auto;
+}
+.view .brand {
+  background: #fff;
+}
+.view .brand h4 {
+  color: #c91523;
+  padding: 3px 5px;
+}
+.view .brand .brand-main {
+  display: flex;
+}
+.view .brand .brand-main a {
+  flex: 3;
+}
+.view .brand .brand-main a:first-child {
+  flex: 4;
+}
+.view .milk-banner {
+  background: #fff;
+  padding: 5px 0;
+}
+.view .milk-banner img {
+  width: 96%;
+  margin: 0 auto;
+}
+.view .like {
+  background: #fff;
+}
+.view .like .like-title {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 5px;
+}
+.view .like .like-title h4 {
+  color: #c91523;
+  padding: 3px 5px;
+}
+.view .like .like-title a {
+  display: flex;
+  width: inherit;
+  align-items: center;
+  color: #c91523;
+  font-size: 13px;
+}
+.view .like .like-title a img {
+  padding-top: 2px;
+  margin-right: 5px;
+  width: 25px;
+}
+.view .like .like-main ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.view .like .like-main ul li {
+  width: 48%;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+}
+.view .like .like-main ul li .like-main-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.view .like .like-main ul li .like-main-top span {
+  color: #c91523;
+  font-size: 20px;
+}
+.view .like .like-main ul li .like-main-top a {
+  width: initial;
+  padding: 0 2px;
+  color: #666;
+  font-size: 13px;
+  border: 1px solid #ccc;
+}
+.view .like .like-main ul li > a {
+  height: initial;
+}
+.view .like .like-main ul li p {
+  height: 37px;
+  font-size: 13px;
+  overflow: hidden;
+}
+.view .on-more {
+  background-color: #f3f5f7;
+  font-size: 14px;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  border-top: 1px solid #ccc;
+}
+.view .on-more a {
+  color: #666;
+}
+.view footer {
+  padding-bottom: 50px;
+  background: #f3f3f3;
+  font-size: 14px;
+}
+.view footer .footer-nav {
+  display: flex;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+}
+.view footer .footer-nav a {
+  flex: 1;
+  text-align: center;
+  border-right: 1px solid #000;
+}
+.view footer .footer-nav a:last-child {
+  border: none;
+}
+.view footer .footer-app {
+  display: flex;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+}
+.view footer .footer-app a {
+  flex: 1;
+  text-align: center;
+  color: #666;
+}
+.view footer .footer-app a span {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 5px;
+  width: 33px;
+  height: 33px;
+  background: url(../images/jd-sprites.png) no-repeat -120px -70px;
+  background-size: 200px 200px;
+}
+.view footer .footer-app a span:nth-child(2) {
+  background-position: -40px -70px;
+}
+.view footer .footer-app a span:nth-child(3) {
+  background-position: -80px -70px;
+}
+.view footer .footer-copy {
+  padding: 20px 0;
+  color: #666;
+  text-align: center;
+  border-top: 1px solid #ccc;
+}
+.view .fixed-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+}
+.view .fixed-nav a {
+  width: 20%;
+  height: 50px;
+}
+.view .fixed-nav a img {
+  width: 60px;
+  margin: 0 auto;
+}

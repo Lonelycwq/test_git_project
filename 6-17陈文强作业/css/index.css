@@ -1,0 +1,444 @@
+/* 导入 字体文件 */
+@font-face {
+  font-family: 'wjsfont';
+  src: url('../fonts/wjsfont/MiFie-Web-Font.eot');
+  src: url('../fonts/wjsfont/MiFie-Web-Font.eot?#iefix') format('embedded-opentype'), url('../fonts/wjsfont/MiFie-Web-Font.woff') format('woff'), url('fonts/MiFie-Web-Font.ttf') format('truetype'), url('../fonts/wjsfont/MiFie-Web-Font.svg') format('svg');
+}
+/* 定义 使用的class */
+.wjsfont {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'wjsfont';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+}
+.wjsfont-logo::before {
+  content: '\e920';
+}
+.wjsfont-name::before {
+  content: '\e921';
+}
+.wjsfont-e903::before {
+  content: '\e903';
+}
+.wjsfont-e901::before {
+  content: '\e901';
+}
+.wjsfont-e904::before {
+  content: '\e904';
+}
+.wjsfont-e905::before {
+  content: '\e905';
+}
+.wjsfont-e902::before {
+  content: '\e902';
+}
+/* 添加 产品列表的 文字样式 */
+.wjsfont-e915::before {
+  content: '\e915';
+}
+.wjsfont-new01::before {
+  content: "\e90e";
+}
+.wjsfont-new02::before {
+  content: "\e90f";
+}
+.wjsfont-new03::before {
+  content: "\e910";
+}
+.wjsfont-new04::before {
+  content: "\e911";
+}
+/* 网页 最下方的 合作单位 */
+.wjsfont-partner01::before {
+  content: "\e946";
+}
+.wjsfont-partner02::before {
+  content: "\e92f";
+}
+.wjsfont-partner03::before {
+  content: "\e92e";
+}
+.wjsfont-partner04::before {
+  content: "\e92a";
+}
+.wjsfont-partner05::before {
+  content: "\e929";
+}
+.wjsfont-partner06::before {
+  content: "\e931";
+}
+.wjsfont-partner07::before {
+  content: "\e92c";
+}
+.wjsfont-partner08::before {
+  content: "\e92b";
+}
+.wjsfont-partner09::before {
+  content: "\e92d";
+}
+* {
+  box-sizing: border-box;
+}
+.view {
+  /* 微金所头部 */
+  /* 导航条 */
+  /* 支付保障 */
+  /* 交易等待 */
+  /* 特别推荐 */
+  /* 新闻模块 */
+  /* 底部合作企业 */
+}
+.view .wjs-header {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-bottom: 1px solid #000;
+}
+.view .wjs-header .row > div {
+  border-left: 1px solid #000;
+}
+.view .wjs-header .row > div a {
+  color: #808080;
+}
+.view .wjs-header .row > div a:hover {
+  text-decoration: underline;
+}
+.view .wjs-header .row .wjs-app-erweima {
+  border: none;
+  position: relative;
+}
+.view .wjs-header .row .wjs-app-erweima .app-erweima-img {
+  display: none;
+  position: absolute;
+  left: 30%;
+  top: 35px;
+  z-index: 99;
+}
+.view .wjs-header .row .wjs-app-erweima a:hover .app-erweima-img {
+  display: block;
+}
+.view nav {
+  margin-bottom: 0;
+}
+.view nav .logo {
+  height: auto;
+  padding: 0;
+}
+.view nav .logo span {
+  font-size: 70px;
+}
+.view nav .logo span:first-child {
+  color: #f00;
+}
+.view nav .logo span:last-child {
+  color: #666;
+  padding: 5px;
+}
+.view nav .wsj-nav li {
+  padding-bottom: 1px;
+}
+.view nav .wsj-nav li a {
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 80px;
+  line-height: 80px;
+  background: transparent;
+}
+.view nav .wsj-nav li a:focus {
+  border-bottom: 1px solid #f00;
+}
+.view nav .wsj-nav .active {
+  background: none;
+}
+.view nav .wsj-nav .active a {
+  background: none;
+  border-bottom: 1px solid #f00;
+}
+.view .main-deal {
+  padding: 60px 0;
+  border-bottom: 1px solid #000;
+}
+.view .main-deal ul {
+  padding-left: 0;
+  list-style: none;
+}
+.view .main-deal ul li {
+  margin-bottom: 20px;
+}
+.view .main-deal ul li a {
+  display: table-row;
+  color: #808080;
+}
+.view .main-deal ul li a:hover {
+  color: #f00;
+}
+.view .main-deal ul li a:hover h4 {
+  text-decoration: underline;
+}
+.view .main-deal ul li a:hover p {
+  text-decoration: underline;
+}
+.view .main-deal ul li a .deal-box-left {
+  display: table-cell;
+  padding-right: 10px;
+  vertical-align: middle;
+}
+.view .main-deal ul li a .deal-box-left span {
+  font-size: 40px;
+}
+.view .main-deal ul li a .deal-box-right {
+  display: table-cell;
+  vertical-align: middle;
+}
+.view .main-deal ul li a .deal-box-right h4 {
+  font-size: 22px;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.view .main-deal ul li a .deal-box-right p {
+  margin-bottom: 0;
+  font-size: 14px;
+}
+.view .wait {
+  padding: 30px 0;
+  border-bottom: 1px solid #000;
+}
+.view .wait .wait-left a {
+  color: #f00;
+  border-bottom: 1px dashed #f00;
+}
+.view .wait .wait-left a:hover {
+  text-decoration: underline;
+}
+.view .recom {
+  margin-bottom: 20px;
+}
+.view .recom > div {
+  padding: 0;
+}
+.view .recom > div .recom-content-normal,
+.view .recom > div .recom-content-experience {
+  position: relative;
+  display: block;
+  padding: 0;
+  margin-top: 20px;
+  box-shadow: 0 1px 3px 3px #cccccc;
+  font-size: 14px;
+  color: #808080;
+}
+.view .recom > div .recom-content-normal h4,
+.view .recom > div .recom-content-experience h4 {
+  padding-top: 20px;
+  text-align: center;
+}
+.view .recom > div .recom-content-normal .recom-content-left,
+.view .recom > div .recom-content-experience .recom-content-left {
+  border-right: 1px dotted #000;
+  position: relative;
+}
+.view .recom > div .recom-content-normal .recom-content-left::before,
+.view .recom > div .recom-content-experience .recom-content-left::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -12.5px;
+  right: -12.5px;
+  width: 25px;
+  height: 25px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 2px 1px #cccccc;
+}
+.view .recom > div .recom-content-normal .recom-content-left::after,
+.view .recom > div .recom-content-experience .recom-content-left::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -12.5px;
+  right: -12.5px;
+  width: 25px;
+  height: 25px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 -2px 2px 1px #cccccc;
+}
+.view .recom > div .recom-content-normal .recom-content-left .pad-0,
+.view .recom > div .recom-content-experience .recom-content-left .pad-0 {
+  padding: 0;
+}
+.view .recom > div .recom-content-normal .recom-content-left .progress,
+.view .recom > div .recom-content-experience .recom-content-left .progress {
+  margin-bottom: 10px;
+}
+.view .recom > div .recom-content-normal .recom-content-right,
+.view .recom > div .recom-content-experience .recom-content-right {
+  margin-top: 60px;
+  text-align: center;
+  color: #808080;
+}
+.view .recom > div .recom-content-normal .recom-content-right .recom-right-baby1,
+.view .recom > div .recom-content-experience .recom-content-right .recom-right-baby1 {
+  border: 1px solid green;
+  color: green;
+}
+.view .recom > div .recom-content-normal .recom-content-right .recom-right-baby2,
+.view .recom > div .recom-content-experience .recom-content-right .recom-right-baby2 {
+  border: 1px solid transparent;
+  color: red;
+}
+.view .recom > div .recom-content-normal .recom-content-right .recom-right-baby2:hover,
+.view .recom > div .recom-content-experience .recom-content-right .recom-right-baby2:hover {
+  border: 1px solid red;
+}
+.view .recom > div .recom-content-normal {
+  background: #f7f7f7;
+}
+.view .recom > div .recom-content-experience {
+  color: #fff;
+  background: #f00;
+}
+.view .recom > div .recom-content-experience .recom-content-left {
+  border-right: 1px dotted #fff;
+}
+.view .recom > div .recom-content-experience .recom-content-right {
+  color: #fff;
+}
+.view .recom > div .recom-content-experience .recom-content-right + .wjsfont {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 40px;
+}
+.view .news {
+  padding: 20px 0;
+}
+.view .news .news-all {
+  position: relative;
+  padding-left: 10px;
+  font-size: 30px;
+  border-bottom: 1px solid #000;
+}
+.view .news .news-all::before {
+  content: '';
+  display: block;
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 50%;
+}
+.view .news .news-tag {
+  position: relative;
+  padding: 0;
+}
+.view .news .news-tag .news-tag-line {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 80%;
+  border-left: 1px dashed #000;
+}
+.view .news .news-tag .news-tag-nav {
+  padding: 0;
+  border: none;
+}
+.view .news .news-tag .news-tag-nav li {
+  margin-bottom: 50px;
+  padding: 0;
+}
+.view .news .news-tag .news-tag-nav li a {
+  display: block;
+  height: 70px;
+  width: 70px;
+  background-color: #cccccc;
+  border-radius: 50%;
+  position: relative;
+  padding: 0;
+  border: none;
+}
+.view .news .news-tag .news-tag-nav li a::before {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  font-size: 50px;
+  color: #fff;
+}
+.view .news .news-tag .news-tag-nav li a:hover {
+  background: #f00;
+}
+.view .news .news-tag .news-tag-nav li a:focus {
+  background: #f00;
+}
+.view .news .news-tag .news-tag-nav .active a {
+  background: #f00;
+  cursor: pointer;
+}
+.view .news .news-tag-content {
+  padding: 0;
+  list-style: none;
+}
+.view .news .news-tag-content li {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: -1px;
+}
+.view footer {
+  padding-bottom: 30px;
+}
+.view footer h3 {
+  text-align: center;
+}
+.view footer .footer-nav {
+  width: 90%;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+.view footer .footer-nav li {
+  float: left;
+  margin-left: 30px;
+}
+.view footer .footer-nav li a {
+  font-size: 80px;
+  color: #ccc;
+}
+.view footer .footer-nav li a:hover li {
+  border-bottom: 2px solid #ccc;
+}
+/* 普通屏幕样式 */
+@media (min-width: 992px) and (max-width: 1200px) {
+  .view .news .news-tag-line {
+    left: 55% !important;
+  }
+  .view .footer-nav li a {
+    width: 60px !important;
+  }
+}
+/* 小屏幕样式 */
+@media (min-width: 768px) and (max-width: 992px) {
+  .view .recom-content-normal .recom-content-right,
+  .view .recom-content-experience .recom-content-right {
+    margin-top: 40px !important;
+  }
+  .view .news .news-tag-line {
+    display: none;
+  }
+}
+/* 极小屏幕样式 */
+@media (max-width: 768px) {
+  .view .main-deal {
+    padding: 10px !important;
+  }
+  .view .news .news-tag-line {
+    display: none;
+  }
+}

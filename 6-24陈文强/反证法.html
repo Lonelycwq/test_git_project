@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  var zhishu = parseInt(prompt('请输入一个数字'));
+  var fanzheng = true;
+  for (var i = 2; i <= zhishu; i++) {
+    if (zhishu % i === 0) {
+      fanzheng = false;
+      break;
+    }
+  }
+  if (fanzheng === true) {
+    document.write('这是一个质数')
+  } else {
+    document.write('这不是一个质数')
+  }
+</script>
+
+</html>

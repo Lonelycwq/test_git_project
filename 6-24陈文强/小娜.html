@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>小娜</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // while (true) {
+  //   var xiaona = prompt('请和小娜交流，输入编号或者关键字即可聊天\n' + '1.求和\n' + '2.日期\n' + '3.讲笑话\n');
+  //   if (xiaona === 'q') {
+  //     alert('你不爱小娜了吗？');
+  //     break;
+  //   }
+  //   switch (xiaona) {
+  //     case '1':
+  //     case '求和':
+  //       var number = prompt('请输入数字，使用逗号分隔');
+  //       var arr = number.split(',');
+  //       var sum = 0;
+  //       for (var i = 1; i < arr.length; i++) {
+  //         sum += parseFloat(arr[i]);
+  //       }
+  //       alert('总和为' + sum);
+  //       break;
+  //     case '2':
+  //     case '日期':
+  //       var mydate = new Date()
+  //       var yyyy = mydate.getFullYear();
+  //       var mm = mydate.getMonth();
+  //       var dd = mydate.getDate();
+  //       var hh = mydate.getHours();
+  //       var ss = mydate.getMinutes();
+  //       var aa = mydate.getSeconds();
+  //       var mm = mm < 10 ? '0' + mm : mm;
+  //       var dd = dd < 10 ? '0' + dd : dd;
+  //       var hh = hh < 10 ? '0' + hh : hh;
+  //       var ss = ss < 10 ? '0' + ss : ss;
+  //       var aa = aa < 10 ? '0' + aa : aa;
+  //       var date = yyyy + '年' + mm + '月' + dd + '日' + hh + '：' + ss + '：' + aa;
+  //       alert(date);
+  //       break;
+  //     case '3':
+  //     case '笑话':
+  //       var arr = ['笑话1', '笑话2', '笑话3', '笑话4', '笑话5', '笑话6', '笑话7', '笑话8'];
+  //       var joke = Math.floor(Math.random() * arr.length);
+  //       alert(arr[joke]);
+  //       break;
+  //     default:
+  //       alert('您的话小娜没有听懂，请重新说一次');
+  //       break;
+  //   }
+  // }
+
+  while (true) {
+    var xiaona = prompt('你好，我是传智小娜，你的语音助手~~~~~~~\n' +
+      '输入《编号》或《关键词》选择功能，输入q退出聊天\n' +
+      '1.计算《总和》\n' +
+      '2.获取《时间》\n' +
+      '3.讲个《笑话》\n');
+    if (xiaona === 'q') {
+      alert('你不爱小娜了吗？');
+      break;
+    }
+    switch (xiaona) {
+      case '1':
+      case '求和':
+        var number = prompt('请输入你要求和的数字，以逗号隔开，例如： 1,2,3,4');
+        var arr = number.split(',');
+        var sum = 0;
+        for (var i = 1; i < arr.length; i++) {
+          sum += parseFloat(arr[i]);
+        }
+        alert('你要计算的总和计算出来了，是：' + sum);
+        break;
+      case '2':
+      case '日期':
+        var mydate = new Date()
+        var yyyy = mydate.getFullYear();
+        var mm = mydate.getMonth();
+        var dd = mydate.getDate();
+        var hh = mydate.getHours();
+        var ss = mydate.getMinutes();
+        var aa = mydate.getSeconds();
+        var mm = mm < 10 ? '0' + mm : mm;
+        var dd = dd < 10 ? '0' + dd : dd;
+        var hh = hh < 10 ? '0' + hh : hh;
+        var ss = ss < 10 ? '0' + ss : ss;
+        var aa = aa < 10 ? '0' + aa : aa;
+        var date = yyyy + '年' + mm + '月' + dd + '日' + '   ' + hh + '：' + ss + '：' + aa;
+        alert('当前的时间是：'+ date);
+        break;
+      case '3':
+      case '笑话':
+        var arr = ['笑话1', '笑话2', '笑话3', '笑话4', '笑话5', '笑话6', '笑话7', '笑话8'];
+        var joke = Math.floor(Math.random() * arr.length);
+        alert(arr[joke]);
+        break;
+      default:
+        alert('您的话小娜没有听懂，请重新说一次');
+        break;
+    }
+  }
+</script>
+
+</html>

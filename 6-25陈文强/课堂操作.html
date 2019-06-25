@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //一个函数中调用另外一个函数
+
+  var sum = 0;
+
+  function numberSum(num1, num2) {
+    sum = num1 + num2;
+  }
+
+  function numberSum1() {
+    numberSum(5, 8);
+    var sum1 = 0;
+    for (var i = 1; i <= sum; i++) {
+      sum1 += i;
+    }
+    document.write('循环结果为' + sum1 + '<br>');
+  }
+  numberSum1();
+
+  //1-n之间的总和
+
+  function test1(n) {
+    var sum2 = 0;
+    for (var i = 1; i <= n; i++) {
+      sum2 += i;
+    }
+    return sum2;
+  }
+  document.write('1-n之和为' + test1(9) + '<br>');
+
+  //n-m之间的总和
+
+  function test2(n, m) {
+    var sum3 = 0;
+    for (var i = n; i <= m; i++) {
+      sum3 += i;
+    }
+    return sum3;
+  }
+  document.write('n-m之和为' + test2(8, 15) + '<br>');
+
+  //求圆的面积
+
+  function test3(bj) {
+    var yuan = 3.1415926 * (bj * bj);
+    return yuan;
+  }
+  document.write('圆的面积为' + test3(5) + '<br>');
+
+  //三个数的和方法1
+
+  function test4(a, b, c) {
+    var sum4 = Number(a + b + c);
+    return sum4;
+  }
+  document.write('三个数的和为' + test4(5, 6, 7) + '<br>');
+
+  //三个数的和方法2
+  function test5(a, b) {
+    var sum5 = a + b;
+    return sum5;
+  }
+  console.log(test5(5, 8));
+
+  function test5One(c) {
+    var sum6 = test5(5, 9) + c;
+    return sum6;
+  }
+  document.write('三个数的和为' + test5One(10) + '<br>')
+
+  // 实验作用域
+  var pp = 10;
+  fun();
+
+  function fun() {
+    console.log(pp);
+    var pp = 20;
+  }
+</script>
+
+</html>

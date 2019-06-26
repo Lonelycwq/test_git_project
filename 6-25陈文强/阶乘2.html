@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // 求 n 的阶乘  n的阶乘 = n * (n-1) * (n-2) * ... * 3 * 2 * 1;
+  //1.定义一个函数,添加一个形参n
+  function jc(n) {
+    //2.定义一个变量存储阶乘的值，因为是乘法，1*任何数为任何数
+    var factorial = 1;
+    //3.创建一个循环，循环所有公式中的值，最大值为用户输入的值，最小数为1，数字不断减1
+    for (var i = n; i >= 1; i--) {
+      //4.使用阶乘值变量存储所有乘值
+      factorial *= n;
+    }
+    return factorial;
+  }
+  //5.调用函数
+    document.write('n的阶乘为' + jc(6) + '<br>');
+  
+
+
+  // 求1-n的阶乘的和    1! + 2! + 3! + ... + n!
+  //1.定义一个函数，引入n的阶乘的函数
+  function jc1(n){
+    //2.定义一个变量存储1-n阶乘的和值
+    var num = 0;
+    //3.创建一个循环，循环1-n之间所有值
+    for(var j = 1;j<=n;j++){
+      //4.使用和值变量存储1-n所有阶乘的值，在其中调用n的阶乘的函数并赋予不断循环的实参，并将所有阶乘值想加存储到和的变量中
+      num+=jc(j);
+    }
+    return num;
+  }
+  //5.调用函数
+  document.write('1-n的阶乘为' + jc1(6));
+
+</script>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //要求：将数组翻转
+
+  //1.创建一个有值的数组
+  var arr = [12, 32, 54, 65, 68, 75]
+  //2.创建一个空数组来存储翻转之后的数组
+  var newarr = [];
+  //3.先倒序遍历有值的数组
+  for (var i = arr.length - 1; i >= 0; i--){
+    //4.现在有值的数组已经倒序遍历了，将倒序之后的数组值传入空数组中
+    newarr[newarr.length] = arr[i];
+  }
+  //5.输出新的数组
+  document.write(newarr);
+</script>
+
+</html>

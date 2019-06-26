@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+  //1.定义一个变量值存储用户输入的值
+  var num = parseFloat(prompt('请输入一个整数检测其是否为素数'));
+  //2.使用一个循环，循环2-num之间所有数
+  for (var i = 2; i < num; i++) {
+    //3.使用一个判断，判断输入的值是否能被循环的值整除，能被整除时改变num1的值并跳出循环，反之重新循环
+    if (num % i === 0) {
+      break;
+    }
+  }
+  //6.判断循环值是否等于输入的值，不同结果输出不同文字
+  if (i == num) {
+    document.write(num + '是素数');
+  } else {
+    document.write(num + '不是素数');
+  }
+</script>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //要求：将数组从小到大排列
+  //1.先定义一个有值且无序的数组
+  var arr = [51, 74, 5, 44, 13, 190,35];
+  //2.使用第一个循环，作为第一个比较的数
+  for (var i = 0; i < arr.length - 1; i++) {
+    //3.使用第二个循环，作为第二个比较的树
+    for (var j = 0; j < arr.length - 1 - i; j++) {
+      //4.如果前面一个比后面一个大，调换位置
+      if (arr[j] > arr[j + 1]) {
+        var temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+      }
+    }
+  }
+  //5.打印排布后的数值
+  console.log(arr);
+</script>
+
+</html>

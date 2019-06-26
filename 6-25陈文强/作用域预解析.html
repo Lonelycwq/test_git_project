@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  var num1 = 10;
+  f1();
+  function f1() {
+    var num2 = 20;
+    console.log(num1);
+    console.log(num2);
+    var num1 = '123';
+  }
+  f1();
+  console.log(num3);
+  console.log(num2);
+  console.log(num1);
+  function f1() {
+    var num1 = num2 = num3 = 30;
+    console.log(num1);
+    console.log(num2);
+    console.log(num3);
+  }
+
+
+  //预解析之后的代码
+
+  //所有函数和变量的声明自动被提至最高层
+  var num1;
+  //这个函数被下面的相同函数名的函数覆盖
+  function f1() {
+    var num2;
+    var num1;
+    num2 = 20;
+    console.log(num1);
+    console.log(num2);
+    num1 = '123';
+  }
+  //函数中局部作用域中num1,num2,num3的值均为30
+  function f1() {
+    var num1;
+    num1 = num2;
+    num2 = num3;
+    num3 = 30;
+    console.log(num1);
+    console.log(num2);
+    console.log(num3);
+  }
+  //给变量num1赋值10
+  num1 = 10;
+  //调用函数f1两次
+  f1();
+  f1();
+  //num2,num3的值为调用函数里num2，num3的值
+  console.log(num3);
+  console.log(num2);
+  //num1在外面被重新赋值了，所以值改变为10
+  console.log(num1);
+</script>
+
+</html>

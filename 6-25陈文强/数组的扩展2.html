@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //要求：将数组翻转
+
+  //1.创建一个有值的数组
+  var arr = [12, 32, 54, 55, 65, 68, 75]
+  //2.先遍历有值的数组，只遍历数值一般的长度，用来和另外一半做调换
+  for (var i = 0; i < arr.length / 2; i++) {
+    //3.定义一个变量来循环存储从左到右的数组值
+    var newarr = arr[i];
+    //4.重新给循环到的数值索引赋值，赋的值为数组以中间平分的相对应的另外一个索引的值
+    arr[i] = arr[arr.length - i - 1];
+    //5.然后又给另外一个索引的值赋上循环到的索引的值，做首尾对应调换
+    arr[arr.length - i - 1] = newarr;
+  }
+  //6.输出新的数组
+  document.write(arr);
+</script>
+
+</html>

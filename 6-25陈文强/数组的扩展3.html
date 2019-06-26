@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //要求：将数组翻转
+
+  //方法一：倒序遍历有值的数组再赋值到空数组中
+
+  var arr = [12, 25, 33, 42, 59, 68, 72, 81, 99];
+  var newarr = [];
+  for (var i = arr.length - 1; i >= 0; i--) {
+    newarr[newarr.length] = arr[i];
+  }
+  document.write('数组翻转为' + newarr);
+
+
+  //方法二：先遍历数组，然后使数组的值以中间为界对换位置
+  var arr1 = [12, 25, 33, 42, 59, 68, 72, 81, 99];
+  for (var j = 0; j <= arr1.length / 2; j++) {
+    var newarr1 = arr1[j];
+    arr1[i] = arr1[arr1.length - j - 1];
+    arr1[arr1.length - j - 1] = newarr1;
+  }
+  document.write('数组翻转为' + newarr);
+</script>
+
+</html>

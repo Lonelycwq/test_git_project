@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //要求：求n个数中的最大值
+  //1.先声明一个函数
+  function max() {
+    //2.先定义一个变量存储最大值，假设最大值是伪数组的第一个值
+    var maxnum = arguments[0];
+    //3.使用最先定义的最大数变量，里面的第一个数组的值，不断和整个数组的值比较，小于则执行判断里面的表达式，重新给变量赋值，大于则重新循环，直到循环结束
+    for (var i = 1; i < arguments.length; i++) {
+      if (maxnum < arguments[i]) {
+        maxnum = arguments[i];
+      }
+    }
+    return maxnum;
+  }
+  //4.输出调用函数的值
+  document.write('n个数最大值为' + max(44, 7, 22, 47, 186, 311));
+</script>
+
+</html>

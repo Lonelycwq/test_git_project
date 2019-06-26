@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //要求：判断一个数是素数
+  //1.先声明一个函数
+  function sushu() {
+    //2.先定义一个变量存储一个用户输入的值，并转化类型为整数
+    var num = parseFloat(prompt('请输入一个整数检测其是否为素数'));
+    //3.先判断是否为1，为1则弹窗，否则继续执行
+    if (num != 1){
+      //4.使用正则表达式判断输入的值是否不是正整数，是则提示用户输错
+      var r = /^[0-9]*[1-9][0-9]*$/; //正整数
+      if (r.test(num) != true) {
+        alert('亲，你输入的不是正整数哦，再乱输入就要接受松哥爱的抱抱哦');
+        //调用页面刷新
+        location.reload();
+      }else{
+        //5.定义一个变量值为true
+        var num1 = true;
+        //6.使用一个循环，循环2-num之间所有数
+        for (var i = 2; i < num; i++) {
+          //7.使用一个判断，判断输入的值是否能被循环的值整除，能被整除时改变num1的值并跳出循环，反之重新循环
+          if (num % i === 0) {
+            num1 = false;
+            break;
+          }
+        }
+        //8.判断num1的值为true还是false，不同结果输出不同文字
+        if (num1) {
+          document.write(num + '是素数');
+        } else {
+          document.write(num + '不是素数');
+        }
+      }
+    } else{
+      alert('亲，你输入的不是正整数哦，再乱输入就要接受松哥爱的抱抱哦');
+      location.reload();
+    }
+  }
+  //9.输出调用函数的值
+  sushu();
+</script>
+
+</html>

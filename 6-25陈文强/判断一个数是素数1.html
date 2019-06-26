@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //要求：判断一个数是素数
+  //1.先声明一个函数
+  function sushu() {
+    //2.先定义一个变量存储一个用户输入的值，并转化类型为整数
+    var num = parseInt(prompt('请输入一个整数检测其是否为素数'));
+    //3.定义一个变量值为true
+    var num1 = true;
+    //4.使用一个循环，循环2-num之间所有数
+    for (var i = 2; i < num; i++) {
+      //5.使用一个判断，判断输入的值是否能被循环的值整除，能被整除时改变num1的值并跳出循环，反之重新循环
+      if (num % i === 0) {
+        num1 = false;
+        break;
+      } 
+    }
+    //6.判断num1的值为true还是false，不同结果输出不同文字
+    if(num1){
+      document.write(num + '是素数');
+    } else{
+      document.write(num + '不是素数');
+    }
+  }
+  //7.输出调用函数的值
+  sushu();
+</script>
+
+</html>

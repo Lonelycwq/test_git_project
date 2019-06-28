@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -16,20 +16,20 @@
 
   //1.先定义一个有值且无序的数组
   var arr = [51, 74, 5, 44, 13, 190,35];
-  //2.使用第一个循环，作为第一个比较的数
-  for (var i = 0; i < arr.length - 1; i++) {
-    //3.使用第二个循环，作为第二个比较的树
-    for (var j = 0; j < arr.length - 1 - i; j++) {
-      //4.如果前面一个比后面一个大，调换位置
+  //2.使用第一个循环
+  for (var i = 0; i < arr.length; i++) {
+    //3.使用第二个循环
+    for (var j = 0; j < arr.length; j++) {
+      //4.如果前面一个比后面一个大，调换位置，然后再重新循环
       if (arr[j] > arr[j + 1]) {
-        //5.
+        //5.定义一个变量存储前一个值，然后后一个值覆盖前一个值，然后再将存储的值赋到后一个值的位置
         var num = arr[j];
         arr[j] = arr[j + 1];
         arr[j + 1] = num;
       }
     }
   }
-  //5.打印排布后的数值
+  //6.打印排布后的数值
   console.log(arr);
 </script>
 

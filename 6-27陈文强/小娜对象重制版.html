@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+
+
+<body>
+
+
+</body>
+<script>
+  /* 
+    分析小娜的特征和行为
+    特征
+    行为：询问，退出（没法写进行为里面），计算总和，显示日期，讲笑话，懵
+    先给一个构造函数，到时naw一个小娜，每次在循环里面指挥小娜做事情
+     */
+
+  //1.自定义构造对象小娜
+  function XiaoNa() {
+    //2.添加最初弹出询问框的行为属性
+    this.all = function () {
+      //2.1定义一个变量存储用户输入的值
+      var alltext = prompt('你好，我是传智小娜，你的语音助手~~~~~~~\n' +
+        '1.求和\n' +
+        '2.日期\n' +
+        '3.讲笑话\n' +
+        '输入《编号》或《关键词》选择功能\n' +
+        '如果你都不需要以上功能，退出请按“q”\n');
+        return alltext;
+    };
+    //3.添加求和功能行为属性
+    this.sum = function () {
+      //3.1定义一个变量存储用户输入的值
+      var numarr = prompt('请你输入想要求和的数字，以逗号分隔，例如1,2,3,4,5');
+      //3.2使用split对象将输入的字符串通过逗号分割变成字符串数组
+      var arr = numarr.split(',');
+      //3.3定义一个变量用来存储输入值的和
+      var sumarr = 0;
+      //3.4循环遍历并将所有值相加
+      for (var i = 0; i < arr.length; i++) {
+        sumarr += parseFloat(arr[i]);
+      }
+      //3.5输出最终得到的总和值
+      alert('所有数字相加的总和为' + sumarr);
+    };
+    //4.添加获取日期功能行为属性
+    this.date = function () {
+      //4.1调用获取日期对象
+      var mydate = new Date();
+      //4.2使用对象获取年月日时分秒
+      var yyyy = mydate.getFullYear();
+      //因为月份是从0开始计算，所有在输出的值的基础上加一显示正常
+      var mm = mydate.getMonth();
+      var dd = mydate.getDate();
+      var hh = mydate.getHours();
+      var ss = mydate.getMinutes();
+      var aa = mydate.getSeconds();
+      //4.3由于月日时分秒的值为个位数的时候不显示前面的0，通过函数封装判断小于10时候在值前面加个0 
+      function zero(zerodate) {
+        if (zerodate < 10) {
+          zerodate = '0' + zerodate;
+        }
+        return zerodate;
+      }
+      //4.4重复调用函数将个位数的值前面加个0
+      mm = zero(mm);
+      dd = zero(dd);
+      hh = zero(hh);
+      ss = zero(ss);
+      aa = zero(aa);
+      //4.5将自定义重组的时间格式放入弹窗中
+      alert('当前日期时间为' + yyyy + '-' + mm + '-' + dd + '   ' + hh + ':' + ss + ':' + aa)
+    };
+    //5.添加随机笑话功能行为属性
+    this.joke = function () {
+      //5.1定义一个有值的数组
+      var jokearr = [
+        '没钱真的太惨了，我只有1块钱，连2元店的吃亏上当都买不到！！！',
+        '如果你真能看得出男朋友有没有潜力，直接做风投好了，还谈什么恋爱啊！',
+        '鄙人优点挺多，没什么不足，如果非要说不足的话，就是经常余额不足。',
+        '最近有人说我喜欢你，我真是无语了，我喜欢你这么多年，为什么最近才有人说？',
+        '当你放屁之后一定要说一句“什么东西糊了？”这样周围的人就会吸光你的屁。',
+        '在床上吃烧烤被我妈看到了，我妈说：跟你说过多少遍了！不要动不动就把床搬到院子里！'
+      ];
+      //5.2使用随机数对象得出数组长度-1之内的所有随机数作为数值索引弹出随机的笑话
+      var jokeRandom = Math.floor(Math.random() * jokearr.length);
+      //5.3弹出框弹出笑话数组中随机索引的值
+      alert(jokearr[jokeRandom]);
+    }
+  }
+  //6. 自定义构造函数添加一个属性值
+  var xiaona = new XiaoNa();
+  //6.写一个无限循环来不断弹出询问框
+  while (true) {
+    //6.1调用询问框方法
+    var alltext = xiaona.all();
+    //6.2判断用户输入的是q则停止循环，否则则继续执行
+    if (alltext === 'q') {
+      alert('小主不爱小娜了吗，那就拜拜了！');
+      break;
+    }
+    //6.3使用固定值判断用户输入的值，相对应的进入到对应的表达式,判断值为用户输入的值
+    switch (alltext) {
+      //6.4判断用户输入的是否是1或求和，是则调用求和的方法并终止循环，否则继续判断
+      case '1':
+      case '求和':
+        xiaona.sum();
+        break;
+        //6.5判断用户输入的是否是2或日期，是则调用获取日期的方法并终止循环，否则继续判断
+      case '2':
+      case '日期':
+        xiaona.date();
+        break;
+        //6.6判断用户输入的是否是3或笑话，是则随机弹出笑话并终止循环，否则继续判断
+      case '3':
+      case '讲笑话':
+        xiaona.joke();
+        break;
+        //6.7添加一个输入的不是之上所有固定值的时候的提示框并终止循环
+      default:
+        alert('别乱输入，老实一点按规则来，不然等着挨揍吧！');
+        break;
+    }
+  }
+</script>
+
+
+</html>

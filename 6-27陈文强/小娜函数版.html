@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //封装第一个需求求和代码
+  function sum1() {
+    var num = prompt('请输入用逗号间隔的一串数字');
+    var arr = num.split(',');
+    var sum = 0;
+    for (var i = 0; i < arr.length; i++) {
+      sum += parseFloat(arr[i]);
+    }
+    return sum;
+  }
+
+  //封装日期值小于10时在前面加个零
+  function date0(n) {
+    n = n < 10 ? '0' + n : n;
+    return n;
+  }
+
+  //封装获取当前时间并按照格式输出
+  function date1() {
+    var mydate = new Date()
+    var yyyy = mydate.getFullYear();
+    var mm = mydate.getMonth();
+    var dd = mydate.getDate();
+    var hh = mydate.getHours();
+    var ss = mydate.getMinutes();
+    var aa = mydate.getSeconds();
+    mm = date0(mm);
+    dd = date0(dd);
+    hh = date0(hh);
+    ss = date0(ss);
+    aa = date0(aa);
+    var date = yyyy + '年' + mm + '月' + dd + '日' + hh + '：' + ss + '：' + aa;
+    return date;
+  }
+
+  //封装随机笑话代码
+  function joke1() {
+    var arr1 = ['笑话1', '笑话2', '笑话3', '笑话4', '笑话5', '笑话6', '笑话7', '笑话8', '笑话9'];
+    var joke = Math.floor(Math.random() * arr1.length);
+    return arr1[joke];
+  }
+
+  while (true) {
+    var all = prompt('小娜为你服务，请输入编号或者关键字激活功能\n' +
+      '1.输入总和\n' + '2.输入日期\n' + '3.输入笑话\n')
+    if (all === 'q') {
+      alert('为什么要退出，不爱了吗？');
+      break;
+    }
+    switch (all) {
+      case '1':
+      case '总和':
+        alert('这几个数的总和为' + sum1());
+        break;
+      case '2':
+      case '日期':
+        alert('当前的日期为' + date1());
+        break;
+      case '3':
+      case '笑话':
+        alert(joke1());
+        break;
+    }
+  }
+</script>
+
+</html>

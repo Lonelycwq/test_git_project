@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  var dog = {};
+  dog.name = '旺财';
+  dog.age = 3;
+  dog.gender = '公';
+  dog.type = '哈士奇';
+  dog.color = '黑白相间';
+  dog.run = function () {
+    alert('速度七十迈，心情自由自在，随风奔跑...')
+  }
+  dog.bark = function () {
+    alert('汪 汪汪 汪汪汪 汪汪汪汪 汪汪汪汪汪...')
+  }
+  document.write('这只狗叫' + dog.name + '，它' + dog.age + '岁了，' + '它是一只' + dog.gender + '的' + dog.type);
+  console.log(dog);
+  dog.run();
+  dog.bark();
+
+//自定义构造函数
+  function Car(brand, color, weight, price) {
+    this.brand = brand;
+    this.color = color;
+    this.weight = weight;
+    this.price = price;
+    this.startUp = function () {
+      console.log('轰轰轰');
+    }
+    this.turnOff = function () {
+      console.log('熄火了');
+    }
+  }
+  var baoma = new Car('宝马', '蓝色', '一吨', '二十万');
+  console.log(baoma);
+  console.log(baoma.startUp);
+  baona.startUp();
+  console.log(baoma.turnOff);
+  console.log(Car);
+
+  var bengc = new Car('奔驰', '蓝色', '一吨', '二十五万');
+  console.log(baoma);
+  console.log(baoma.startUp);
+  console.log(baoma.turnOff);
+  var aodi = new Car('奥迪', '蓝色', '一吨', '二十三万');
+  console.log(baoma);
+  console.log(baoma.startUp);
+  console.log(baoma.turnOff);
+</script>
+
+</html>

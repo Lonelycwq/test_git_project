@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="button" value="点击更换随机颜色" id="rc">
+</body>
+<script>
+  // // 1.生成0-255之间的数字，先封装一个可以生成指定区间的随机整数的函数
+  // function randomInt(n, m) {
+  //   return Math.floor(Math.random() * (m - n + 1) + n);
+  // }
+  // // 2.封装一个函数，拼装rgb并返回值
+  // function randomColor() {
+  //   var r = randomInt(0, 255);
+  //   var g = randomInt(0, 255);
+  //   var b = randomInt(0, 255);
+  //   return 'rgb(' + r + ',' + g + ',' + b + ')';
+  // }
+  // //3.获取按钮元素
+  // var btn = document.getElementById('rc');
+  // //4.绑定事件到按钮上
+  // btn.onclick = function () {
+  //   document.body.style.backgroundColor = randomColor();
+  // }
+
+
+
+  //数组颠倒
+  var arr = ['张飞1', '张飞2', '张飞3', '张飞4', '张飞5'];
+  arr.reverse();
+  document.write(arr + '<br>');
+
+  //向数组插入数据
+  var arr1 = ['张飞1', '张飞2', '张飞3', '张飞4', '张飞5'];
+  arr1.push('刘备');
+  document.write(arr1 + '<br>');
+
+  //移除数组中最后一个数据
+  var arr2 = ['张飞1', '张飞2', '张飞3', '张飞4', '张飞5'];
+  arr2.pop();
+  document.write(arr2 + '<br>');
+
+  //在数组前面添加两个元素
+  var arr3 = ['张飞1', '张飞2', '张飞3', '张飞4', '张飞5'];
+  arr3.unshift('刘备', '关羽');
+  document.write(arr3 + '<br>');
+
+  //将数组前面两个元素删除
+  var arr4 = ['张飞1', '张飞2', '张飞3', '张飞4', '张飞5'];
+  arr4.shift();
+  document.write(arr4 + '<br>')
+
+  //将数组遍历并筛选
+  var arr5 = [200, 3, 50, 90, 100, 105];
+  var arr6 = [];
+  arr5.forEach(function (i) {
+    if (i > 100) {
+      arr6.push(i);
+    }
+  })
+  console.log(arr6);
+</script>
+
+</html>

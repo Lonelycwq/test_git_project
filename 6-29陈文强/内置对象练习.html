@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>内置对象练习</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //在body中添加随机背景颜色
+  //1.先声明一个函数用来获取[0-255]的随机数
+  function randomColor() {
+    // return Math.floor(Math.random() * (255 - 0 + 1) + 0);
+    return Math.floor(Math.random() * (255 + 1));
+  }
+
+  function zidong() {
+    //2.调用三次上面的函数然后存储进rgb三原色中
+    var red = randomColor();
+    var green = randomColor();
+    var blue = randomColor();
+    //3.将三个变量拼装进rgb属性值中
+    var rgb = 'rgb(' + red + ',' + green + ',' + blue + ')';
+    //4.将rgb值添加进body的背景样式中
+    document.body.style.backgroundColor = (rgb);
+  };
+  //5.使用setInterval()方法，每隔2s执行一次上面函数更换body背景颜色
+  setInterval("zidong()", "2000");
+
+
+  // //在body中添加随机背景透明颜色
+  // //1.先声明一个函数用来获取[0-255]的随机数
+  // function randomColor(n, m) {
+  //   // return Math.floor(Math.random() * (255 - 0 + 1) + 0);
+  //   return Math.floor(Math.random() * (m - n + 1) + n);
+  // }
+
+  // function zidong() {
+  //   //2.调用三次上面的函数然后存储进rgb三原色中
+  //   var red = randomColor(0, 255);
+  //   var green = randomColor(0, 255);
+  //   var blue = randomColor(0, 255);
+  //   var opc = Math.random();
+  //   //3.将三个变量拼装进rgb属性值中
+  //   var rgba = 'rgba(' + red + ',' + green + ',' + blue + ',' + opc + ')';
+  //   //4.将rgb值添加进body的背景样式中
+  //   document.body.style.backgroundColor = (rgba);
+  // };
+  // //5.使用setInterval()方法，每隔2s执行一次上面函数更换body背景颜色
+  // setInterval("zidong()", "2000");
+
+
+  //获取[0-1)之间的随机小数
+  var num = Math.random();
+  console.log('1、0-1之间的随机数为' + num);
+  //求[n-m]之间整数的公式  Math.floor(Math.random() * (m - n + 1) + n);
+  //[0-1)之间的随机小数向下取整,并得到[1-10)之间的随机整数
+  var num1 = Math.floor(num * 10);
+  console.log('2、1-10之间的随机数为' + num1);
+  //[0-1)之间的随机小数向下取整,并得到[5-15)之间的随机整数
+  var num2 = Math.floor(num * (15 - 5) + 5);
+  console.log('3、5-15之间的随机数为' + num2);
+  //向上取整,获得比它大1的整数
+  var num3 = Math.ceil(3.16);
+  console.log('4、3.16向上取整为' + num3);
+  //把数字四舍五入
+  var num4 = Math.round(5.26);
+  console.log('5、5.26四舍五入为' + num4);
+  //求一个数中的绝对值
+  var num5 = Math.abs(-8);
+  console.log('6、-8的绝对值为' + num5);
+  //求两个数中最大值
+  var num6 = Math.max(6, 9);
+  console.log('7、6和9的最大值为' + num6);
+  //求两个数中最小值
+  var num7 = Math.min(6, 9);
+  console.log('7、6和9的最小值为' + num7);
+
+  //先创建一个date对象才能使用Date的方法
+  var date = new Date();
+
+  //获取当前时间的年份
+  var year = date.getFullYear();
+  console.log('今年的年份是' + year);
+  //创建自定义的时间对象，活动的开始日期和结束日期
+  var date1 = new Date('2019-11-11 11:11:11')
+  console.log('1、自定义的年月日时分秒为' + date1);
+  //获取日期的总毫秒数
+  var haomiao = date.getTime();
+  console.log('2、当前时间的总毫秒是' + haomiao);
+  //用毫秒数设置date，设置的日期和时间据1997年1月1日午夜之间的毫秒数正数为加，负数为减
+  var date2 = new Date();
+  date2.setTime(1561794817244);
+  console.log('3、1561794817244毫秒的时间是' + date2);
+  date2.setTime(-1561794817244);
+  console.log('4、1561794817244毫秒的时间是' + date2);
+  //获取指定日期的总毫秒数
+  var haomiao2 = date1.valueOf();
+  console.log('5、当前时间的总毫秒是' + haomiao2);
+  //将日期时间转化为字符串
+  var stringDate = date.toString();
+  console.log('6、当前日期的字符串显示为' + stringDate);
+
+  //数组中在最后插入数据
+  var arr = ['刘备', '关羽', '张飞', '诸葛亮', '赵云'];
+  arr.push('马超');
+  console.log(arr);
+  //取出数组中最后一个值
+  var arr1 = ['刘备', '关羽', '张飞', '诸葛亮', '赵云'];
+  arr1.pop();
+  console.log(arr1);
+  //调换数组顺序
+  var arr2 = ['刘备', '关羽', '张飞', '诸葛亮', '赵云'];
+  arr2.reverse();
+  console.log(arr2);
+  //调换数组顺序
+  var arr2 = ['刘备', '关羽', '张飞', '诸葛亮', '赵云'];
+  arr2.reverse();
+  console.log(arr2);
+  //在数组的前面插入元素
+  var arr3 = ['刘备', '关羽', '张飞', '诸葛亮', '赵云'];
+  arr3.unshift('曹操','孙权');
+  console.log(arr3); 
+  //取出数组中开头一个值
+  var arr4 = ['刘备', '关羽', '张飞', '诸葛亮', '赵云'];
+  arr4.shift();
+  console.log(arr4);
+  //在数组的第二个值插入新值
+  var arr5 = ['刘备', '关羽', '张飞', '诸葛亮', '赵云'];
+  arr5.splice(2,0,'黄忠','孟获');
+  console.log(arr5);
+  //遍历数组的方法
+  var arr6 = [2,5,8,6,5,4];
+  var sum = 0;
+  var res = arr6.forEach(function(res1,arr6){
+    return sum += res1 
+  })
+  console.log('遍历数组的和为' + sum);
+  //筛选数组的方法
+  var arr7 = [1536,22,5525,4361,31,522,99];
+  var arr8 = arr7.filter(function(liu,arr7){
+    return liu > 100
+  })
+  console.log('筛选出来的数组为' + arr8);
+  //将数组用指定的分隔符串成
+  var arr9 = ['刘备', '关羽', '张飞', '诸葛亮', '赵云'];
+  var newarr9 = arr9.join('❤');
+  console.log(newarr9);
+
+//根据字符串的split方法把字符串分割成数组
+var string1 = '刘备，关羽，张飞，赵云，马超，黄忠';
+var string1Arr = string1.split(',');
+console.log(string1Arr);
+
+</script>
+
+</html>

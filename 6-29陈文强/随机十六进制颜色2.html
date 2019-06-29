@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>十六进制颜色</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+  //1.封装一个获取随机颜色的函数
+  function bgColor() {
+    //2.声明一个存储颜色的变量，字符串开头为#
+    var color = '#';
+    //3.因为颜色有6位字符，所以循环6次得到6个随机元素
+    for (var i = 0; i < 6; i++) {
+      //4.得到一个0-15随机数整数，声明变量存储随机数
+      var indexColor = Math.floor(Math.random() * (15 - 0 + 1) + 0);
+      //5.将随机到的数转换为十六进制并拼装
+      color += indexColor.toString(16);
+    }
+    //6.将随机颜色给body当背景颜色
+    document.body.style.backgroundColor = (color);
+  }
+  //7.使用setInterval()方法，每隔2s执行一次上面函数更换body背景颜色
+  setInterval("bgColor()", "1000");
+
+</script>
+
+</html>

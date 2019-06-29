@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>内置对象练习</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //1.封装一个获取随机颜色的函数
+  function bgColor() {
+    //2.声明一个数组，其中数据是0-9和a-f的集合
+    var colorArr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+    //3.声明一个存储颜色的变量，字符串开头为#
+    var color = '#';
+    //4.因为颜色有6位字符，所以循环6次得到6个随机元素
+    for (var i = 0; i < 6; i++) {
+      //5.得到一个随机数索引，声明变量存储随机索引对应的值
+      var indexColor = Math.floor(Math.random() * (15 - 0 + 1) + 0);
+      //6.将随机到的索引取值拼装
+      color += colorArr[indexColor];
+    }
+    //7.将随机颜色给body当背景颜色
+    document.body.style.backgroundColor = (color);
+  }
+  //8.使用setInterval()方法，每隔2s执行一次上面函数更换body背景颜色
+  setInterval("bgColor()", "2000");
+</script>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>内置对象练习</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //1.先声明一个函数用来获取[0-255]的随机数
+  function randomColor(n, m) {
+    // return Math.floor(Math.random() * (255 - 0 + 1) + 0);
+    return Math.floor(Math.random() * (m - n + 1) + n);
+  }
+
+  function zidong() {
+    //2.调用三次上面的函数然后存储进rgb三原色中
+    var red = randomColor(0, 255);
+    var green = randomColor(0, 255);
+    var blue = randomColor(0, 255);
+    var opc = Math.random();
+    //3.将三个变量拼装进rgb属性值中
+    var rgba = 'rgba(' + red + ',' + green + ',' + blue + ',' + opc + ')';
+    //4.将rgb值添加进body的背景样式中
+    document.body.style.backgroundColor = (rgba);
+  };
+  //5.使用setInterval()方法，每隔2s执行一次上面函数更换body背景颜色
+  setInterval("zidong()", "2000");
+</script>
+
+</html>

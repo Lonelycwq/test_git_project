@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .box {
+      width: 1000px;
+      padding: 10px;
+      margin: 50px auto;
+      border: 1px solid #ccc;
+    }
+
+    #search {
+      width: 150px;
+      border: 1px solid #ccc;
+    }
+
+    .box-list {
+      width: 150px;
+      border: 1px solid #ccc;
+    }
+
+    .show {
+      display: block;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <!-- <input id="text" type="text"> -->
+    <input id="search" type="text">
+    <div class="box-list hidden">
+      <ul>
+        <li><a href="#">选项1</a></li>
+        <li><a href="#">选项2</a></li>
+        <li><a href="#">选项3</a></li>
+        <li><a href="#">选项4</a></li>
+        <li><a href="#">选项5</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+<script>
+  //获得焦点和失去焦点
+  // //先获取元素
+  // var text = document.getElementById('text');
+  // //获取焦点
+  // text.focus = function() {
+  //   console.log('获取焦点');
+  // }
+  // //失去焦点
+  // text.blur = function() {
+  //   console.log('失去焦点');
+  // }
+
+  //输入框获取焦点时显示下拉，失去焦点的时候隐藏下拉
+  //1.通过id获取输入框元素和下拉
+  var search1 = document.getElementById('search');
+  var section = document.getElementsByClassName('box-list');
+  //2.获取焦点时显示下拉
+  search1.onfocus = function () {
+    section[0].classList.remove('hidden');
+    section[0].classList.add('show');
+  }
+  //3.失去焦点时隐藏下拉
+  search1.onblur = function () {
+    section[0].classList.remove('show');
+    section[0].classList.add('hidden');
+  }
+</script>
+
+</html>

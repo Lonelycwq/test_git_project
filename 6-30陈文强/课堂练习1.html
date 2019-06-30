@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .box {
+      width: 1000px;
+      padding: 10px;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+    }
+
+    .box img {
+      margin-top: 20px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="button" value="关灯" id="close">
+  <input type="button" value="开灯" id="open">
+  <input type="button" value="关灯" id="openclose">
+  <input class="close" type="button" value="暖光1">
+  <button>暖光2</button>
+
+  <div class="box">
+    <input type="button" value="图片1" id="img1">
+    <input type="button" value="图片2" id="img2">
+    <input type="button" value="图片3" id="img3">
+    <input type="button" value="图片4" id="img4">
+    <input type="button" value="图片5" id="img5">
+    <img id="boxImg1" src="./images/img (1).jpg" alt="">
+  </div>
+</body>
+<script>
+  // 关灯
+  //1.先获取关灯按钮元素
+  var close1 = document.getElementById('close');
+  //2.绑定点击时间
+  close1.onclick = function () {
+    // 3.改变body里的背景颜色
+    document.body.style.backgroundColor = '#000';
+  }
+
+  // 开灯
+  //1.先获取开灯按钮元素
+  var open1 = document.getElementById('open');
+  //2.绑定点击时间
+  open1.onclick = function () {
+    // 3.改变body里的背景颜色
+    document.body.style.backgroundColor = '#fff';
+  }
+
+  //使用一个按钮实现开灯和关灯
+  var openclose1 = document.getElementById('openclose');
+  openclose1.onclick = function () {
+    if (openclose1.value === '关灯') {
+      document.body.style.backgroundColor = '#000';
+      openclose1.value = '开灯';
+    } else {
+      document.body.style.backgroundColor = '#fff';
+      openclose1.value = '关灯';
+    }
+  }
+
+  // 暖光灯1
+  //1.先获取开启暖光灯按钮元素
+  var close2 = document.getElementsByClassName('close');
+  //2.绑定点击时间
+  close2[0].onclick = function () {
+    // 3.改变body里的背景颜色
+    document.body.style.backgroundColor = '#9defdc';
+  }
+
+  //开启暖光灯2
+  //1.先获取开启暖光灯按钮元素
+  var open2 = document.getElementsByTagName('button');
+  console.log(open2);
+  //2.绑定点击时间
+  open2[0].onclick = function () {
+    // 3.改变body里的背景颜色
+    document.body.style.backgroundColor = '#efed9d';
+  }
+
+  //点击更换图片1
+  //1.创建五个按钮和一个图片框
+  var btnImg1 = document.getElementById('img1');
+  var btnImg2 = document.getElementById('img2');
+  var btnImg3 = document.getElementById('img3');
+  var btnImg4 = document.getElementById('img4');
+  var btnImg5 = document.getElementById('img5');
+  var boxImg11 = document.getElementById('boxImg1');
+  //2.给按钮绑定点击事件
+  btnImg1.onclick = function () {
+    //3.更换图片src地址
+    boxImg11.src = './images/img (1).jpg';
+  }
+  btnImg2.onclick = function () {
+    boxImg11.src = './images/img (2).jpg';
+  }
+  btnImg3.onclick = function () {
+    boxImg11.src = './images/img (3).jpg';
+  }
+  btnImg4.onclick = function () {
+    boxImg11.src = './images/img (4).jpg';
+  }
+  btnImg5.onclick = function () {
+    boxImg11.src = './images/img (5).jpg';
+  }
+
+</script>
+
+</html>

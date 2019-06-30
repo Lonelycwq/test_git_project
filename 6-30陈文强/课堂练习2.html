@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .box {
+      width: 1000px;
+      padding: 10px;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+    }
+
+    .box img {
+      margin-top: 20px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <button value="" class="img1" data-src="./images/img (1).jpg">图片1</button>
+    <button value="" class="img1" data-src="./images/img (2).jpg">图片2</button>
+    <button value="" class="img1" data-src="./images/img (3).jpg">图片3</button>
+    <button value="" class="img1" data-src="./images/img (4).jpg">图片4</button>
+    <button value="" class="img1" data-src="./images/img (5).jpg">图片5</button>
+    <img id="boxImg1" src="./images/img (1).jpg" alt="">
+  </div>
+
+  <div class="box">
+    <input type="button" value="图片1">
+    <input type="button" value="图片2">
+    <input type="button" value="图片3">
+    <input type="button" value="图片4">
+    <input type="button" value="图片5" id="img5">
+    <img id="boxImg2" src="./images/img (1).jpg" alt="">
+  </div>
+</body>
+<script>
+  //点击更换图片2
+  //1.根据标签名找到按钮元素和图片id找到图片元素
+  var button1 = document.getElementsByTagName('button');
+  var boxImg11 = document.getElementById('boxImg1');
+  //2.使用循环使每个按钮上都绑定点击事件
+  for (var i = 0; i < button1.length; i++) {
+    //3.在按钮上面绑定点击事件
+    button1[i].onclick = function () {
+      //4.改变点击时图片的路径地址
+      var src = this.dataset.src;
+      boxImg11.src = src;
+    }
+  }
+
+  //点击更换图片3
+  //1.根据标签名找到按钮元素和图片id找到图片元素
+  var input1 = document.getElementsByTagName('input');
+  var boxImg22 = document.getElementById('boxImg2');
+  //2.使用循环使每个按钮上都绑定点击事件
+  for (let i = 0; i < input1.length; i++) {
+    //3.在按钮上面绑定点击事件
+    input1[i].onclick = function () {
+      //4.改变点击时图片的路径地址
+      boxImg22.src = './images/img (' + (i+1) + ').jpg';
+    }
+  }
+</script>
+
+</html>

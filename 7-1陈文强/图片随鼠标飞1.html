@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 1500px;
+    }
+
+    img {
+      position: absolute;
+      width: 50px;
+      display: none;
+    }
+  </style>
+</head>
+<img id="img1" src="./images/timg.gif" alt="">
+
+<body>
+</body>
+<script>
+  //1.获取图片元素
+  let img = document.querySelector('img');
+  console.log(img);
+  //2.绑定鼠标移动事件onmousemove
+  // document.addEventListener('onmousemove', function (e) {
+  //   //3.声明变量存储鼠标移动时候xy轴距离
+  //   let x = e.clientX;
+  //   let y = e.clientY;
+  //   console.log(x, y);
+  // });
+  document.onmousemove = function(e) {
+    let x = e.clientX;
+    let y = e.clientY;
+    //3.将鼠标移动的xy轴的值赋给img的样式并使图片去除隐藏
+    img.style.display = 'block';
+    img.style.left = x + 'px';
+    img.style.top = y + 'px';
+  }
+</script>
+
+</html>

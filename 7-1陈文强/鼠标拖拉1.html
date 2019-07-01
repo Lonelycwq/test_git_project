@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      overflow: hidden;
+      user-select: none;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    #link {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      color: #000;
+      font-size: 30px;
+      text-decoration: none;
+    }
+
+    .box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -140px;
+      margin-left: -256px;
+      width: 512px;
+      height: 280px;
+      box-shadow: 0px 0px 10px #ddd;
+    }
+
+    .show {
+      display: block;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .box .box-title {
+      margin-bottom: 20px;
+      height: 40px;
+      font-size: 20px;
+      line-height: 40px;
+      text-align: center;
+      cursor: move;
+    }
+
+    .box-form>input {
+      display: block;
+      margin: 50px auto 0;
+      background: none;
+      border: 1px solid #ddd;
+      width: 300px;
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .box .box-input {
+      margin-bottom: 30px;
+    }
+
+    .box .box-input label {
+      float: left;
+      width: 20%;
+      text-align: right;
+      vertical-align: middle;
+    }
+
+    .box .box-input input {
+      float: left;
+      margin-left: 10px;
+      width: 70%;
+      height: 30px;
+      border: 1px solid #ddd;
+    }
+
+    .clear {
+      clear: both;
+    }
+
+    .box .close {
+      position: absolute;
+      right: -25px;
+      top: -25px;
+      width: 50px;
+      height: 50px;
+      font-size: 14px;
+      text-align: center;
+      line-height: 50px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0px 0px 10px #ddd;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#" id="link">点击弹出登录框</a>
+
+  <div class="box hidden">
+    <div class="box-title">登录会员</div>
+    <div class="box-form">
+      <div class="box-input">
+        <label for="">用户名：</label>
+        <input type="text">
+        <div class="clear"></div>
+      </div>
+      <div class="box-input">
+        <label for="">登录密码：</label>
+        <input type="password">
+        <div class="clear"></div>
+      </div>
+      <input type="submit" value="登录会员">
+    </div>
+    <span class="close">关闭</span>
+  </div>
+</body>
+<script>
+  //点击a标签弹出登录框
+  //1.声明获取a标签和登录框元素
+  let link = document.querySelector('#link');
+  let box = document.querySelector('.box');
+  //2.给a标签绑定点击事件
+  link.onclick = function () {
+    //3.删除有隐藏功能的class
+    box.classList.remove('hidden');
+  }
+
+  //点击关闭按钮隐藏登录框
+  //1.声明获取关闭span标签
+  var close = document.querySelector('.close');
+  //2.给span标签绑定点击事件
+  close.onclick = function () {
+    //3.添加有隐藏功能的class
+    box.classList.add('hidden');
+  }
+
+  //鼠标点击登录框标题可移动登录框
+  //1.先声明一开始登录框是不可拖动的
+  let drag = false;
+  //2.声明获取标题元素
+  var title = document.querySelector('.box-title');
+  //3.声明两个变量存储鼠标坐标
+  var tempx = 0;
+  var tempy = 0;
+  //4.给登录框标题绑定鼠标按下事件
+  title.addEventListener('mousedown', function (e) {
+    //5.鼠标按下的时候，标题框是可以拖动的
+    drag = true;
+    //6.按下的时候获取鼠标离登录框里左上的距离，用鼠标的位置减去登录框离浏览器的位置
+    tempx = e.pageX - box.offsetLeft;
+    tempy = e.pageY - box.offsetTop;
+    console.log(tempx, tempy);
+  });
+  //7.添加鼠标移动事件
+  document.addEventListener('mousemove', function (e) {
+    //8.判断登录框是否可移动
+    if (drag == true) {
+      //9.声明获取当前鼠标坐标位置
+      let x = e.pageX;
+      let y = e.pageY;
+      //10.将鼠标移动的距离添加至登录框上
+      box.style.left = x - tempx + 256 + 'px';
+      box.style.top = y - tempy + 140 + 'px';
+    }
+  });
+
+  //11.绑定标题鼠标松开事件
+  document.addEventListener('mouseup', function (e) {
+    //12.鼠标松开时，登录框不可移动
+    drag = false;
+  });
+</script>
+
+</html>

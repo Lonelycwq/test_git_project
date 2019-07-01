@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      height: 1500px;
+    }
+    img {
+      position: absolute;
+      width: 50px;
+    }
+  </style>
+</head>
+<img id="img1" src="./images/timg.gif" alt="">
+<img id="img2" src="./images/timg.gif" alt="">
+<body>
+</body>
+<script>
+  let img1 = document.getElementById('img1');
+  let img2 = document.getElementById('img2');
+  document.onmousemove = function(e){
+    img1.style.top = e.clientY + 'px';
+    img1.style.left = e.clientX + 'px';
+    img2.style.top = e.pageY + 50 + 'px';
+    img2.style.left = e.pageX + 'px';
+  }
+  document.onmousedown = function(){
+    console.log('按下')
+  }
+  document.onmouseup = function(){
+    console.log('松开')
+  }
+</script>
+
+</html>

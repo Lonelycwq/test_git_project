@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      overflow: hidden;
+      user-select: none;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    #link1 {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      color: #000;
+      font-size: 30px;
+      text-decoration: none;
+    }
+
+    .box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -140px;
+      margin-left: -256px;
+      width: 512px;
+      height: 280px;
+      box-shadow: 0px 0px 10px #ddd;
+    }
+
+    .show {
+      display: block;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .box .box-title {
+      margin-bottom: 20px;
+      height: 40px;
+      font-size: 20px;
+      line-height: 40px;
+      text-align: center;
+      cursor: move;
+    }
+
+    .box-form>input {
+      display: block;
+      margin: 50px auto 0;
+      background: none;
+      border: 1px solid #ddd;
+      width: 300px;
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .box .box-input {
+      margin-bottom: 30px;
+    }
+
+    .box .box-input label {
+      float: left;
+      width: 20%;
+      text-align: right;
+      vertical-align: middle;
+    }
+
+    .box .box-input input {
+      float: left;
+      margin-left: 10px;
+      width: 70%;
+      height: 30px;
+      border: 1px solid #ddd;
+    }
+
+    .clear {
+      clear: both;
+    }
+
+    .box .close1 {
+      position: absolute;
+      right: -25px;
+      top: -25px;
+      width: 50px;
+      height: 50px;
+      font-size: 14px;
+      text-align: center;
+      line-height: 50px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0px 0px 10px #ddd;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#" id="link1">点击弹出登录框</a>
+
+  <div class="box hidden">
+    <div class="box-title">登录会员</div>
+    <div class="box-form">
+      <div class="box-input">
+        <label for="">用户名：</label>
+        <input type="text">
+        <div class="clear"></div>
+      </div>
+      <div class="box-input">
+        <label for="">登录密码：</label>
+        <input type="password">
+        <div class="clear"></div>
+      </div>
+      <input type="submit" value="登录会员">
+    </div>
+    <span class="close1">关闭</span>
+  </div>
+</body>
+<script>
+  //点击顶部显示登录框
+  let link = document.querySelector('#link1');
+  let login = document.querySelector('.box');
+  link.addEventListener('click', function () {
+    login.classList.remove('hidden')
+  });
+
+  //点击关闭按钮隐藏登录框
+  let close = document.querySelector('.close1');
+  close.addEventListener('click', function () {
+    login.classList.add('hidden')
+  })
+
+  //先假设登录框不可以移动，声明
+  let title = document.querySelector('.box-title');
+  let tampx = 0;
+  let tampy = 0;
+  let drag = false;
+  title.addEventListener('mousedown', function (e) {
+    drag = true;
+    tampx = e.pageX - login.offsetLeft;
+    tampy = e.pageY - login.offsetTop;
+  });
+  document.addEventListener('mousemove', function (e) {
+    if (drag == true) {
+      let x = e.pageX;
+      let y = e.pageY;
+      login.style.left = x - tampx + 256 + 'px';
+      login.style.top = y - tampy + 140 + 'px';
+    }
+  });
+  document.addEventListener('mouseup', function (e) {
+    drag = false;
+  });
+</script>
+
+</html>

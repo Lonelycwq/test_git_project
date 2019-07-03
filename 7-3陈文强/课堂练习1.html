@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>微博发布效果</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .weibo {
+      width: 600px;
+      border: 1px solid #ccc;
+
+      margin: 100px auto;
+      padding: 10px;
+
+    }
+
+    .weibo-text {
+      width: 590px;
+      height: 140px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      outline: none;
+      resize: none;
+    }
+
+    .weibo-text:focus {
+      border-color: #f60;
+    }
+
+    .weibo-btn {
+      width: 80px;
+      height: 30px;
+      background-color: #f90;
+      color: #fff;
+      border: 0 none;
+      margin-top: 5px;
+      border-radius: 3px;
+      cursor: pointer;
+      outline: 0 none;
+    }
+
+    .weibo-list {
+      padding-top: 10px;
+    }
+
+    .weibo-list li {
+      font-size: 14px;
+      line-height: 30px;
+      border-bottom: 1px dotted #ccc;
+      overflow: hidden;
+    }
+
+    .weibo-list li p {
+      float: left;
+    }
+
+    .weibo-list li span {
+      float: right;
+      cursor: pointer;
+    }
+
+    .weibo-list li input {
+      height: 24px;
+      line-height: 24px;
+      width: 300px;
+      font-size: 14px;
+      border: 0 none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="weibo">
+    <textarea class="weibo-text"></textarea>
+    <input class="weibo-btn" value="发布" type="button">
+    <ul class="weibo-list">
+      <li>
+        <p>快来收了这九款用上就停不下来的应用吧！！</p>
+        <span>删除</span>
+      </li>
+      <li>
+        <p>超级详细的云南大理自助游攻略</p>
+        <span>删除</span>
+      </li>
+      <li>
+        <p>外国最近很火的舞蹈，舒服简单自然，太棒了！</p>
+        <span>删除</span>
+      </li>
+    </ul>
+  </div>
+</body>
+<script>
+  //获取文本域元素、按钮元素、显示列表元素
+  let textarea = document.querySelector('.weibo-text');
+  let btn = document.querySelector('.weibo-btn');
+  let list = document.querySelector('.weibo-list');
+  //获取所有删除
+  let del = document.querySelectorAll('.weibo-list li span');
+  //绑定点击事件
+  btn.onclick = function () {
+    //获取文本域内容
+    let text = textarea.value;
+    //判断文本域为空时弹出提示框，否则就执行发布命令
+    if (text == '') {
+      alert('输入为空，请重新输入！')
+    } else {
+      //添加标签
+      let li = document.createElement('li');
+      //标签内添加两个子元素
+      li.innerHTML = '<p>' + text + '</p><span>删除</span>';
+      //将新增的插入到最前面
+      list.insertBefore(li, list.children[0]);
+      //清空文本域
+      textarea.value = '';
+    }
+  }
+  //循环给所有删掉绑定事件
+  list.onclick = function (e) {
+    console.log(e.target);
+    if (e.target.nodeName === 'SPAN') {
+      list.removeChild(e.target.parentNode);
+      console.log(e.target.parentNode);
+    }
+  }
+</script>
+
+</html>

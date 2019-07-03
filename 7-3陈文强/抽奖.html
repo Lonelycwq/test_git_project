@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .box {
+      position: relative;
+      width: 700px;
+      margin: 0 auto;
+    }
+
+    .box .zhuanpan {
+      width: 100%;
+      display: block;
+    }
+
+    .box .zhizhen {
+      position: absolute;
+      top: 131px;
+      left: 309px;
+      width: 22px;
+      height: 99px;
+      display: block;
+      transition: all 2s;
+      transform-origin: 11px 168px;
+    }
+
+    .box .beggen {
+      position: absolute;
+      left: 252px;
+      top: 230px;
+      width: 138px;
+      height: 138px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <img class="zhuanp" src="./images/panze.png" alt="">
+    <img class="zhizhen" src="./images/zhizhen.png" alt="">
+    <div class="beggen"></div>
+  </div>
+</body>
+<script>
+  //获取指针和开始按钮元素
+  let zhizhen = document.querySelector('.zhizhen');
+  let beggen = document.querySelector('.beggen');
+  //声明一个变量存储角度值、一个变量表示转动次数
+  let r1 = 0;
+  let conunt = 1;
+  //给开始按钮绑定点击事件
+  beggen.onclick = function () {
+    //判断conunt的值大于3就解绑函数
+    if (conunt > 3) {
+      beggen.onclick = null;
+    }
+    //随机一个角度数
+    let r = Math.random() * 721 + 360;
+    r1 += r;
+    //将随机角度数设置给指针
+    zhizhen.style.transform = 'rotate(' + r1 + 'deg)';
+    //每次点击增加一次点击次数
+    ++conunt;
+  }
+</script>
+
+</html>

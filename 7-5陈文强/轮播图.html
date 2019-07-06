@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      user-select: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .box {
+      width: 730px;
+      height: 454px;
+      padding: 8px;
+      border: 1px solid green;
+      margin: 100px auto;
+    }
+
+    .inner {
+      position: relative;
+      overflow: hidden;
+      height: 454px;
+    }
+
+    #imglist {
+      width: 700%;
+      position: absolute;
+      left: 0;
+      transition: left 300ms linear;
+    }
+
+    li {
+      float: left;
+    }
+
+    .list {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      margin-left: -85px;
+    }
+
+    .list i {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #fff;
+      color: #333;
+      float: left;
+      font-style: normal;
+      line-height: 20px;
+      font-size: 14px;
+      text-align: center;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .list i:last-child {
+      margin-right: 0;
+    }
+
+    .list i.current {
+      background-color: skyblue;
+      color: #fff;
+    }
+
+    .arrow {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      margin-top: -30px;
+    }
+
+    .arrow-left,
+    .arrow-right {
+      width: 30px;
+      height: 60px;
+      position: absolute;
+      font: 20px/60px "consolas";
+      color: #fff;
+      background-color: rgba(0, 0, 0, .3);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .arrow-right {
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box" id="box">
+    <div class="inner" id="inner">
+      <ul id="imglist">
+        <li><a href="#"><img src="images/1.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/2.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/3.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/4.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/5.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/6.jpg" alt=""></a></li>
+      </ul>
+      <div class="list">
+        <i class="current">1</i>
+        <i>2</i>
+        <i>3</i>
+        <i>4</i>
+        <i>5</i>
+        <i>6</i>
+      </div>
+      <div class="arrow">
+        <span class="arrow-left">&lt;</span>
+        <span class="arrow-right">&gt;</span>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  //静态资源加载完毕时执行js代码
+  window.onload = function () {
+    //获取轮播图盒子元素、图片列表元素、图片宽度元素、左右按钮元素、底部小圆点元素
+    let box = document.getElementById('box');
+    let imglist = document.getElementById('imglist');
+    let imgWidth = imglist.children[0].offsetWidth;
+    let leftBtn = document.querySelector('.arrow-left');
+    let rightBtn = document.querySelector('.arrow-right');
+    let circles = document.querySelectorAll('.list>i');
+    //遍历小圆点，给所有小圆点添加鼠标悬停事件
+    circles.forEach((e, i) => {
+      e.addEventListener('mouseover', function () {
+        //声明变量存储获取的每一张图片离盒子左边距离的位置
+        let distance = i * imgWidth * -1;
+        //同时给ul加上得到的负左外边距的值
+        imglist.style.left = distance + 'px';
+        //遍历小圆点数组先将所有特殊样式去除
+        circles.forEach(e => {
+          e.classList.remove('current');
+        });
+        //在鼠标悬停的小圆点加上特殊样式
+        e.classList.add('current');
+      });
+    });
+
+    //给左按钮绑定点击事件
+    let currentIndex = 0;
+    leftBtn.onclick = function () {
+      if (currentIndex === 0) {
+        currentIndex = imglist.children.length - 1;
+      } else {
+        currentIndex--;
+      }
+      //声明变量存储获取的每一张图片离盒子左边距离的位置
+      let distance = currentIndex * imgWidth * -1;
+      //同时给ul加上得到的负左外边距的值
+      imglist.style.left = distance + 'px';
+      //遍历小圆点数组先将所有特殊样式去除
+      circles.forEach(e => {
+        e.classList.remove('current');
+      });
+      //在鼠标悬停的小圆点加上特殊样式
+      circles[currentIndex].classList.add('current');
+    }
+
+    //给右按钮绑定点击事件
+    rightBtn.onclick = lunbo;
+
+    function lunbo() {
+      if (currentIndex === imglist.children.length - 1) {
+        currentIndex = 0;
+      } else {
+        currentIndex++;
+      }
+      //声明变量存储获取的每一张图片离盒子左边距离的位置
+      let distance = currentIndex * imgWidth * -1;
+      //同时给ul加上得到的负左外边距的值
+      imglist.style.left = distance + 'px';
+      //遍历小圆点数组先将所有特殊样式去除
+      circles.forEach(e => {
+        e.classList.remove('current');
+      });
+      //在鼠标悬停的小圆点加上特殊样式
+      circles[currentIndex].classList.add('current');
+    }
+
+    //设置定时器给轮播图
+    let timer = setInterval(function () {
+      lunbo();
+    }, 1500);
+    //设置鼠标悬停在图片列表上，定时器停止
+    imglist.onmouseover = function () {
+      clearInterval(timer);
+    }
+    //设置鼠标离开图片列表时，定时器重新执行
+    imglist.onmouseout = function () {
+      timer = setInterval(function () {
+        lunbo();
+      }, 1500);
+    }
+  }
+</script>
+
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>微博发布效果</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    body {
+      user-select: none;
+    }
+
+    .weibo {
+      width: 600px;
+      border: 1px solid #ccc;
+
+      margin: 100px auto;
+      padding: 10px;
+
+    }
+
+    .weibo-text {
+      width: 590px;
+      height: 140px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      outline: none;
+      resize: none;
+    }
+
+    .weibo-text:focus {
+      border-color: #f60;
+    }
+
+    .weibo-btn {
+      width: 80px;
+      height: 30px;
+      background-color: #f90;
+      color: #fff;
+      border: 0 none;
+      margin-top: 5px;
+      border-radius: 3px;
+      cursor: pointer;
+      outline: 0 none;
+    }
+
+    .weibo-list {
+      padding-top: 10px;
+    }
+
+    .weibo-list li {
+      font-size: 14px;
+      line-height: 30px;
+      border-bottom: 1px dotted #ccc;
+      overflow: hidden;
+    }
+
+    .weibo-list li p {
+      float: left;
+    }
+
+    .weibo-list li span {
+      float: right;
+    }
+
+    .weibo-list li span.del {
+      cursor: pointer;
+    }
+
+    .weibo-list li input {
+      height: 24px;
+      line-height: 24px;
+      width: 300px;
+      font-size: 14px;
+      border: 0 none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="weibo">
+    <textarea class="weibo-text"></textarea>
+    <input class="weibo-btn" value="发布" type="button">
+    <ul class="weibo-list">
+
+    </ul>
+  </div>
+</body>
+<script src="./kits.js"></script>
+<script>
+  //获取文本域元素，发布按钮元素，内容列表元素
+  let text = document.querySelector('.weibo-text');
+  let btn = document.querySelector('.weibo-btn');
+  let lists = document.querySelector('.weibo-list');
+  //声明变量存储随机id
+  let delId = kits.primaryKey();
+  //声明变量存储当前时间
+  let time = kits.mydate();
+  //给发布按钮绑定点击事件
+  btn.onclick = function () {
+    //获取文本框内容
+    let content = text.value;
+    //判断文本框内容是否为空，为空则提示用户，不为空则继续执行程序
+    if (content === '') {
+      alert('请输入内容！');
+    } else {
+      //动态填充内容，先生成标签-再插入内容元素-最后插入页面最前
+      let li = document.createElement('li');
+      li.innerHTML = '<p>' + content + '</p>' +
+        '<span class="del" data-id="' + delId + '">删除</span>' +
+        '<span>' + time + '</span>';
+      lists.insertBefore(li, lists.children[0]);
+      //点击后清空文本域
+      text.value = '';
+      //声明对象存储数据
+      let obj = {
+        id: delId,
+        content: content,
+        time: time
+      }
+      //将对象插入数组中
+      weiboArr.push(obj);
+      //将对象数组转化为字符串格式
+      let jsonStr = JSON.stringify(weiboArr);
+      //将符合格式的数据存入本地
+      localStorage.setItem('weibo', jsonStr);
+    }
+  }
+  //给文本域绑定键盘事件
+  text.onkeydown = function (e) {
+    //判断是否同时按下Ctrl和回车键
+    if (e.ctrlKey && e.keyCode === 13) {
+      btn.onclick();
+    }
+  }
+
+  //取出本地数据
+  let jsonStr1 = localStorage.getItem('weibo');
+  //判断本地是否有数据，没有则赋值空数组，有数据则将之前的数据插入
+  let weiboArr;
+  if (jsonStr1 == null) {
+    weiboArr = [];
+  } else {
+    weiboArr = JSON.parse(jsonStr1);
+  }
+  //声明一个变量存储所有数据所得出的元素
+  let html = '';
+  //倒序遍历数组将所有数据组合拼接插入页面
+  for (let i = weiboArr.length - 1; i >= 0; i--) {
+    html += '<li>' +
+      '<p>' + weiboArr[i].content +
+      '</p>' +
+      '<span class="del" data-id="' + weiboArr[i].id + '">&nbsp;&nbsp;删除</span>' +
+      '<span>' + weiboArr[i].time + '</span>' +
+      '</li>';
+  }
+  lists.innerHTML = html;
+
+  //找到动态生产的元素已有的前代元素绑定委托事件
+  lists.addEventListener('click', function (e) {
+    //判断所点击的元素是否和返回的选择器名大写一致
+    if (e.target.className === 'del') {
+      //判断成功则执行删除元素
+      lists.removeChild(e.target.parentNode);
+      //获取当前点击的删除上面的自定义id
+      let id = e.target.dataset.id;
+      //取出本地存储的数据
+      let jsonStr2 = localStorage.getItem('weibo');
+      //转化为数组格式
+      let weiboArr1 = JSON.parse(jsonStr2);
+      //遍历数组匹配相同的id
+      weiboArr1.forEach((e, i) => {
+        //判断id是否一致
+        if (id == weiboArr1[i].id) {
+          //一致则删除这条元素
+          weiboArr1.splice(i, 1);
+        }
+      });
+      //将数值转化为json字符串格式
+      let jsonStr3 = JSON.stringify(weiboArr1);
+      //将数据存入本地
+      localStorage.setItem('weibo', jsonStr3);
+    }
+  })
+</script>
+
+</html>

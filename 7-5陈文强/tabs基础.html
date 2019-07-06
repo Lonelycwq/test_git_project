@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .wrapper {
+      width: 1000px;
+      height: 475px;
+      margin: 0 auto;
+      margin-top: 100px;
+    }
+
+    .tab {
+      border: 1px solid #ddd;
+      border-bottom: 0;
+      height: 36px;
+      width: 320px;
+    }
+
+    .tab li {
+      position: relative;
+      float: left;
+      width: 80px;
+      height: 34px;
+      line-height: 34px;
+      text-align: center;
+      cursor: pointer;
+      border-top: 4px solid #fff;
+    }
+
+    .tab span {
+      position: absolute;
+      right: 0;
+      top: 10px;
+      background: #ddd;
+      width: 1px;
+      height: 14px;
+      overflow: hidden;
+    }
+
+    .products {
+      width: 1002px;
+      border: 1px solid #ddd;
+      height: 476px;
+      transition: all 1s;
+    }
+
+    .products .main {
+      float: left;
+      display: none;
+    }
+
+    .products .main.selected {
+      display: block;
+    }
+
+    .tab li.active {
+      border-color: red;
+      border-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <ul class="tab">
+      <li class="tab-item">国际大牌<span>◆</span></li>
+      <li class="tab-item active">国妆名牌<span>◆</span></li>
+      <li class="tab-item">清洁用品<span>◆</span></li>
+      <li class="tab-item">男士精品</li>
+    </ul>
+    <div class="products">
+      <div class="main">
+        <a href="###"><img src="./images/guojidapai.jpg" alt="" /></a>
+      </div>
+      <div class="main selected">
+        <a href="###"><img src="./images/guozhuangmingpin.jpg" alt="" /></a>
+      </div>
+      <div class="main">
+        <a href="###"><img src="./images/qingjieyongpin.jpg" alt="" /></a>
+      </div>
+      <div class="main">
+        <a href="###"><img src="./images/nanshijingpin.jpg" alt="" /></a>
+      </div>
+    </div>
+  </div>
+
+</body>
+<script>
+  //获取导航独块元素和内容独块元素
+  let tabs = document.querySelectorAll('.tab .tab-item');
+  let contents = document.querySelectorAll('.products .main');
+  //循环给所有导航绑定鼠标悬停事件
+  tabs.forEach((e, i) => {
+    e.onmouseover = function () {
+      //排它思想先将所有导航上的特殊样式去除,通过循环
+      tabs.forEach(e => {
+        e.classList.remove('active');
+      });
+      //将特殊样式单独加在悬停的tabs上
+      this.classList.add('active');
+      //排它思想先将所有下面的内容去除所有显示样式,通过循环
+      contents.forEach(e => {
+        e.classList.remove('selected')
+      });
+      //将特殊的样式加在和tabs对应的索引上
+      contents[i].classList.add('selected');
+    }
+  });
+</script>
+
+</html>

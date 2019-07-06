@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .box {
+      width: 450px;
+      height: 450px;
+      border: 1px solid #aaa;
+      position: relative;
+      top: 100px;
+      left: 100px;
+    }
+
+    .small {
+      width: 450px;
+      height: 450px;
+      position: absolute;
+    }
+
+    .mask {
+      position: absolute;
+      background-color: rgba(255, 255, 0, .3);
+      width: 225px;
+      height: 225px;
+      top: 0;
+      left: 0;
+      display: none;
+    }
+
+    .big {
+      width: 450px;
+      height: 450px;
+      border: 1px solid #aaa;
+      position: absolute;
+      left: 500px;
+      top: 0;
+      overflow: hidden;
+      display: none;
+    }
+
+    .big>img {
+      width: 900px;
+      height: 900px;
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="small">
+      <img src="./images/s.jpg" alt="">
+      <div class="mask"></div>
+    </div>
+    <div class="big">
+      <img src="./images/big.jpg" alt="">
+    </div>
+  </div>
+</body>
+<script>
+  //获取大盒子元素、小图区域元素、大图区域元素、遮罩层元素
+  let box = document.querySelector('.box');
+  let small = document.querySelector('.small');
+  let big = document.querySelector('.big');
+  let bigImg = document.querySelector('.big>img');
+  let mask = document.querySelector('.mask');
+
+  //给小图区域绑定鼠标移入事件
+  small.onmouseover = function () {
+    //显示遮罩层和大图区域
+    mask.style.display = 'block';
+    big.style.display = 'block';
+  }
+  //给小图区域绑定鼠标移出事件
+  small.onmouseout = function () {
+    //隐藏遮罩层和大图区域
+    mask.style.display = 'none';
+    big.style.display = 'none';
+  }
+  //给小图绑定鼠标滑过事件
+  small.onmousemove = function (e) {
+    //遮罩层中心显示在鼠标处
+    //计算遮罩层离盒子的距离 = 鼠标离页面的距离 - 盒子离页面的距离 - 遮罩宽高的一半
+    //获取鼠标离页面的距离
+    let x = e.pageX;
+    let y = e.pageY;
+    // console.log('!' + x);
+    // console.log('!' + y);
+    //获取盒子离页面的距离
+    let boxX = box.offsetLeft;
+    let boxY = box.offsetTop;
+    // console.log('@' + boxX);
+    // console.log('@' + boxY);
+    //获得遮罩宽度的一半
+    let maskWidth = mask.offsetWidth / 2;
+    let maskHeight = mask.offsetHeight / 2;
+    // console.log('#' + maskWidth);
+    // console.log('#' + maskHeight);
+    //计算出遮罩层随鼠标滑动所显示的位置
+    let maskX = x - boxX - maskWidth;
+    let maskY = y - boxY - maskHeight;
+    // console.log('距离' + maskX);
+    // console.log('距离' + maskY);
+    //约束遮罩层能移动的最小距离和最大距离
+    //最小距离
+    maskX = maskX < 0 ? 0 : maskX;
+    maskY = maskY < 0 ? 0 : maskY;
+    //最大距离 = 盒子宽高 - 遮罩层宽高
+    let maxX = small.clientWidth - mask.offsetWidth;
+    let maxY = small.clientHeight - mask.offsetHeight;
+    maskX = maskX > maxX ? maxX : maskX;
+    maskY = maskY > maxY ? maxY : maskY;
+    // console.log('应该的距离' + maskX);
+    // console.log('应该的距离' + maskY);
+    //将遮罩层该移动的距离设置到遮罩层上
+    mask.style.left = maskX + 'px';
+    mask.style.top = maskY + 'px';
+
+    //获得大图区域最大移动距离 = 大图宽高 - 大盒子宽高
+    let bigImgX = bigImg.offsetWidth - big.clientWidth;
+    let bigImgY = bigImg.offsetHeight - big.clientHeight;
+    //获取大图移动距离的公式为 遮罩移动距离/遮罩最大移动距离=大图移动距离/大图最大移动距离
+    let bigX = maskX * bigImgX / maxX;
+    let bigY = maskY * bigImgY / maxY;
+    //设置计算的值给大图
+    bigImg.style.left = -bigX + 'px';
+    bigImg.style.top = -bigY + 'px';
+  }
+</script>
+
+</html>

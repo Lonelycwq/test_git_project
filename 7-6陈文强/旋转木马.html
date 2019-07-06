@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>旋转木马轮播图</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0
+    }
+
+    ul {
+      list-style: none
+    }
+
+    img {
+      border: 0;
+      vertical-align: top;
+    }
+
+    a,
+    button {
+      cursor: pointer;
+    }
+
+    .wrap {
+      width: 1200px;
+      margin: 30px auto;
+    }
+
+    .slide {
+      height: 500px;
+      position: relative;
+    }
+
+    .slide li {
+      position: absolute;
+      left: 200px;
+      top: 0;
+      transition: all .7s;
+    }
+
+    .slide li img {
+      width: 100%;
+    }
+
+    .prev,
+    .next {
+      width: 76px;
+      height: 112px;
+      position: absolute;
+      top: 50%;
+      margin-top: -56px;
+      background: url(./images/prev.png) no-repeat;
+      z-index: 99;
+    }
+
+    .next {
+      right: 0;
+      background-image: url(./images/next.png);
+    }
+
+    .slide li.left1 {
+      width: 400px;
+      top: 20px;
+      left: 50px;
+      opacity: 0.2;
+      z-index: 2;
+    }
+
+    .slide li.left2 {
+      width: 600px;
+      top: 70px;
+      left: 0px;
+      opacity: 0.8;
+      z-index: 3;
+    }
+
+    .slide li.middle {
+      width: 800px;
+      top: 100px;
+      left: 200px;
+      opacity: 1;
+      z-index: 4;
+    }
+
+    .slide li.right2 {
+      width: 600px;
+      top: 70px;
+      left: 600px;
+      opacity: 0.8;
+      z-index: 3;
+    }
+
+    .slide li.right1 {
+      width: 400px;
+      top: 20px;
+      left: 750px;
+      opacity: 0.2;
+      z-index: 2;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap" id="wrap">
+    <div class="slide" id="slide">
+      <ul>
+        <li>
+          <a href="#"><img src="images/slidepic1.jpg" alt="" /></a>
+        </li>
+        <li>
+          <a href="#"><img src="images/slidepic2.jpg" alt="" /></a>
+        </li>
+        <li>
+          <a href="#"><img src="images/slidepic3.jpg" alt="" /></a>
+        </li>
+        <li>
+          <a href="#"><img src="images/slidepic4.jpg" alt="" /></a>
+        </li>
+        <li>
+          <a href="#"><img src="images/slidepic5.jpg" alt="" /></a>
+        </li>
+      </ul>
+      <div class="arrow" id="arrow">
+        <a href="javascript:;" class="prev" id="arrLeft"></a>
+        <a href="javascript:;" class="next" id="arrRight"></a>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  //在静态资源加载完之后再执行程序
+  window.onload = function () {
+    //获取元素
+    let lis = document.querySelectorAll('#slide li');
+    let slide = document.querySelector('#slide');
+    let btnLeft = document.querySelector('#arrLeft');
+    let btnRight = document.querySelector('#arrRight');
+    //创建一个数组用来存储五个不同的选择器
+    let classArr = ['left1', 'left2', 'middle', 'right2', 'right1'];
+
+    function cha() {
+      //遍历li数组将不同的选择器设置给不同的li
+      lis.forEach((e, i) => {
+        //给li设置索引对应的选择器
+        lis[i].className = classArr[i];
+      });
+    }
+    cha();
+    //给左按钮绑定点击事件
+    btnLeft.onclick = function () {
+      //将选择器数组最后一个值取出插入在第一个
+      let last = classArr.pop();
+      classArr.unshift(last);
+      //调用将选择器设置给对应的li的方法
+      cha();
+    }
+    //给右边按钮绑定点击事件
+    btnRight.onclick = function () {
+      //将选择器数组第一个值取出插入在最后一个
+      let first = classArr.shift();
+      classArr.push(first);
+      //调用将选择器设置给对应的li的方法
+      cha();
+    }
+
+    //给旋转木马设置一个自动轮播
+    let timer = setInterval(() => {
+      btnLeft.onclick();
+    }, 1500);
+    //鼠标移入列表停止定时器
+    slide.onmouseover = function () {
+      clearInterval(timer);
+    }
+    //鼠标移出重新开始定时器
+    slide.onmouseout = function () {
+      timer = setInterval(() => {
+        btnLeft.onclick();
+      }, 1500);
+    }
+  }
+</script>
+
+</html>

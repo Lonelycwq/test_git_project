@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      user-select: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .box {
+      width: 730px;
+      height: 454px;
+      padding: 8px;
+      border: 1px solid green;
+      margin: 100px auto;
+    }
+
+    .inner {
+      position: relative;
+      overflow: hidden;
+      height: 454px;
+    }
+
+    #imglist {
+      width: 700%;
+      position: absolute;
+      left: 0;
+      transition: left 300ms linear;
+    }
+
+    li {
+      float: left;
+    }
+
+    .list {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      margin-left: -85px;
+    }
+
+    .list i {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #fff;
+      color: #333;
+      float: left;
+      font-style: normal;
+      line-height: 20px;
+      font-size: 14px;
+      text-align: center;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .list i:last-child {
+      margin-right: 0;
+    }
+
+    .list i.current {
+      background-color: skyblue;
+      color: #fff;
+    }
+
+    .arrow {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      margin-top: -30px;
+    }
+
+    .arrow-left,
+    .arrow-right {
+      width: 30px;
+      height: 60px;
+      position: absolute;
+      font: 20px/60px "consolas";
+      color: #fff;
+      background-color: rgba(0, 0, 0, .3);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .arrow-right {
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box" id="box">
+    <div class="inner" id="inner">
+      <ul id="imglist">
+        <li><a href="#"><img src="images/1.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/2.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/3.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/4.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/5.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/6.jpg" alt=""></a></li>
+      </ul>
+      <div class="list">
+        <i class="current">1</i>
+        <i>2</i>
+        <i>3</i>
+        <i>4</i>
+        <i>5</i>
+        <i>6</i>
+      </div>
+      <div class="arrow">
+        <span class="arrow-left">&lt;</span>
+        <span class="arrow-right">&gt;</span>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  //1在所有静态资源加载完毕之后再执行程序
+  window.onload = function () {
+    //1.1先获取小圆点元素、左右按钮元素、图片列表元素
+    let lists = document.querySelector('#imglist');
+    let img = document.querySelectorAll('#imglist img');
+    let yuan = document.querySelectorAll('.list>i');
+    let btnLeft = document.querySelector('.arrow-left');
+    let btnRight = document.querySelector('.arrow-right');
+    //2.循环给小圆点添加鼠标移入事件
+    //2.1排他先使所有小圆点都是一样的样式，然后给选中的小圆点加特殊的样式
+    //2.2计算得到每移到一个圆点，图片列表需要移动多少距离 = 小圆点索引 * 单个图片的宽度 * -1
+    yuan.forEach((e, i) => {
+      e.onmouseover = function () {
+        let listsWidth = i * img[0].offsetWidth * -1;
+        lists.style.left = listsWidth + 'px';
+        yuan.forEach(e => {
+          e.classList.remove('current');
+        });
+        this.classList.add('current');
+      }
+    });
+    //3.声明一个变量用来表示当前图片是那一个（索引）
+    //3.1给左边按钮绑定点击事件
+    //3.2判断当前图片是否是第一个，如果是则重新赋值为最后一张图片的索引，如果不是则索引自减1
+    //3.3获取图片列表需要移动多少距离 = 索引 * 单个图片的宽度 * -1
+    //3.4将获得的值设置给图片列表
+    //3.5循环遍历小圆点先用排他使所有小圆点都是相同样式，当前索引的小圆点是有特殊样式 
+    let imgIndex = 0;
+
+    function gun() {
+      let listsWidth = imgIndex * img[0].offsetWidth * -1;
+      lists.style.left = listsWidth + 'px';
+      yuan.forEach(e => {
+        e.classList.remove('current');
+      });
+      yuan[imgIndex].classList.add('current');
+    }
+    btnLeft.onclick = function () {
+      if (imgIndex === 0) {
+        imgIndex = img.length - 1;
+      } else {
+        imgIndex--;
+      }
+      gun();
+    }
+    //4给右边按钮绑定点击事件
+    //4.1判断当前图片是否是最后一个，如果是则重新赋值为第一张图片的索引，如果不是则索引自加1
+    //4.2获取图片列表需要移动多少距离 = 索引 * 单个图片的宽度 * -1
+    //4.3将获得的值设置给图片列表
+    //4.4循环遍历小圆点先用排他使所有小圆点都是相同样式，当前索引的小圆点是有特殊样式 
+    btnRight.onclick = function () {
+      if (imgIndex === img.length - 1) {
+        imgIndex = 0;
+      } else {
+        imgIndex++;
+      }
+      gun();
+    }
+    //5给图片列表设置定时器自动轮播，调用右点击事件
+    //5.1鼠标移入图片列表清除定时器
+    //5.2鼠标移出图片列表重新添加定时器
+    let lunbo = setInterval(() => {
+      btnRight.onclick();
+    }, 1500);
+
+    lists.onmouseover = function () {
+      clearInterval(lunbo);
+    }
+    lists.onmouseout = function () {
+      lunbo = setInterval(() => {
+        btnRight.onclick();
+      }, 1500);
+    }
+  }
+</script>
+
+</html>

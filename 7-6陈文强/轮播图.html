@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      user-select: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .box {
+      width: 730px;
+      height: 454px;
+      padding: 8px;
+      border: 1px solid green;
+      margin: 100px auto;
+    }
+
+    .inner {
+      position: relative;
+      overflow: hidden;
+      height: 454px;
+    }
+
+    #imglist {
+      width: 700%;
+      position: absolute;
+      left: 0;
+      transition: left 300ms linear;
+    }
+
+    li {
+      float: left;
+    }
+
+    .list {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      margin-left: -85px;
+    }
+
+    .list i {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #fff;
+      color: #333;
+      float: left;
+      font-style: normal;
+      line-height: 20px;
+      font-size: 14px;
+      text-align: center;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .list i:last-child {
+      margin-right: 0;
+    }
+
+    .list i.current {
+      background-color: skyblue;
+      color: #fff;
+    }
+
+    .arrow {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      margin-top: -30px;
+    }
+
+    .arrow-left,
+    .arrow-right {
+      width: 30px;
+      height: 60px;
+      position: absolute;
+      font: 20px/60px "consolas";
+      color: #fff;
+      background-color: rgba(0, 0, 0, .3);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .arrow-right {
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box" id="box">
+    <div class="inner" id="inner">
+      <ul id="imglist">
+        <li><a href="#"><img src="images/1.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/2.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/3.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/4.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/5.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/6.jpg" alt=""></a></li>
+      </ul>
+      <div class="list">
+        <i class="current">1</i>
+        <i>2</i>
+        <i>3</i>
+        <i>4</i>
+        <i>5</i>
+        <i>6</i>
+      </div>
+      <div class="arrow">
+        <span class="arrow-left">&lt;</span>
+        <span class="arrow-right">&gt;</span>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  //在静态资源加载完毕之后再执行程序
+  window.onload = function () {
+    //获取元素
+    let yuan = document.querySelectorAll('.list>i');
+    let box = document.querySelectorAll('#box');
+    let lists = document.querySelector('#imglist');
+    let listImg = document.querySelectorAll('#imglist img');
+
+    //获取左右按钮元素
+    let btnLeft = document.querySelector('.arrow-left');
+    let btnRight = document.querySelector('.arrow-right');
+    //获取图片宽度
+    let imgWidth = listImg[0].offsetWidth;
+    //声明一个变量表示当前图片的索引
+    let imgNow = 0;
+    //循环给所有小圆点绑定鼠标悬停事件
+    yuan.forEach((e, i) => {
+      e.onmouseover = function (e) {
+        //获取图片轮播滚动的距离
+        let gun = i * imgWidth * -1;
+        //将图片轮播滚动的距离添加到ul上面
+        lists.style.left = gun + 'px';
+        //遍历圆点数组
+        yuan.forEach(e => {
+          //排他使所有样式变得一样
+          e.classList.remove('current');
+        });
+        //单独给当前悬停的小圆点添加特殊样式
+        this.classList.add('current');
+        //将当前图片索引改变为小圆点悬停的对应图片索引
+        imgNow = i;
+      }
+    });
+    //封装一个函数，给ul添加移动需要的距离并让小圆点随之改变
+    function fn() {
+      //得出点击一次图片需要移动的距离
+      let gun = imgNow * imgWidth * -1;
+      //将距离添加到ul上面
+      lists.style.left = gun + 'px';
+      //遍历圆点数组
+      yuan.forEach(e => {
+        //排他使所有样式变得一样
+        e.classList.remove('current');
+      });
+      //单独给当前悬停的小圆点添加特殊样式
+      yuan[imgNow].classList.add('current');
+    }
+    //点击左边按钮实现切换
+    btnLeft.addEventListener('click', function () {
+      //判断当前图片是否是最左边一张
+      if (imgNow === 0) {
+        imgNow = listImg.length - 1;
+      } else {
+        imgNow--;
+      }
+      fn();
+    });
+
+    //点击右边切换图片
+    btnRight.addEventListener('click', right);
+
+    function right() {
+      if (imgNow === listImg.length - 1) {
+        imgNow = 0;
+      } else {
+        imgNow++;
+      }
+      fn();
+    }
+
+    //给轮播图添加定时器自动轮播
+    let timer = setInterval(function () {
+      right();
+    }, 1500);
+
+    //鼠标移入盒子停止自动轮播
+    lists.onmousemove = function () {
+      clearInterval(timer);
+    }
+    // //鼠标移入左按钮停止自动轮播
+    // btnLeft.onmousemove = function () {
+    //   clearInterval(timer);
+    // }
+    // //鼠标移入右按钮停止自动轮播
+    // btnRight.onmousemove = function () {
+    //   clearInterval(timer);
+    // }
+
+    //鼠标移出继续开始自动轮播
+    lists.onmouseout = function () {
+      timer = setInterval(function () {
+        right();
+      }, 1500);
+    }
+    // //鼠标移出左按钮继续开始自动轮播
+    // btnLeft.onmouseout = function () {
+    //   timer = setInterval(function () {
+    //     right();
+    //   }, 1500);
+    // }
+    // //鼠标移出右按钮继续开始自动轮播
+    // btnRight.onmouseout = function () {
+    //   timer = setInterval(function () {
+    //     right();
+    //   }, 1500);
+    // }
+
+  }
+</script>
+
+</html>

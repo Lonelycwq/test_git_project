@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>移动端轮播图</title>
+  <style>
+    .box {
+      width: 200px;
+      height: 200px;
+      background: pink;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box"></div>
+</body>
+<script>
+  //1.获取事件源元素
+  let box = document.querySelector('.box');
+  //封装函数
+  function tap(element,fanhuizhi, span, offset, fn) {
+    //2.设定可以偏移的距离和开始到结束可以允许的时间间隔
+    span = span || 300;
+    offset = offset || 50;
+    //3.注册触摸开始事件
+    //3.1判断触摸点是否是一个
+    //3.2获得触摸点的坐标位置
+    let startT = 0;
+    let startX = 0;
+    let startY = 0;
+    box.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) {
+        console.log('触摸点不止一个');
+        return;
+      }
+      startT = Date.now();
+      startX = e.pageX;
+      startY = e.pageY;
+    });
+    //4.注册触摸结束事件
+    //4.1判断变化的触摸点是否是一个
+    //4.2获得结束后触摸点的坐标
+    //4.3判断结束后触摸点减去开始时的坐标的值是否超出偏差值
+    box.addEventListener('touchend', function (e) {
+      if (e.changedTouches.length !== 1) {
+        console.log('变化的触摸点不止一个');
+        return;
+      }
+      let endT = Date.now();
+      let endX = e.pageX;
+      let endY = e.pageY;
+
+      if (Math.abs(endX - startX) > offset || Math.abs(endY - startY) > offset || (endT - startT) > span) {
+        console.log('偏移过多或者时间间隔过长');
+        return;
+      }
+      console.log('这是一个点击事件！');
+      fanhuizhi && fanhuizhi();
+    });
+  }
+  tap(box,function(){});
+</script>
+
+</html>

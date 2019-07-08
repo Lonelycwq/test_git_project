@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    header {
+      height: 100px;
+      background-color: yellow;
+    }
+
+    nav {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    nav>ul {
+      display: flex;
+      /* 多了前后的两张 */
+      width: 800%;
+      /* 动画不能一开始就加，如果一开始就加了，会导致我们第一次的切换也是以动画的形式进行的 */
+      /* transition:transform 1s; */
+    }
+
+    li {
+      flex: 1;
+    }
+
+    li img {
+      width: 100%;
+      vertical-align: middle;
+    }
+
+    main {
+      height: 500px;
+      background-color: green;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    页面的头部
+  </header>
+  <nav>
+    <!-- li*6>a[#]>img[src=./images/$.jpg] -->
+    <!-- 为了实现无缝滚动，把图片列表前后加上1张，前后多了一张，要记得把ul的宽度改成 800% -->
+    <ul>
+      <li><a href="#"><img src="./images/yi (6).jpg" alt=""></a></li>
+      <li><a href="#"><img src="./images/yi (1).jpg" alt=""></a></li>
+      <li><a href="#"><img src="./images/yi (2).jpg" alt=""></a></li>
+      <li><a href="#"><img src="./images/yi (3).jpg" alt=""></a></li>
+      <li><a href="#"><img src="./images/yi (4).jpg" alt=""></a></li>
+      <li><a href="#"><img src="./images/yi (5).jpg" alt=""></a></li>
+      <li><a href="#"><img src="./images/yi (6).jpg" alt=""></a></li>
+      <li><a href="#"><img src="./images/yi (1).jpg" alt=""></a></li>
+    </ul>
+  </nav>
+  <main>
+    其他布局
+  </main>
+</body>
+<script src="./zepto.js"></script>
+<script src="./touch.js"></script>
+<script>
+  //获取ul元素li元素图片宽度
+  let ul = $('nav>ul');
+  let imgWidth = $('nav').width();
+  console.log(imgWidth);
+  //先定义一个变量表示当前图片是第几个
+  let imgIndex = 1;
+  //获取到第一张图片偏移的距离
+  let target = imgIndex * imgWidth * -1;
+  console.log(target);
+  ul.css('transform', 'translate(' + target + 'px)');
+  //添加动画时间样式给li,通过定时器
+  setInterval(() => {
+    ul.css('transition', 'transform 1s');
+  }, 20);
+  //绑定手指左滑事件
+  ul.on('swipeLeft', function () {
+    //让ul从n张到n++
+    imgIndex++;
+    //给ul设置偏移距离
+    let target = imgIndex * imgWidth * -1;
+    ul.css('transform', 'translate(' + target + 'px)');
+  })
+  //给ul绑定动画停止事件
+  ul[0].addEventListener('transitionend', function () {
+    //如果当前图片的索引等于最后一张
+    if (imgIndex === ul[0].children.length - 1) {
+      //将索引换为第二张
+      imgIndex = 1;
+      console.log(imgIndex);
+      console.log(imgWidth);
+      //给ul设置偏移距离
+      let target = imgIndex * imgWidth * -1;
+      console.log(target);
+      //将动画去除
+      ul.css('transition', '');
+      ul.css('transform', 'translate(' + target + 'px)');
+      console.log(3);
+      //添加动画时间样式给li,通过定时器
+      setInterval(() => {
+        ul.css('transition', 'transform 1s');
+      }, 20);
+    }
+  })
+</script>
+
+</html>

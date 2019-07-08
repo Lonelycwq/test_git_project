@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .box {
+      width: 200px;
+      height: 200px;
+      background: pink;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box"></div>
+
+</body>
+<script src="./tap.js"></script>
+<script>
+  //获取元素box
+  let box = document.querySelector('.box');
+  tap(box, function () {
+    alert(123);
+  });
+  // //先定义一个变量设置触摸开始到触摸结束的时间限制为500ms
+  // let time = 500;
+  // //再定义一个变量设置触摸开始到触摸结束偏移不能超过50px
+  // let painyiX = 50;
+  // let painyiY = 50;
+  // //定义一个变量表示开始触摸的时间
+  // let timeStart = 0;
+  // //定义两个变量表示开始触摸的坐标
+  // let startX = 0;
+  // let startY = 0;
+  // //注册手指触摸开始事件
+  // box.addEventListener('touchstart', function (e) {
+  //   //判断触摸点是否唯一
+  //   if (e.touches.length != 1) {
+  //     console.log('触摸点不是一个');
+  //     return;
+  //   }
+  //   //获取触摸开始的毫秒数
+  //   timeStart = Date.now();
+  //   //获取触摸开始的触摸点位置
+  //   startX = e.touches[0].pageX;
+  //   startY = e.touches[0].pageY;
+  // })
+
+  // //注册手指触摸结束事件
+  // box.addEventListener('touchend', function (e) {
+  //   // 是否单指操作
+  //   if (e.changedTouches.length !== 1) {
+  //     console.log('不是单指操作');
+  //     return;
+  //   }
+  //   //获取触摸结束的毫秒数
+  //   let timeEnd = Date.now();
+  //   //触摸结束和触摸开始的毫秒数相减判断是否是单击
+  //   if ((timeEnd - timeStart) > time) {
+  //     console.log('手指停留时间太长')
+  //     return;
+  //   }
+  //   //获取触摸开始的触摸点位置
+  //   let endX = e.changedTouches[0].pageX;
+  //   let endY = e.changedTouches[0].pageY;
+  //   //判断触摸结束和触摸开始的偏移是否过大
+  //   if (Math.abs(endX - startX) > painyiX || Math.abs(endY - startY) > painyiY) {
+  //     console.log('手指偏移距离过大')
+  //     return;
+  //   }
+  //   console.log('这是一个手指点击事件')
+  // })
+</script>
+
+</html>

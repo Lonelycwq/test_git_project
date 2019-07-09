@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .openclose {
+      background-color: #000;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="button" value="开灯" id="open">
+  <input type="button" value="关灯" id="close">
+</body>
+<script src="./jquery-2.2.2.js"></script>
+<script>
+  $(function () {
+    $('input').eq(0).click(function () {
+      $('body').css('background-color', '#666');
+    });
+    $('#close').click(function () {
+      if ($('#close').val() == '开灯') {
+        $('body').css('background-color', '#fff');
+        $('#close').val('关灯');
+      } else {
+        $('body').css('background-color', '#000');
+        $('#close').val('开灯');
+      }
+      // $('body').css('background-color','#000');
+    });
+    // $('#open').click(function(){
+    //   $('body').toggleClass('openclose');
+    // });
+  });
+</script>
+
+</html>

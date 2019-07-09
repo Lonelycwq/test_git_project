@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    body {
+      background: #000;
+    }
+
+    .wrap {
+      margin: 100px auto 0;
+      width: 630px;
+      height: 394px;
+      padding: 10px 0 0 10px;
+      background: #000;
+      overflow: hidden;
+      border: 1px solid #fff;
+    }
+
+    .wrap li {
+      float: left;
+      margin: 0 10px 10px 0;
+    }
+
+    .wrap img {
+      display: block;
+      border: 0;
+    }
+
+    .opc {
+      opacity: .5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <ul>
+      <li><a href="#"><img src="./images/01.jpg" alt="" /></a></li>
+      <li><a href="#"><img src="./images/02.jpg" alt="" /></a></li>
+      <li><a href="#"><img src="./images/03.jpg" alt="" /></a></li>
+      <li><a href="#"><img src="./images/04.jpg" alt="" /></a></li>
+      <li><a href="#"><img src="./images/05.jpg" alt="" /></a></li>
+      <li><a href="#"><img src="./images/06.jpg" alt="" /></a></li>
+    </ul>
+  </div>
+</body>
+<script src="./jquery-2.2.2.js"></script>
+<script>
+  /*
+  效果：
+    鼠标移入某个图片，当前图片变亮，其他变暗 - 想让其他变暗，把其他的透明度变小
+    鼠标移出，所有的图片恢复不透明
+*/
+  $(function () {
+    $("li").css('opacity', '.5');
+    // 获取元素，注册鼠标的移入事件
+    $("li").mouseover(function () {
+      // $("li").css('opacity','.5');
+      // $(this).css('opacity','1');
+      $(this).siblings().css('opacity', '.5');
+      $(this).css('opacity', '1');
+    });
+    $('li').on('mouseout',function(){
+      $('li').css('opacity', '.5');
+    });
+
+  });
+</script>
+
+</html>

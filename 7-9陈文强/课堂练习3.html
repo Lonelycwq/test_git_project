@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    body {
+      background: #000;
+    }
+
+    .wrap {
+      margin: 100px auto 0;
+      width: 630px;
+      height: 394px;
+      padding: 10px 0 0 10px;
+      background: #000;
+      overflow: hidden;
+      border: 1px solid #fff;
+    }
+
+    .wrap li {
+      float: left;
+      margin: 0 10px 10px 0;
+    }
+
+    .wrap img {
+      display: block;
+      border: 0;
+    }
+
+    .opc {
+      opacity: .5;
+    }
+
+    ul {
+      list-style-type: none;
+    }
+
+    .parentWrap {
+      width: 200px;
+      text-align: center;
+
+    }
+
+    .menuGroup {
+      border: 1px solid #999;
+      background-color: #e0ecff;
+    }
+
+    .groupTitle {
+      display: block;
+      height: 20px;
+      line-height: 20px;
+      font-size: 16px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    .menuGroup>div {
+      height: 200px;
+      background-color: #fff;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="button" value="关灯灯">
+  <div class="wrap">
+    <ul>
+      <li><a href="#"><img src="./images/01.jpg" alt="" /></a></li>
+      <li><a href="#"><img src="./images/02.jpg" alt="" /></a></li>
+      <li><a href="#"><img src="./images/03.jpg" alt="" /></a></li>
+      <li><a href="#"><img src="./images/04.jpg" alt="" /></a></li>
+      <li><a href="#"><img src="./images/05.jpg" alt="" /></a></li>
+      <li><a href="#"><img src="./images/06.jpg" alt="" /></a></li>
+    </ul>
+  </div>
+
+
+  <ul class="parentWrap">
+    <li class="menuGroup">
+      <span class="groupTitle">标题1</span>
+      <div>我是弹出来的div1</div>
+    </li>
+    <li class="menuGroup">
+      <span class="groupTitle">标题2</span>
+      <div>我是弹出来的div2</div>
+    </li>
+    <li class="menuGroup">
+      <span class="groupTitle">标题3</span>
+      <div>我是弹出来的div3</div>
+    </li>
+    <li class="menuGroup">
+      <span class="groupTitle">标题4</span>
+      <div>我是弹出来的div4</div>
+    </li>
+  </ul>
+</body>
+<script src="./jquery-2.2.2.js"></script>
+<script>
+  $('input').eq(0).on('click', function () {
+    if ($('input').eq(0).val() === '关灯') {
+      $('body').css('background', '#000');
+      $('input').eq(0).val('开灯');
+    } else {
+      $('body').css('background', '#fff');
+      $('input').eq(0).val('关灯');
+    }
+  })
+</script>
+<script>
+  $('.wrap li').css('opacity', '.5');
+  $('.wrap li').on('mouseover', function () {
+    $(this).css('opacity', '1').siblings().css('opacity', '.5');
+    // $(this).css('opacity','1');
+  })
+  $('.wrap li').on('mouseout', function () {
+    $('.wrap li').css('opacity', '.5');
+  })
+</script>
+<script>
+  $('.groupTitle').on('click', function () {
+    $(this).parent().siblings().children('div').hide();
+    $(this).siblings('div').show();
+  });
+</script>
+
+</html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head lang="en">
@@ -106,14 +106,21 @@
     let lis = $('#left>li,#right>li');
     lis.on('mouseover', function () {
         let index = lis.index(this);
-        $(this).css({
-            'background': '#f00',
-            'color': '#fff'
-        }).siblings().css({
+$('#left>li').css({
             'background': '#fff',
             'color': '#000'
         });
+$('#right>li').css({
+            'background': '#fff',
+            'color': '#000'
+        });
+        $(this).css({
+            'background': '#f00',
+            'color': '#fff'
+        });
         $('#center>li').eq(index).show().siblings().hide();
+console.log($(this));
+
     });
 </script>
 

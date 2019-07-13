@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>五角星评分案例</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    .comment {
+      font-size: 40px;
+      color: red;
+    }
+
+    .comment li {
+      float: left;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <ul class="comment">
+    <li>☆</li>
+    <li>☆</li>
+    <li>☆</li>
+    <li>☆</li>
+    <li>☆</li>
+  </ul>
+
+</body>
+<script src="./jquery-2.2.2.js"></script>
+<script>
+  /*
+  效果：
+    1.鼠标移入，鼠标在哪个星星上面，当前的星星和之前的星星都是实心
+    2.鼠标移出，分数回归原来的分数 - 之前有一个分数，鼠标移出，之前的分数和左边都是实心的
+    3.鼠标点击，修改分数
+*/
+  /*
+    效果1的思路：
+      1. 获取元素
+      2. 注册鼠标移入事件
+      3. 遍历从第一个开始，到当前结束，都变成实心的，把当前之后的变成空心的
+  */
+  $(function () {
+
+    $('li').on('mouseover', function (e, i) {
+      let index = $(this).index();
+      $('li').each(function (i, e) {
+        if (i <= index) {
+          $(e).text('★');
+        } else {
+          $(e).text('☆');
+        }
+      });
+    });
+    let star = 0;
+    $('li').on('click', function () {
+      star = $(this).index() + 1;
+    });
+    $('li').on('mouseout', function () {
+      $('li').each(function (i, e) {
+        console.log('i的值' + i);
+        console.log(e);
+        console.log('分数的值' + star);
+        if (i < star) {
+          $(e).text('★');
+        } else {
+          $(e).text('☆');
+        }
+      });
+    });
+  });
+</script>
+
+</html>

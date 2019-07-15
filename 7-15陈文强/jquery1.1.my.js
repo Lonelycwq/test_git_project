@@ -29,12 +29,32 @@
     this.length = element.length;
   }
 
-  //创建一个改变css的方法放在原型对象上面，两个参数为属性名和属性值
+  //创建一个改变css的方法放在原型对象上面
   Init.prototype.css = function (name, value) {
-    //遍历数组，将所有获取到的元素都添加修改css方法
-    for (let i = 0; i < this.length; i++) {
-      this[i].style[name] = value + 'px';
+    //判断有几个值，一个值为获取样式属性，两个值为设置样式
+    if (value == undefined) {
+      return window.getComputedStyle(this[0])[name];
+    } else {
+      //建一个数组用来存储一些需要带单位的常用属性名
+      let pxArr = ['width', 'height', 'top', 'left', 'right', 'bottom', 'fontSize', 'padding', 'margin']
+      //遍历伪数组，将所有获取到的元素都添加修改css方法
+      for (let i = 0; i < this.length; i++) {
+        //将要带单位的属性和不带单位的属性区分，indexof返回值为-1，说明带单位属性名的数组中没有
+        if (pxArr.indexOf(name) !== -1) {
+          //判断属性名中是否带了px
+          if (value.toString().indexOf('px') === -1) {
+            //返回值为-1代表没有px，就需要带上单位
+            this[i].style[name] = value + 'px';
+          } else {
+            //属性值已经带了px，则不需要再添加
+            this[i].style[name] = value;
+          }
+        } else {
+          this[i].style[name] = value;
+        }
+      }
+      return this;
+
     }
-    // return this;
   }
 })();

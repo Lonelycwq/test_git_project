@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // let Person = {
+  //   name : '张三',
+  //   age : 18,
+  // }
+  function Person(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  Person.prototype.say = function () {
+    console.log('名字是' + this.name + ',年龄是' + this.age);
+  }
+  let p1 = new Person('张胜男', 18);
+
+  function Student(name, age, number) {
+    Person.call(this, name, age);
+    this.number = number;
+  }
+  Student.prototype = new Person();
+  // Student.prototype.constructor = Student;
+  let p2 = new Student('武欧冠', 22, 0110);
+  p1.say();
+  p2.say();
+  console.log(p1);
+  console.log(p2);
+  // console.log(Person === Person.prototype.constructor)
+  // console.log(Person.prototype.constructor)
+  // console.log(Person)
+  // console.log(Person.prototype.__proto__)
+  // console.log(Person.prototype.__proto__.constructor)
+  // console.log(Person.prototype.__proto__.constructor === Object)
+  // console.log(Object.prototype)
+  // console.log(Person.prototype.__proto__ === Object.constructor)
+  // console.log(Person.prototype instanceof Object);
+</script>
+
+</html>

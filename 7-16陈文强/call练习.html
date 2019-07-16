@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</body>
+<script>
+  let lis = document.querySelectorAll('li');
+  console.log('伪数组')
+  console.log(lis)
+  //伪数组中只有使用querySelectorAll获取元素得到的NodeList伪数组才有foreach遍历数组的方法
+  lis.forEach((e, i) => {
+    e.innerText = i;
+  });
+
+  let lis1 = document.getElementsByTagName('li');
+  console.log(lis1);
+  //array函数.prototype.方法名.call(伪数组,从哪里开始截取，到哪里开始结束)
+  let arr1 = Array.prototype.slice.call(lis1, 0);
+  console.log('伪数组借用slice转化数组');
+  console.log(arr1);
+  //slice使用两个参数时只截取自己想要截取的个数
+  let arr2 = Array.prototype.slice.call(lis1, 1, 3);
+  console.log('slice截取两个元素');
+  console.log(arr2);
+  //数组.方法名(从哪来开始删除，删除多少个)
+  let arr3 = arr1.splice(1, 3);
+  console.log('伪数组借用splice转化数组')
+  console.log(arr3);
+  //array函数.prototype.方法名.call(伪数组，函数体)
+  Array.prototype.forEach.call(lis1, function (e, i) {
+    e.innerText = i + '内容';
+  });
+  console.log('伪数组借用foreach遍历数组');
+  console.log(lis1);
+</script>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .main {
+      width: 900px;
+      margin: 50px auto;
+      display: flex;
+    }
+
+    .cell {
+      flex: 1;
+      text-align: center;
+      margin-right: 10px;
+    }
+
+    .contain {
+      min-height: 400px;
+    }
+
+    img {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <div class="cell">
+      <div class="contain">
+        <img src="./images/1.jpg" alt="">
+      </div>
+      <input type="button" value="喜欢她(0)">
+    </div>
+    <div class="cell">
+      <div class="contain">
+        <img src="./images/2.jpg" alt="">
+      </div>
+      <input type="button" value="喜欢她(0)">
+    </div>
+    <div class="cell">
+      <div class="contain">
+        <img src="./images/3.jpg" alt="">
+      </div>
+      <input type="button" value="喜欢她(0)">
+    </div>
+  </div>
+</body>
+<script>
+  //点击各自的按钮改变按钮内喜欢次数
+  //用一个数组存储各个按钮数数值
+  //遍历数组将点击事件绑定
+  //点击各自 的按钮改变自己的数字
+  let val = 0;
+  let pic = document.querySelectorAll('input');
+  pic.forEach((e, i) => {
+    e.onclick = function () {
+      val++;
+      this.value = ('喜欢她(' + val + ')');
+    }
+  });
+</script>
+
+</html>

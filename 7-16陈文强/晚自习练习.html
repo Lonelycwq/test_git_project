@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="box">1</div>
+  <div class="box">2</div>
+  <div class="box">3</div>
+</body>
+<script src="./jquery1.1.1.my.js"></script>
+<script>
+  //判断函数是对象
+  function fn() {
+    return 66;
+  }
+  //输出键值对就可以证明函数也是对象
+  console.dir(fn);
+  //instanceof用来判断前者函数是否是后者函数的的实例
+  console.log(fn instanceof Function);
+
+  //创建函数
+  function sum(a, b) {
+    return a + b;
+  }
+  console.log(sum(15, 20));
+  //使用构造函数的方式创建函数
+  let sumNum = new Function('a', 'b', 'return a+b');
+  console.log(sumNum(20, 30));
+
+  //使用call方式改变this
+  function fn1(a, b, c) {
+    return a + b + c;
+  }
+  fn();
+  let obj = {
+    name: '张三',
+    age: 12
+  }
+  //函数名.call(新this,参数1,参数2,参数3);新this可以直接使用对象名
+  let res = fn1.call(obj, 10, 20, 30);
+  console.log(res);
+
+  let arr1 = {
+    0: 'a',
+    1: 'b',
+    2: 'c',
+    length: 3
+  }
+  console.log(arr1);
+  let arr2 = Array.prototype.slice.call(arr1, 0);
+  console.log(arr2);
+  let arr3 = arr2.push('d', 'e');
+  console.log(arr3);
+  //普通函数中的this是window对象
+  function fn2() {
+    console.log('普通函数中的this是');
+    console.log(this);
+  }
+  fn2();
+
+  //构造函数中的this是实例对象
+  function fn3(name, age) {
+    this.name = name;
+    this.age = age;
+    console.log('构造函数中的this是');
+    console.log(this);
+  }
+  new fn3('张三', 38);
+
+  //事件处理程序的this是事件源本身
+  let box = document.querySelector('.box');
+  box.onclick = function () {
+    console.log(this);
+  }
+  //回调函数中大部分this都是window
+  // setInterval(function () {
+  //   console.log(this);
+  // }, 1000);
+  //构造函数原型上的方法里面的this是实例对象
+  fn3.prototype.getSum = function () {
+    console.log('对象方法上的this是');
+    console.log(this);
+  }
+  let res2 = new fn3('猴子', 18);
+  res2.getSum();
+
+  //箭头函数中的this是window
+  (() => {
+    console.log(this);
+  })();
+  //箭头函数在其他函数中，this指向上一级函数的this，如下箭头函数中this是点击事件的事件源
+  box.onclick = function () {
+    setTimeout(() => {
+      console.log(this);
+    }, 1000);
+  }
+
+  //引用自建jq
+  let box1 = $('.box');
+  console.log(box1);
+  box1.css('color', 'red');
+  box1.css('width', '100px');
+  box1.css('height', '100px');
+
+
+  //apply的使用
+  function fn4(a, b, c) {
+    //里面的this是开始是widow
+    console.log(this);
+    return a + b + c;
+  }
+  fn4();
+  let obj1 = {
+    age: 18
+  }
+  let res3 = fn4.apply(obj1, [10, 20, 30]);
+  //fn4函数中的this经过apply借用后变成了obj1中的this
+  console.log(res3);
+
+  //借用math中求最大数的方法
+  let arr4 = [66, 58, 99, 44, 221, 159];
+  //基础的求最大值方法
+  // let max = arr4[0];
+  // for (let i = 0; i < arr4.length; i++) {
+  //   if (max < arr4[i]) {
+  //     max = arr4[i];
+  //   }
+  // }
+  // console.log(max);
+  //内置对象求最大值
+  // let max = Math.max(66, 58, 99, 44, 221, 159);
+  // console.log(max);
+  //内置对象中math比较特殊，方法不是在原型上
+  //math.max方法不需要this，所有只需要随便一个东西在第一个参数占位(null,undefined,NaN...均可)，第二个参数直接写数组
+  let max = Math.max.apply(NaN, arr4);
+  console.log(max);
+
+
+  //bind的用法
+  function fn5(a, b, c) {
+    console.log(this);
+    return a + b + c
+  }
+  fn5();
+  let obj2 = {
+    age: 16
+  }
+  //bind方法修改this，把函数的副本返回
+  let res4 = fn5.bind(obj2, 16, 32, 48);
+  console.log(res4);
+  //因为返回的函数副本，所以需要再调用一次
+  res4();
+
+  //bind通常用于回调函数的this修改
+  function fn6() {
+    console.log(this);
+  }
+  setTimeout(fn6.bind({
+    name: '张三'
+  }), 1000);
+</script>
+
+</html>

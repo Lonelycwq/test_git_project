@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  function fn(a, b, c) {
+    console.log(this);
+    console.log(a, b, c);
+    return a + b + c;
+  }
+  let obj = {
+    name: '孤城',
+    age: 18
+  }
+  let res = fn.apply(obj, [20, 30, 40])
+  console.log(obj);
+  console.log(res);
+
+  let arr = [20, 62, 32, 44, 2, 55];
+  let max = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    if (max < arr[i]) {
+      max = arr[i];
+    }
+  }
+  console.log(max);
+</script>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  var name = "The Window";
+  var object = {
+    name: "My Object",
+    getNameFunc: function () {
+      console.log(this);
+      return function () {
+        return this.name;
+      };
+    }
+  };
+  //回调函数大部分的this都是window，所以最终返回值为window.name
+  console.log(object.getNameFunc()())
+  // let res = object.getNameFunc();
+  // console.log(res());
+
+
+  var name = "The Window";
+  var object = {
+    name: "My Object",
+    getNameFunc: function () {
+      var that = this;
+      return function () {
+        return that.name;
+      };
+    }
+  };
+  //事先缓存了方法的this给that，然后里面的回调函数用的that，所以最终的返回值为构造函数的this.name
+  console.log(object.getNameFunc()())
+  // let res = object.getNameFunc();
+  // console.log(res());
+</script>
+
+</html>

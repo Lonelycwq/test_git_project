@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //求n的和
+  function fn(n) {
+    if (n === 1) {
+      return 1;
+    }
+    return n + fn(n - 1);
+  }
+  console.log(fn(100));
+
+  //阶乘 !n = n * (n-1) * (n-2) ... * 3 * 2 * 1
+  /*
+  !5 = 5*(5-1)*(5-2)*(5-3)*(5-4)
+  !4 = 4*(4-1)*(4-2)*(4-3)
+  !3 = 3*(3-1)*(3-2)
+  !2 = 2*(2-1)
+  !1 = 1
+  规律为n*(n-1)
+  */
+  function fn(n) {
+    //当n等于1 的是，1 的阶乘为1，所以返回值为1
+    if (n === 1) {
+      return 1;
+    }
+    //返回n*实参为n-1的函数调用，使函数不断调用且实参递减
+    return n * fn(n - 1);
+  }
+  console.log(fn(4));
+
+
+  /*
+  1 1 2 3 5 8 13 21.... 
+  规律：
+  第n个数字 = 第n-1个数字 + 第n-2个数字
+  特殊：
+  第一个和第二个都是1
+  */
+  function fn1(n) {
+    if (n === 1 || n === 2) {
+      return 1;
+    }
+    return fn1(n - 1) + fn1(n - 2);
+  }
+  console.log(fn1(5));
+</script>
+
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .container {
+      width: 700px;
+      height: 400px;
+      border: 1px solid #f00;
+      margin: 100px auto;
+    }
+
+    .nav {
+      width: 100%;
+    }
+
+    .nav::after {
+      content: '.';
+      display: block;
+      visibility: hidden;
+      height: 0;
+      line-height: 0;
+      clear: both;
+    }
+
+    .nav .active {
+      background-color: #ccc;
+    }
+
+    .nav li {
+      float: left;
+      width: 100px;
+      height: 60px;
+      text-align: center;
+      line-height: 60px;
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    .row {
+      border-top: 1px solid #000;
+    }
+
+    .row .content {
+      height: 338px;
+      background-color: pink;
+      display: none;
+    }
+
+    .row .show {
+      display: block;
+    }
+
+    .container1 {
+      width: 700px;
+      height: 400px;
+      border: 1px solid #f00;
+      margin: 100px auto;
+    }
+
+    .nav1 {
+      width: 100%;
+    }
+
+    .nav1::after {
+      content: '.';
+      display: block;
+      visibility: hidden;
+      height: 0;
+      line-height: 0;
+      clear: both;
+    }
+
+    .nav1 .active1 {
+      background-color: #ccc;
+    }
+
+    .nav1 li {
+      float: left;
+      width: 100px;
+      height: 60px;
+      text-align: center;
+      line-height: 60px;
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    .row1 {
+      border-top: 1px solid #000;
+    }
+
+    .row1 .content1 {
+      height: 338px;
+      background-color: pink;
+      display: none;
+    }
+
+    .row1 .show1 {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <ul class="nav">
+      <li class="active">零食</li>
+      <li>饮料</li>
+      <li>水果</li>
+    </ul>
+    <div class="row">
+      <div class="content show">零食对应的内容</div>
+      <div class="content">饮料对应的内容</div>
+      <div class="content">水果对应的内容</div>
+    </div>
+  </div>
+  <div class="container1">
+    <ul class="nav1">
+      <li class="active1">零食</li>
+      <li>饮料</li>
+      <li>水果</li>
+    </ul>
+    <div class="row1">
+      <div class="content1 show1">零食对应的内容</div>
+      <div class="content1">饮料对应的内容</div>
+      <div class="content1">水果对应的内容</div>
+    </div>
+  </div>
+</body>
+<script>
+  // class Person {
+  //   constructor(name, age) {
+  //     this.name = name;
+  //     this.age = age
+  //   }
+  //   sayHi() {
+  //     console.log('大家好，我叫' + this.name + '，我今年' + this.age + '岁')
+  //   }
+  // }
+  // let p1 = new Person('张三', 19);
+  // p1.sayHi();
+
+  // let lis = document.querySelectorAll('.nav>li');
+  // let contents = document.querySelectorAll('.content');
+  // lis.forEach((li, index) => {
+  //   li.onmouseover = function () {
+  //     lis.forEach(e => {
+  //       e.classList.remove('active');
+  //     });
+  //     this.classList.add('active');
+  //     contents.forEach(e => {
+  //       e.classList.remove('show');
+  //     });
+  //     contents[index].classList.add('show');
+  //   }
+  // });
+  /*
+  封装面向对象代码的步骤
+  1.抽象出类
+  2.在类的语法里面封装属性和方法
+  3.new一个对象，调用对象的属性或者是方法来实现
+  */
+  class Tab {
+    //tab栏有属性 -- 只要是代码汇总可以产生变化的东西，都可以认为是对象的属性
+    /*
+    会变化的类名 
+    li的选择器  navSelector
+    内容的选择器  contentSelector
+    触发的时间类型 type 
+    特殊的li的类名 navClass
+    显示隐藏内容的类名 contentClass
+    */
+    //存放属性
+    constructor(options) {
+      //options必须是一个对象或者不传,为了省略传参和无序传参
+      options = options || {};
+      //添加tab栏几个会变的元素为属性，并设置一个默认值
+      this.navSelector = options.navSelector || '.nav>li';
+      this.contentSelector = options.contentSelector || '.content';
+      this.type = options.type || 'mouseover';
+      this.navClass = options.navClass || 'active';
+      this.contentClass = options.contentClass || 'show';
+    }
+    //tab方法
+    addEvent() {
+      //闭包形式将实例对象的this存入_this中
+      let _this = this;
+      //获取tab列表和下面内容元素
+      let lis = document.querySelectorAll(this.navSelector);
+      let contents = document.querySelectorAll(this.contentSelector);
+      //循环遍历tab列表
+      lis.forEach((e, i) => {
+        //给每一个tab绑定一个动态的事件类型
+        e.addEventListener(_this.type, function () {
+          //排他思想，先将所有tab列表的特殊样式清空
+          lis.forEach(e => {
+            e.classList.remove(_this.navClass);
+          });
+          //再将当前触发事件的tab添加特殊样式
+          this.classList.add(_this.navClass);
+          //排他思想，先将所有单个内容的特殊样式清空，使所有内容都隐藏
+          contents.forEach(e => {
+            e.classList.remove(_this.contentClass);
+          });
+          //再将当前触发事件的tab对应的内容块添加样式显示
+          contents[i].classList.add(_this.contentClass);
+        });
+      });
+    }
+  }
+  //创建一个实例对象，并调用addevent方法
+  let tab = new Tab();
+  tab.addEvent();
+
+  //创建一个自定义构造函数并使用extends继承上一个tab函数的属性和方法
+  class autoTab extends Tab {
+    constructor(options) {
+      //在autoTab构造函数的最前面调用Tab
+      super(options);
+      options = options || {};
+      //新增动态的定时器时间属性
+      this.time = options.time || 1000;
+    }
+    autoPaly() {
+      //定义一个变量表示当前tab是第几个
+      let index = 0;
+      let intervalId = setInterval(() => {
+        let lis = document.querySelectorAll(this.navSelector);
+        let contents = document.querySelectorAll(this.contentSelector);
+        // if (index == 2) {
+        //   index = 0;
+        // } else {
+        //   index++;
+        // }
+        index == 2 ? index = 0 : index++;
+        // index = ++index % lis.length;
+        // lis.forEach(e => {
+        //   e.classList.remove(this.navClass);
+        // });
+        // lis[index].classList.add(this.navClass);
+        this.changeNavStyle(lis, lis[index])
+        this.changeContentStyle(contents, contents[index])
+        // contents.forEach(e => {
+        //   e.classList.remove(this.contentClass);
+        // });
+        // contents[index].classList.add(this.contentClass);
+      }, this.time);
+      this.stopPaly(intervalId);
+    }
+    changeNavStyle(lis, currentLi) {
+      lis.forEach(e => {
+        e.classList.remove(this.navClass);
+      })
+      currentLi.classList.add(this.navClass);
+    }
+    // 修改内容的样式的方法
+    changeContentStyle(contents, currentContent) {
+      contents.forEach(e => {
+        e.classList.remove(this.contentClass);
+      })
+      // 把对应div显示
+      currentContent.classList.add(this.contentClass);
+    }
+    stopPaly(Id) {
+      let _this = this;
+      let lis = document.querySelectorAll(this.navSelector);
+      let contents = document.querySelectorAll(this.contentSelector);
+      lis.forEach((e, i) => {
+        e.setAttribute('data-id', i);
+        e.addEventListener(this.type, function () {
+          clearInterval(Id);
+          let eq = this.getAttribute('data-id');
+          _this.changeNavStyle(lis, lis[eq]);
+          _this.changeContentStyle(contents, contents[eq]);
+        });
+        e.addEventListener('mouseout', function () {
+          _this.autoPaly();
+        });
+      });
+    }
+  }
+
+  let autotab = new autoTab({
+    navSelector: '.nav1>li',
+    contentSelector: '.content1',
+    type: 'mouseover',
+    navClass: 'active1',
+    contentClass: 'show1',
+  })
+  autotab.autoPaly();
+  autotab.addEvent();
+  autotab.stopPaly();
+</script>
+
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .main {
+      width: 1200px;
+      margin: 0 auto;
+    }
+
+    ul {
+      list-style: none;
+      max-width: 300px;
+      background-color: #000;
+      padding: 4px;
+    }
+
+    li {
+      margin-top: 4px;
+      padding-left: 10px;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px dashed #fff;
+      font-size: 24px;
+    }
+
+    a::before {
+      content: "☆"
+    }
+
+    .hide {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <div class="nav">
+    </div>
+  </div>
+</body>
+<script>
+  let navData = [{
+      id: 1,
+      text: '一级菜单A',
+      parentId: null
+    },
+    {
+      id: 2,
+      text: '一级菜单B',
+      parentId: null
+    },
+    {
+      id: 3,
+      text: '一级菜单C',
+      parentId: null
+    },
+    {
+      id: 4,
+      text: '二级菜单AA',
+      parentId: 1
+    },
+    {
+      id: 5,
+      text: '二级菜单AB',
+      parentId: 1
+    },
+    {
+      id: 6,
+      text: '二级菜单AC',
+      parentId: 1
+    },
+    {
+      id: 7,
+      text: '二级菜单BA',
+      parentId: 2
+    },
+    {
+      id: 8,
+      text: '二级菜单BB',
+      parentId: 2
+    },
+    {
+      id: 9,
+      text: '二级菜单BC',
+      parentId: 2
+    },
+    {
+      id: 10,
+      text: '二级菜单CA',
+      parentId: 3
+    },
+    {
+      id: 11,
+      text: '二级菜单CB',
+      parentId: 3
+    },
+    {
+      id: 12,
+      text: '二级菜单CC',
+      parentId: 3
+    },
+    {
+      id: 13,
+      text: '三级菜单AAA',
+      parentId: 4
+    },
+    {
+      id: 14,
+      text: '三级菜单BAA',
+      parentId: 7
+    },
+    {
+      id: 15,
+      text: '三级菜单CAA',
+      parentId: 10
+    }
+  ];
+
+  //根据parentId来查找是那个对象里面的id，就作为那个对象的子级菜单
+  // let menu1 = navData[0];
+  // //遍历数组，把里面的parentId是menu1的id的作为它的子级菜单
+  // menu1.child = [];
+  // navData.forEach(e => {
+  //   if (e.parentId === menu1.id) {
+  //     menu1.child.push(e);
+  //   }
+  // });
+  // console.log(menu1);
+  //空数组装一级菜单
+  // let menus = [];
+  // //arr是数组，parentID是上一级的ID
+  // function fn(arr, parentId) {
+  //   navData.forEach(e => {
+  //     if (e.parentId === parentId) {
+  //       arr.push(e);
+  //     }
+  //     if (e.parentId !== null) {
+  //       e.child = [];
+  //       fn(e.child, e.id);
+  //     }
+  //   });
+  // }
+  // fn(menus, null);
+  // console.log(menus);
+
+
+  // function fn1(arr, id) {
+  //   let menus = [];
+  //   //遍历从服务器获取的数组，来判断父级菜单
+  //   arr.forEach(e => {
+  //     if (e.parentId === id) {
+  //       menus.push(e);
+  //       //处理子级菜单
+  //       // e.child = [];
+  //       // arr.forEach(el => {
+  //       //   if (el.parentId === id) {
+  //       //     e.child.push(e);
+  //       //   }
+  //       // });
+  //       e.child = fn1(arr1, e.id);
+  //     }
+  //   });
+  //   return menus;
+  // }
+  // let arr1 = fn1(navData, null);
+  // console.log(arr1);
+
+
+  // //构建一级菜单
+  // let menu2 = [];
+  // navData.forEach(e => {
+  //   if (e.parentId === null) {
+  //     menu2.push(e);
+  //   }
+  // });
+  // console.log(menu2);
+
+  // //构建二级菜单
+  // menu2[0].child = [];
+  // navData.forEach(e => {
+  //   if (e.parentId === menu2[0].id) {
+  //     menu2[0].child.push(e);
+  //   }
+  // });
+  // console.log(menu2[0].child);
+
+  //
+  // function fn2(arr, id) {
+  //   let temp = [];
+  //   arr.forEach(e => {
+  //     if (e.parentId === id) {
+  //       temp.push(e);
+  //       //e是父级菜单中的的，需要给e构建相对应的子级菜单
+  //       e.child = fn2(arr, e.id);
+  //     }
+  //   });
+  //   return temp;
+  // }
+  // fn2(navData, null);
+  // console.log(fn2(navData, null));
+
+
+  // //设置一个空数组存来存储一级菜单
+  // let menu3 = [];
+  // //遍历数组，判断parentId是否为null，是则为一级菜单并添加到空数组中
+  // navData.forEach(e => {
+  //   //遍历数组判断所有数据中是否有parentId为null的
+  //   if (e.parentId === null) {
+  //     //为null则表示是一级菜单
+  //     menu3.push(e);
+  //   }
+  // });
+
+  // //遍历数组判断parentId是否是第一个一级菜单的id,是则是第一个一级菜单的子级菜单
+  // //设置一个空数组存储二级菜单
+  // let menu4 = [];
+  // navData.forEach(e => {
+  //   if (e.parentId === menu3[0].id) {
+  //     menu4.push(e);
+  //   }
+  // });
+  // console.log(menu3);
+  // console.log(menu4);
+
+  // //设置一个空数组用来存储三级菜单
+  // let menu5 = [];
+  // navData.forEach(e => {
+  //   if (e.parentId === menu4[0].id) {
+  //     menu5.push(e);
+  //   }
+  // });
+  // console.log(menu5);
+
+  /*
+  由此得出一个规律：通过遍历总的数据数组，在里面判断parentId等于其他数据的id属性是，这个元素就是相对的那个元素的子级菜单
+  */
+  function menu(arr, id) {
+    let menu6 = [];
+    navData.forEach(e => {
+      if (e.parentId === id) {
+        menu6.push(e);
+        e.child = menu(arr, e.id)
+      }
+    });
+    return menu6;
+  }
+  let menuArr = menu(navData, null);
+  console.log(menuArr);
+
+  // let nav = document.querySelector('.nav');
+  // let html1 = '';
+  // let html2 = '';
+  // let html3 = '';
+  // menuArr.forEach(e => {
+  //   html1 += `<li data-id="${e.id}"><a href="#">${e.text}</a></li>`
+  // });
+  // nav.innerHTML = html1;
+  // menuArr[0].child.forEach(e => {
+  //   html2 += `<li data-id="${e.id}"><a href="#">${e.text}</a></li>`
+  // });
+  // nav.innerHTML = html2;
+  // menuArr[0].child[0].child.forEach(e => {
+  //   html3 += `<li data-id="${e.id}"><a href="#">${e.text}</a></li>`
+  // });
+  // nav.innerHTML = html3;
+
+  // //生产一级菜单
+  // let ul = document.createElement('ul');
+  // menuArr.forEach(e => {
+  //   let li = document.createElement('li');
+  //   li.innerHTML = `<a href="#">${e.text}</a>`;
+  //   ul.appendChild(li);
+  //   if (e.child.length !== 0) {
+  //     let ul2 = document.createElement('ul');
+  //     li.appendChild(ul2);
+  //     e.child.forEach(e2 => {
+  //       let li2 = document.createElement('li');
+  //       li2.innerHTML = `<a href="#">${e2.text}</a>`;
+  //       ul2.appendChild(li2);
+  //       if (e2.child.length !== 0) {
+  //         let ul3 = document.createElement('ul');
+  //         li2.appendChild(ul3);
+  //         e2.child.forEach(e3 => {
+  //           let li3 = document.createElement('li');
+  //           li3.innerHTML = `<a href="#">${e3.text}</a>`;
+  //           ul3.appendChild(li3);
+  //         });
+  //       }
+  //     });
+  //   }
+  // });
+  // document.querySelector('.nav').appendChild(ul);
+
+  function content(ulParent, arrChild) {
+    let ul = document.createElement('ul');
+    ul.classList.add('hide');
+    ulParent.appendChild(ul);
+    arrChild.forEach(e => {
+      let li = document.createElement('li');
+      li.innerHTML = `<a href="#">${e.text}</a>`;
+      ul.appendChild(li);
+      if (e.child.length !== 0) {
+        content(li, e.child);
+      }
+    });
+  }
+  let nav = document.querySelector('.nav');
+  content(nav, menuArr);
+  nav.children[0].classList.remove('hide');
+  let lis = document.querySelectorAll('li');
+  lis.forEach(e => {
+    e.onclick = function (e) {
+      e.stopPropagation();
+      if (this.children.length != 1) {
+        this.children[1].classList.toggle('hide');
+      }
+    }
+  });
+  console.log(window);
+</script>
+
+</html>

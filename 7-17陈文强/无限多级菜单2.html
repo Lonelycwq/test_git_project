@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .main {
+      width: 1200px;
+      margin: 0 auto;
+    }
+
+    ul {
+      list-style: none;
+      max-width: 300px;
+      background-color: #000;
+      padding: 4px;
+    }
+
+    li {
+      margin-top: 4px;
+      padding-left: 10px;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px dashed #fff;
+      font-size: 24px;
+    }
+
+    a::before {
+      content: "☆"
+    }
+
+    .hide {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <div class="nav">
+    </div>
+  </div>
+</body>
+<script>
+  let navData = [{
+      id: 1,
+      text: '一级菜单A',
+      parentId: null
+    },
+    {
+      id: 2,
+      text: '一级菜单B',
+      parentId: null
+    },
+    {
+      id: 3,
+      text: '一级菜单C',
+      parentId: null
+    },
+    {
+      id: 4,
+      text: '二级菜单AA',
+      parentId: 1
+    },
+    {
+      id: 5,
+      text: '二级菜单AB',
+      parentId: 1
+    },
+    {
+      id: 6,
+      text: '二级菜单AC',
+      parentId: 1
+    },
+    {
+      id: 7,
+      text: '二级菜单BA',
+      parentId: 2
+    },
+    {
+      id: 8,
+      text: '二级菜单BB',
+      parentId: 2
+    },
+    {
+      id: 9,
+      text: '二级菜单BC',
+      parentId: 2
+    },
+    {
+      id: 10,
+      text: '二级菜单CA',
+      parentId: 3
+    },
+    {
+      id: 11,
+      text: '二级菜单CB',
+      parentId: 3
+    },
+    {
+      id: 12,
+      text: '二级菜单CC',
+      parentId: 3
+    },
+    {
+      id: 13,
+      text: '三级菜单AAA',
+      parentId: 4
+    },
+    {
+      id: 14,
+      text: '三级菜单BAA',
+      parentId: 7
+    },
+    {
+      id: 15,
+      text: '三级菜单CAA',
+      parentId: 10
+    }
+  ];
+
+  //创建一个函数，里面放创建树状导航的方法
+  function menu(arr, id) {
+    //创建一个空数组用来存储树状导航 数组
+    let menuArr = [];
+    //循环遍历参数数组
+    arr.forEach(e => {
+      //判断循环的parentId全等于参数id(就是数据中的parentId)
+      if (e.parentId === id) {
+        //将parentId相等的数据添加到空数组里面，作为父级菜单
+        menuArr.push(e);
+        //将父级菜单的子菜单通过再调用函数获取，层层子菜单，改变第二个实参为父级菜单的id，再循环就判断循环的数据的parentId和父级菜单的id是否相等
+        e.ooo = menu(arr, e.id);
+      }
+    });
+    //函数执行完毕返回改变的数组
+    return menuArr;
+  }
+  //将树状结构存储至变量中
+  let menuarr = menu(navData, null);
+  console.log(menuarr);
+</script>
+
+</html>

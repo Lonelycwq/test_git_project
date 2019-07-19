@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    input {
+      outline: none;
+      border: 1px solid #333;
+    }
+
+    .form {
+      width: 400px;
+      margin: 100px auto;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .row {
+      display: flex;
+    }
+
+    .cell {
+      padding: 0 10px;
+      line-height: 55px;
+    }
+
+    .f2 {
+      flex: 2;
+    }
+
+    .f3 {
+      flex: 3;
+    }
+
+    .control {
+      display: inline-block;
+      width: 100%;
+      height: 34px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      vertical-align: middle;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 6px 12px;
+      margin-bottom: 0;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      color: #333;
+      background-color: #fff;
+      border-color: #ccc;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form">
+    <form action="" id="registerForm" method="get">
+      <div class="row">
+        <div class="cell f2">请输入用户名：</div>
+        <div class="cell f3"><input type="text" class="control" name="userName"></div>
+      </div>
+      <div class="row">
+        <div class="cell f2">请输入密码：</div>
+        <div class="cell f3"><input type="password" class="control" name="password"></div>
+      </div>
+      <div class="row">
+        <div class="cell f2">请输入手机号码：</div>
+        <div class="cell f3"><input type="tel" class="control" name="phoneNumber"></div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="cell f2"></div>
+        <div class="cell f3">
+          <input type="submit" class="btn" value="提交">
+        </div>
+      </div>
+
+    </form>
+  </div>
+</body>
+<script>
+  //获取按钮元素注册事件
+  let btn = document.querySelector('.btn');
+  let form = document.querySelector('#registerForm');
+
+  //封装判断输入框不为空的函数
+  let noVal = function (val, error) {
+    // let nameVal = form.userName.value;
+    if (val === '') {
+      return error;
+    }
+  }
+  //封装判断输入框内容长度的函数
+  let minLength = function (val, len, error) {
+    if (val.length < len) {
+      return error;
+    }
+  }
+
+  // var r = /^[0-9]*[1-9][0-9]*$/; //正整数
+  // if (r.test(num) != true) {}
+  //将所有情况存入一个数组中
+  let errArr = [function () {
+    return noVal(form.userName.value, '用户名不能为空');
+  }, function () {
+    return minLength(form.userName.value, 8, '用户名长度最小为8');
+  }, function () {
+    return noVal(form.password.value, '密码不能为空');
+  }, function () {
+    return minLength(form.password.value, 6, '密码长度最小为6');
+  }, function () {
+    return noVal(form.phoneNumber.value, '手机号不能为空');
+  }, function () {
+    return minLength(form.phoneNumber.value, 11, '手机号长度为11');
+  }]
+
+  //遍历数组返回错误信息
+  function returnErr() {
+    for (let i = 0; i < errArr.length; i++) {
+      let error = errArr[i]();
+      if (error) {
+        return error;
+      }
+    }
+  }
+
+  btn.onclick = function (e) {
+    //获取用户名输入框内容
+    // let nameVal = form.nameVal.value;
+    // let passVal = form.password.value;
+    // let phoneVal = form.phoneNumber.value;
+    // console.log(nameVal, passVal, phoneVal)
+    // e.preventDefault();
+    let error = returnErr();
+    // console.log(error);
+    if (error) {
+      e.preventDefault();
+      alert(error);
+    }
+  }
+</script>
+
+</html>

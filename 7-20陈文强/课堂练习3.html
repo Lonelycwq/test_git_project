@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>动态网页</title>
+  <style>
+    @keyframes linear {
+      50% {
+        background-color: #ff00ff;
+      }
+
+      100% {
+        background-color: #00cfff;
+      }
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+      background-color: #e7e7e7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    #app {
+      width: 375px;
+      margin: auto;
+      height: 100vh;
+      background-color: #fff;
+    }
+
+    header {
+      /* height: 36px; */
+      padding: 6px 10px;
+      background-color: #fa0000;
+      animation: linear 10s linear 0s infinite alternate forwards;
+    }
+
+    input {
+      border: 0;
+      width: 100%;
+      outline: none;
+      border-radius: 20px;
+      height: 30px;
+      text-indent: 16px;
+    }
+
+    ul {
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+      line-height: 30px;
+      border-bottom: 1px solid #c7c7c7;
+      padding-left: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <input id="filter" type="text" placeholder="请输入搜索内容">
+    </header>
+    <div class="content">
+      <ul>
+      </ul>
+    </div>
+  </div>
+</body>
+<script src="./jquery-2.2.2.js"></script>
+<script>
+  // let xhr = new XMLHttpRequest();
+  // xhr.open('get', 'http://127.0.0.1:8080/getArticle');
+  // xhr.send();
+  // xhr.onreadystatechange = function () {
+  //   if (xhr.readyState === 4 && xhr.status === 200) {
+  //     let res = JSON.parse(xhr.responseText);
+  //     res.data.forEach(e => {
+  //       $('<li>').html(e.content).appendTo('.content>ul');
+  //     });
+  //   }
+  // }
+  // $('#filter').on('input', function () {
+  //   // console.log($(this).val());
+  //   let val = $(this).val();
+  //   let xhr = new XMLHttpRequest();
+  //   xhr.open('get', 'http://127.0.0.1:8080/getSearchArticle?search=' + val);
+  //   xhr.send();
+  //   xhr.onreadystatechange = function () {
+  //     if (xhr.readyState === 4 && xhr.status === 200) {
+  //       let res = JSON.parse(xhr.responseText);
+  //       $('.content>ul').html('');
+  //       res.data.forEach(e => {
+  //         $('<li>').html(e.content).appendTo('.content>ul');
+  //       });
+  //     }
+  //   }
+  // });
+
+  //创建一个实例对象
+  let xhr = new XMLHttpRequest();
+  //打开数据库发送获取文章列表请求
+  xhr.open('get', 'http://127.0.0.1:8080/getArticle');
+  //发送请求
+  xhr.send();
+  //监听通讯状态
+  xhr.onreadystatechange = function () {
+    //判断请求状态是否处理完成，响应准备就绪并且响应成功
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      //将返回的json数据转换为数组
+      let res = JSON.parse(xhr.responseText);
+      //遍历数组中的data属性数组
+      res.data.forEach(e => {
+        //将没个数组中的数据中的content内容插入li标签并插入大盒子的子元素
+        $('<li>').html(e.content).appendTo('.content>ul');
+      });
+    }
+  }
+
+  //注册输入框监听事件
+  $('#filter').on('input', function () {
+    //获取输入框中的内容
+    let val = $(this).val();
+    //创建一个实例对象
+    let xhr = new XMLHttpRequest();
+    //打开数据库发送获取匹配的文章数据请求，在请求地址后带参数
+    xhr.open('get', 'http://127.0.0.1:8080/getSearchArticle?search=' + val);
+    //发送请求
+    xhr.send();
+    //监听通讯状态
+    xhr.onreadystatechange = function () {
+      //判断请求状态是否处理完成，响应准备就绪并且响应成功
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        //将返回的json数据转换为数组
+        let res = JSON.parse(xhr.responseText);
+        //清空盒子内容
+        $('.content>ul').html('');
+        //遍历数组中的data属性数组
+        res.data.forEach(e => {
+          //将没个数组中的数据中的content内容插入li标签并插入大盒子的子元素
+          $('<li>').html(e.content).appendTo('.content>ul');
+        });
+      }
+    }
+  })
+</script>
+
+</html>

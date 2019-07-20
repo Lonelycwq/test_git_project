@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>表单注册</title>
+  <style>
+    form {
+      padding-top: 100px;
+      padding-left: 100px;
+    }
+
+    form>* {
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    form-item input {
+      height: 32px;
+      border: none;
+      width: 500px;
+      box-shadow: 0 0 0 1px #e7e7e7 inset;
+      text-indent: 8px;
+    }
+
+    .pre_register,
+    .register {
+      display: inline-block;
+      width: 120px;
+      line-height: 40px;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 16px;
+      text-align: center;
+      cursor: pointer;
+      margin-top: 20px;
+      text-decoration: none;
+      margin-left: 100px;
+    }
+
+    .register {
+      background-color: dodgerblue;
+      border: none;
+      outline: none;
+    }
+
+    .register:hover {
+      background-color: deepskyblue;
+    }
+
+    .disable {
+      background-color: #666;
+    }
+
+    .error::after {
+      position: absolute;
+      top: 50%;
+      transform: translate(8px, -50%);
+      color: rgb(224, 51, 51);
+      content: attr(data-error);
+    }
+
+    .correct::after {
+      position: absolute;
+      top: 50%;
+      transform: translate(8px, -50%);
+      color: rgb(95, 238, 95);
+      content: attr(data-correct);
+    }
+
+    form-item {
+      display: block;
+    }
+
+    #toast {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 9;
+    }
+
+    #toast span {
+      padding: 8px 15px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 4px;
+      -webkit-user-select: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <form>
+    <form-item class="name">
+      用&ensp;户&ensp;名：<input type="text" placeholder="请输入用户名" name='name' required="true" />
+    </form-item>
+
+    <form-item class="pwd">
+      密&emsp;&emsp;码：<input type="password" placeholder="请输入密码" name='pwd' required="true" />
+    </form-item>
+
+    <form-item class="repwd">
+      确认密码：<input type="password" placeholder="请输入密码" required="true" />
+    </form-item>
+
+    <input type="submit" class="register" value="注册">
+  </form>
+</body>
+<script src="./jquery-2.2.2.js"></script>
+<script>
+  // jq getError 方法，在元素后方显示错误提示，用法 $('tag').getError('信息')
+  // jq getCorrect 方法，在元素后方显示错误提示，用法 $('tag').getCorrect('信息')
+  // jq checkForm 方法，检测表单是否有错误存在，有错误返回false, 否则返回true, 用法 $(表单元素).checkForm()
+  // jq toast 方法, 弹出小黑提示框，用法 $.fn.toast('信息')
+  // serialize 方法, 格式化post提交的参数，用法 serialize(表单元素)
+  $('.name input').on('blur', function () {
+    if (!$(this).val()) {
+      return;
+    }
+    let xhr = new XMLHttpRequest();
+    xhr.open('get', 'http://127.0.0.1:8080/isUserNameExist?name=' + $(this).val());
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.send();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        let res = JSON.parse(xhr.responseText);
+        if (res.code === 200) {
+
+        } else {
+          $('.name').getError(res.msg);
+        }
+      }
+    }
+  });
+
+  $('.repwd input').on('blur', function () {
+    let pwdData = $('.pwd input').val();
+    let rePwdData = $(this).val();
+    if (pwdData !== rePwdData) {
+      $('.repwd').getError('两次密码不一致')
+    } else {
+      $('.repwd').getError('两次密码一致')
+    }
+  });
+
+  $('form').on('submit', function () {
+    if (!$(this).checkForm) {
+      $.fn.toast('请确认表单正确!')
+    } else {
+      let xhr = new XMLHttpRequest();
+      xhr.open('post', 'http://127.0.0.1:8080/doRegister')
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      let params = serialize($('form'))
+      xhr.send(params);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          let res = JSON.parse(xhr.responseText);
+          $.fn.toast(res.msg)
+        }
+      }
+    }
+  });
+</script>
+
+</html>

@@ -3,7 +3,6 @@ const fs = require('fs');
 const fileController = {
     getJson(req, res) {
         fs.readFile('./fileData/data.json', 'utf-8', (err, result) => {
-            console.log(result);
             res.json(result);
         })
     },

@@ -2,7 +2,7 @@ const userModel = require('../model/userModel');
 
 
 const userController = {
-    makeCode(){
+    makeCode() {
         let code = [];
         for (let i = 0; i < 4; i++) {
             code.push(Math.floor(Math.random() * 10));
@@ -15,90 +15,98 @@ const userController = {
             code
         });
     },
-    getCodeWithPhone(req,res){
+    getCodeWithPhone(req, res) {
         let phone = req.query.phone;
-        
+
         let code = userController.makeCode();
 
         res.send({
-            code,phone
+            code,
+            phone
         });
     },
-    isUserNameExist(req,res){
+    isUserNameExist(req, res) {
         let userName = req.query.userName;
-        
-        userModel.isUserNameExist(userName,(err,result)=>{
+
+        userModel.isUserNameExist(userName, (err, result) => {
             let response = {
-                code : 0,
-                msg : ''
+                code: 0,
+                msg: ''
             }
-            if(err){
+            if (err) {
                 response.code = 401;
                 response.msg = '服务器发生了错误';
-            }else if(result.count >= 1){
+            } else if (result.count >= 1) {
                 response.code = 401;
                 response.msg = '用户名已经存在'
-            }else {
+            } else {
                 response.code = 200;
                 response.msg = '用户名可以使用'
             }
             res.send(response);
-        })        
+        })
     },
-    doRegister(req,res){
-        let { userName,password,phone } = req.body;
-        console.log(userName,password,phone);
-        userModel.doRegister({userName,password,phone},(err,result)=>{
+    doRegister(req, res) {
+        let {
+            userName,
+            password,
+            phone
+        } = req.body;
+        // console.log(userName,password,phone);
+        userModel.doRegister({
+            userName,
+            password,
+            phone
+        }, (err, result) => {
             let response;
-            if(err){
+            if (err) {
                 response = {
-                    code : 401,
-                    msg : '服务器错误'
+                    code: 401,
+                    msg: '服务器错误'
                 }
-            }else if(result.affectedRows !==1){
+            } else if (result.affectedRows !== 1) {
                 response = {
-                    code : 401,
-                    msg : '注册失败'
+                    code: 401,
+                    msg: '注册失败'
                 }
-            }else {
+            } else {
                 response = {
-                    code : 200,
-                    msg : '注册成功'
+                    code: 200,
+                    msg: '注册成功'
                 }
             }
             res.send(response);
         })
     },
-    doLogin(req,res){
+    doLogin(req, res) {
         let userName = req.body.userName;
         let password = req.body.password;
 
-        userModel.doLogin(userName,(err,result)=>{
+        userModel.doLogin(userName, (err, result) => {
             let response;
-            if(err){
+            if (err) {
                 response = {
-                    code : 401,
-                    msg : '服务器错误'
+                    code: 401,
+                    msg: '服务器错误'
                 }
-            }
-            else if(!result){
+            } else if (!result) {
                 response = {
-                    code : 401,
-                    msg : '用户名错误'
+                    code: 401,
+                    msg: '用户名错误'
                 }
-            }else if(result.password != password){
+            } else if (result.password != password) {
                 response = {
-                    code : 401,
-                    msg : '密码错误'
+                    code: 401,
+                    msg: '密码错误'
                 }
-            }else{
+            } else {
                 req.session.isLogin = true;
                 req.session.currentUserId = result.id;
 
                 response = {
-                    code : 200,
-                    msg : '登录成功',
-                    userId : result.id
+                    code: 200,
+                    msg: '登录成功',
+                    userId: result.id
                 }
             }
 
@@ -106,19 +114,19 @@ const userController = {
         })
 
     },
-    isUserLogin(req,res){
+    isUserLogin(req, res) {
         let id = req.query.id;
         // console.log(id,req.session.isLogin,req.session.currentUserId);
         let response = null;
-        if(req.session.isLogin && id == req.session.currentUserId){ 
+        if (req.session.isLogin && id == req.session.currentUserId) {
             response = {
-                code : 200,
-                msg : '用户已经登录过了'
+                code: 200,
+                msg: '用户已经登录过了'
             }
-        }else{
+        } else {
             response = {
-                code : 401,
-                msg : '用户没有登录或者token已经过期'
+                code: 401,
+                msg: '用户没有登录或者token已经过期'
             }
         }
         res.send(response);

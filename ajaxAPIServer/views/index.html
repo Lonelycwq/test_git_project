@@ -80,141 +80,61 @@
 <script src="../static/js/jquery.js"></script>
 <script src="../static/js/bootstrap.js"></script>
 <script src="../static/js/template-web.js"></script>
+<script src="../static/js/ajax.js"></script>
+<script type="text/template" id="temp">
+  <%for(var i = 0;i < $data.length;i++) {%>
+    <tr>
+      <td><%=$data[i].id%></td>
+      <td><%=$data[i].name%></td>
+      <td><%=$data[i].gender%></td>
+      <td><img src="../static/images/<%=$data[i].img%>"></td>
+      <td><a href="./edit.html?id=1">修改</a> 
+        <a data-id="1" href="javscript:void(0);">删除</a>
+      </td>
+    </tr>
+  <%}%>
+</script>
 <script>
-  // console.log(localStorage.getItem('userId'));
-  /*
-    jquery里面也封装了一个ajax函数
-  
-      用法
-        $.ajax({
-          type : 请求的方式
-          url : 请求地址
-          data : 带回服务器的数据
-          success : function(res){
-            res就是响应体
+  //从本地存储取出用户id
+  let userId = localStorage.getItem('userId');
+  //判断本地存储是否有数据
+  if (!userId) {
+    //提示用户没有登录并跳转
+    alert('您还没有登录，请前往登录');
+    location.href = './login.html';
+  }
+  //ajax向服务器发送请求
+  ajax({
+    url: 'http://127.0.0.1:8080/isLogin',
+    //将本地存储的id发送服务器
+    data: 'id=' + userId,
+    callback: function (res) {
+      //将服务器返回的字符串转化为对象
+      res = JSON.parse(res);
+      if (res.code === 200) {
+        //将该显示的元素去除hidden属性，该隐藏的加上hidden元素
+        $('.btn-login').attr('hidden', true);
+        $('.btn-exit,.btn-add,table').removeAttr('hidden');
+        ajax({
+          type: 'post',
+          url: 'http://127.0.0.1:8080/getAllHero',
+          callback: function (res) {
+            //将服务器返回的字符串转化为对象
+            res = JSON.parse(res);
+            //判断返回数据中code的值
+            if (res.code === 200) {
+              let html = template('temp', res.data);
+              $('#tbody').html(html);
+            } else {
+              //提示用户没有登录并跳转
+              alert('您还没有登录，请前往登录');
+              location.href = './login.html';
+            }
           }
         });
-  */
-
-  $(function () {
-    // 从localStorage里面取出用户的id
-    var id = localStorage.getItem('userId');
-    $.ajax({
-      type: 'get',
-      url: 'http://127.0.0.1:8080/isLogin',
-      data: {
-        'id': id
-      },
-      success: function (res) {
-        // console.log(res);// res此时因为响应头里面告诉了jq按照json格式解析，jq里面自动帮我们把字符串转换为了对象，此时直接当成对象使用即可
-        if (res.code === 200) {
-          // 把一些按钮显示 - 添加英雄，退出，表格
-          $('.btn-add').removeAttr('hidden');
-          $('.btn-exit').removeAttr('hidden');
-          $('table').removeAttr('hidden');
-          // 把登录隐藏
-          $(".btn-login").attr('hidden', true);
-
-          // 演示使用模板引擎的方式实现数据的渲染
-          $.ajax({
-            type: 'post',
-            url: 'http://127.0.0.1:8080/getAllHero',
-            success: function (res) {
-              if (res.code !== 200) {
-                return;
-              }
-              // template(模板id,导入模板的数据)
-              var html = template('tp', res.data);
-              // console.log(html);
-              $("#tbody").append(html);
-            }
-          });
-
-
-          /* //3.2 使用ajax请求英雄的数据
-          $.ajax({
-            type : 'post',
-            url : 'http://127.0.0.1:8080/getAllHero',
-            success : function(res){
-              // console.log(res);
-              if(res.code !== 200){
-                return;
-              }
-              // 根据数组，生成指定的结构
-              res.data.forEach(function(e,i){
-                var html = `<tr>
-                  <td>${e.id}</td>
-                  <td>${e.name}</td>
-                  <td>${e.gender}</td>
-                  <td><img src="../static/images/${e.img}"></td>
-                  <td><a href="./edit.html?id=1">修改</a> 
-                    <a data-id="1" href="javscript:void(0);">删除</a>
-                  </td>
-                </tr>`
-                // 把结构追加到tabal里面
-                $("#tbody").append(html);
-              });
-            }
-          });
-          */
-        }
       }
-    });
-
-    // 实现删除
-    // 1 给删除注册点击事件
-    $("#tbody").on('click', 'a:last-child', function () {
-      // console.log('123');
-      // 弹框
-      $("#modelId").modal();
-      // 把上一级作用域的delId，修改为点击的a标签所代表的影响的id
-      delId = this.dataset.id;
-      console.log(delId);
-      // 把上一级作用域用于表示要删除的tr的变量，修改一下
-      delEle = $(this).parents('tr');
-    });
-    var delId = 0;// 在两个函数的上一级作用域，定义一个变量，用于存储要删除的影响的id
-    var delEle = null;
-
-    // 给模态框的确定按钮注册点击事件
-    $('.btn-sure-del').on('click', function () {
-      // 发送请求删除数据
-      $.ajax({
-        type: 'get',
-        url: 'http://127.0.0.1:8080/deleteHeroById',
-        data: {
-          id: delId
-        },
-        success: function (res) {
-          // console.log(res);
-          if (res.code == 200) {
-            // 要把模态框隐藏
-            $("#modelId").modal('hide');
-            // 把对应的数据移除
-            delEle.remove();
-          }
-        }
-      })
-
-      // 演示模态框的隐藏
-      // $("#modelId").modal('hide');
-    });
+    }
   });
-
-</script>
-<script type="text/template" id="tp">
-{{each $data $value}}
-  <tr>
-    <td>{{$value.id}}</td>
-    <td>{{$value.name}}</td>
-    <td>{{$value.gender}}</td>
-    <td><img src="../static/images/{{$value.img}}"></td>
-    <td>
-      <a href="./edit.html?id={{$value.id}}">修改</a> 
-      <a data-id="{{$value.id}}" href="javscript:void(0);">删除</a>
-    </td>
-  </tr>
-{{/each}}
 </script>
 
 </html>

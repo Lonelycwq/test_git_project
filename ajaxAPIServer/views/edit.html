@@ -1,0 +1,162 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hero - Admin</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <style>
+        .hero-list img {
+            width: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="page-header container">
+            <h1>王者荣耀 <small>英雄管理器</small></h1>
+        </div>
+    </header>
+    <div class="container hero-list">
+        <form id="form">
+            <input type="hidden" id="id" name='id' value="1">
+            <input type="hidden" name="img" id="headSrc" value="">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td>姓名：</td>
+                        <td><input type="text" id="name" name="name" value=""></td>
+                    </tr>
+                    <tr>
+                        <td>性别：</td>
+                        <td>
+                            <input id="nan" name="gender" value="男" type="radio" checked><label for="nan">男</label>
+                            <input name="gender" value="女" type="radio" id="nv"><label for="nv">女</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>头像：</td>
+                        <td><img src="../static/images/0.jpg" alt="" id="photo" width="100">
+                            <input type="file" id="img"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="button" class="btn btn-primary" id="sub" value="完成"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+</body>
+<script src="../static/js/jquery.js"></script>
+<script>
+    /*
+        根据url获取英雄id
+            但是我们所想要的id，它的位置和位数都是不确定的，直接使用截取字符串的方式是不保险的
+        最好的方式，把location.search转换为一个对象之后，直接用对象.id 获取 才是最稳妥的
+    */
+    // var heroId = location.search.substring(4);
+    // console.log(heroId);
+
+    function parseUrlParams() {
+        var params = location.search.substring(1);// 把?先去除
+        // 键=值&键=值&键=值
+        // console.log(params);
+        // 把参数以&符号分割
+        var arr = params.split("&");// [键=值,键=值,键=值]
+        // console.log(arr);
+        // 把键=值以=分割
+        // var temp = arr[0].split('=');
+        // console.log(temp);
+        // var obj = {};
+        // obj[temp[0]] = temp[1];
+        // console.log(obj);
+        var obj = {};
+        arr.forEach(function (e) {
+            // e === 键=值
+            var temp = e.split('='); //[键,值]
+            // console.log(temp);
+            obj[temp[0]] = temp[1];// obj[键] = 值
+        });
+        // console.log(obj);
+        return obj;
+    }
+
+    // console.log(parseUrlParams());
+
+    // 直接从url参数里面，获取id
+    var id = parseUrlParams().id;
+    // 应该立刻把id修改到id对应的隐藏域里面
+    $("#id").val(id);
+    // 根据id到服务器获取当前要修改的英雄的数据
+    $.ajax({
+        type : 'get',
+        url : 'http://127.0.0.1:8080/getHeroById',
+        data : {
+            id : id
+        },
+        success: function(res){
+            console.log(res);
+            // 请求成功之后，把数据填写到表单里面
+            if(res.code == 200){
+                $("#name").val(res.data.name);
+                // 性别
+                var genderId = res.data.gender == '男'? 'nan' : 'nv';
+                $("#"+genderId).prop('checked',true);
+                // 头像
+                $("#photo").attr('src','../static/images/' + res.data.img);
+                // 还要把代表头像的数据的隐藏域也要修改一下
+                $("#headSrc").val(res.data.img);
+            }
+        }
+    });
+
+    // 实现图片上传
+    $("#img").on('change',function(){
+        // 获取文件
+        var file = this.files[0];
+        // 创建formdata对象
+        var fd =new FormData();
+        // 把图片转换为二进制流的形式
+        fd.append('pic',file);
+        // 使用ajax提交
+        $.ajax({
+            type : 'post',
+            url : 'http://127.0.0.1:8080/uploadHeadImg',
+            data : fd,
+            processData : false,
+            contentType: false,
+            success:function(res){
+                if(res.code == 200){
+                    // 图片路径修改一下，隐藏域的内容修改
+                    $("#photo").attr('src',res.baseDir + res.filePath);
+                    $("#headSrc").val(res.filePath);
+                }
+            }
+        });
+    });
+
+    // 点击完成编辑
+    $("#sub").on('click',function(){
+        // 非空验证
+        // 收集所有的表单数据
+        var data = $("#form").serialize();
+        console.log(data);
+        // 把数据发送回服务器请求修改
+        $.ajax({
+            type : 'post',
+            url : 'http://127.0.0.1:8080/eidtHeroById',
+            data : data,
+            success:function(res){
+                // console.log(res);
+                if(res.code == 200){
+                    // 弹框告诉用户，成功
+                }
+            }
+        });
+    });
+
+</script>
+
+</html>

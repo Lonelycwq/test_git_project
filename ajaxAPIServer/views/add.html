@@ -1,0 +1,172 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hero - Admin</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <style>
+        .hero-list img {
+            width: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="page-header container">
+            <h1>王者荣耀 <small>英雄管理器</small></h1>
+        </div>
+    </header>
+    <div class="container hero-list">
+        <form id='myform'>
+            <input type="hidden" name="img" id="headSrc">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td>姓名：</td>
+                        <td><input type="text" name="name"></td>
+                    </tr>
+                    <tr>
+                        <td>性别：</td>
+                        <td><input id="nan" name="gender" value="男" type="radio"><label for="nan">男</label> <input
+                                name="gender" value="女" type="radio" id="nv"><label for="nv">女</label></td>
+                    </tr>
+                    <tr>
+                        <td>头像：</td>
+                        <td><img src="../static/images/0.jpg" alt="" id="photo" width="100">
+                            <input type="file" id="img"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input class="btn btn-primary" type="button" id="sub" value="新增"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                            <h5 class="modal-title">提水</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        新增失败
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="../static/js/jquery.js"></script>
+<script src="../static/js/bootstrap.js"></script>
+<script>
+$(function(){
+    // 获取上传的图片
+    // $('#img').on('change',function(){
+    //     // 获取文件选择按钮的选中的文件，通过该对象身上的一个属性： files
+    //     // 但是要注意 得在选中文件之后再获取 - change 事件，是表单元素的value属性发生改变的时候触发的事件
+    //     // console.dir(this.files[0]);// 直接通过事件源的files属性低0个元素获取了图片
+    //     // 还需要把文件"融化为液体" -- > 把文件转换为二进制数据 - 文件流
+    //     // 怎么融化？
+    //     // 创建一个FormData对象
+    //     var fd = new FormData();
+    //     // 调用append方法把文件转换为二进制数据
+    //     fd.append('pic',this.files[0]);
+    //     // 使用ajax提交数据
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.open('post','http://127.0.0.1:8080/uploadHeadImg');
+    //     // 如果使用的FormData对象提交数据，它户自动的根据对应的数据，选择一个合适的请求头，是不需要我们手动设置的 —— 注意
+    //     // xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+    //     xhr.send(fd);
+    //     xhr.onreadystatechange = function(){
+    //       if(xhr.readyState == 4 && xhr.status == 200){
+    //         console.log(xhr.responseText);
+    //         var resObj = JSON.parse(xhr.responseText);
+    //         // 当返回的数据是成功的时候，就把对应头像替换一下即可
+    //         // 约定好，图片的路径 = baseDir + filePath
+    //         $("#photo").attr('src',resObj.baseDir+resObj.filePath);
+    //       }
+    //     }
+    // });
+
+    // 使用jq的ajax实现图片的上传
+    $("#img").on('change',function(){
+        // 获取到选中的文件
+        var file = this.files[0];
+        // 创建FormData对象
+        var fd = new FormData();
+        // 让文件转换为二进制数据
+        fd.append('pic',file);
+        // 使用ajax实现图片的上传
+        $.ajax({
+            type : 'post',
+            url : 'http://127.0.0.1:8080/uploadHeadImg',
+            //如果要在jq里面使用formdata传递数据，告诉jq不要乱动我们的数据
+            processData: false,
+            // 还要告诉jq，不要乱动我们请求头
+            contentType: false,
+            data : fd,
+            success: function(res){
+                // console.log(res);
+                if(res.code == 200){
+                    // 把图片修改一下
+                    $("#photo").attr('src',res.baseDir+res.filePath);
+                    // 还要把图片的名字，存储到隐藏域里面，方便后期在进行新增的时候，实现数据的获取
+                    $("#headSrc").val(res.filePath);
+                }
+            }
+        });
+    })
+
+
+    $("#sub").on('click',function(){
+        // 把服务器要的数据收集起来，发送回服务器，新增到数据库里面
+        // 先找到表单元素
+        var data = $("#myform").serialize();
+        // console.log(data);
+        // input:type=file 这种元素，他的name是不会被收集的，因为value一般都不是我们想要的
+        // 一般有一些数据，当我们不方便获取的时候，会采用hidden这种表单元素，先存储起来，然后通过序列化获取
+        // hidden这种表单元素，一开始出现的意义就是我们前端程序员在表单里面存储一些不希望被用户看到的数据 - 该元素称为 隐藏域 我们如果要得到头像的名称，就可以在上传成功的时候，把图片的名字存储到隐藏域里面，就可以在序列化数据的时候，得到了
+
+        // 使用ajax请求新增的接口
+        $.ajax({
+            type : 'post',
+            url : 'http://127.0.0.1:8080/addNewHero',
+            data : data,
+            success: function(res){
+                if(res.code !== 200){
+                    $("#modelId").modal();
+                }else {
+                    $(".container-fluid").text('新增成功');
+                    $("#modelId").modal();
+                    // 保存一个状态，新增是否成功的状态
+                    isSuccess = true;
+                }
+            }
+        });
+    })
+
+    var isSuccess = false;
+
+    $('#modelId').on('hide.bs.modal', event => {
+        // 判断是否新增成功，新增成功才跳转
+        if(isSuccess){
+            location.href = './index.html';
+        }
+    });
+
+
+});
+</script>
+</html>

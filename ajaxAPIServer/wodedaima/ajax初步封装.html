@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- <form action="" enctype="application/x-www-form-urlencoded"></form> -->
+</body>
+<script>
+  // //1.请求方式 2.请求地址 3.发送回数据 4.回调函数里面方法
+  // function ajax(type, url, data, callback) {
+  //   // 创建一个实例对象
+  //   let xhr = new XMLHttpRequest();
+  //   //如果是get请求，将数据拼接在url后面
+  //   if (type == 'get') {
+  //     url += '?' + data
+  //   }
+  //   xhr.open(type, url);
+  //   //如果是post请求，将数据放在监听里面并设置请求头
+  //   if (type == 'post') {
+  //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  //     xhr.send(data);
+  //   } else {
+  //     xhr.send();
+  //   }
+  //   xhr.onreadystatechange = function () {
+  //     if (xhr.readyState === 4 && xhr.status === 200) {
+  //       callback();
+  //     }
+  //   }
+  // }
+
+  function ajax(options) {
+    options = options || {};
+    options.type = options.type || 'get';
+    options.url = options.url || '';
+    options.data = options.data || '';
+    options.callback = options.callback || function () {
+      console.log('无回调函数')
+    };
+    //创建实例对象
+    let xhr = new XMLHttpRequest();
+    //设置传参方式和传参地址
+    xhr.open(options.type, options.url);
+    //判断传参方式是get
+    if (options.type === 'get') {
+      //将带的参数拼接到地址后面
+      options.url += '?' + options.data;
+    }
+    //判断传参方式是post
+    if (options.type === 'post') {
+      //设置请求头类型
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      //将参数放在发送请求中
+      xhr.send(options.data);
+    } else {
+      //发送请求
+      xhr.send();
+    }
+    //监听通讯状态
+    xhr.onreadystatechange = function () {
+      //判断通讯成功和响应成功
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        options.callback(xhr.responseText);
+      }
+    }
+  }
+
+  ajax({
+    type: 'get',
+    url: 'http://127.0.0.1:8080/getCodeWithoutPhone',
+    callback: function (res) {
+      console.log(res)
+    }
+  });
+  ajax({
+    type: 'get',
+    url: 'http://127.0.0.1:8080/getjson',
+    callback: function (res) {
+      console.log(res)
+    }
+  });
+  ajax({
+    type: 'post',
+    url: 'http://127.0.0.1:8080/doLogin',
+    data: 'userName=ligoudan&password=123456',
+    callback: function (res) {
+      console.log(res)
+    }
+  });
+  ajax({
+    type: 'post',
+    url: 'http://127.0.0.1:8080/doRegister',
+    data: 'userName=张三&password=123&phone=17845858965',
+    callback: function (res) {
+      console.log(res)
+    }
+  });
+</script>
+
+</html>

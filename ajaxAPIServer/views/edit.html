@@ -8,6 +8,27 @@
     .hero-list img {
       width: 50px;
     }
+
+    .progress {
+      margin-top: 10px;
+      width: 300px;
+      height: 20px;
+      border: 1px solid #f00;
+      background: #fff;
+      border-radius: 10px;
+      line-height: 20px;
+      overflow: hidden;
+    }
+
+    .inner-progress {
+      height: 18px;
+      color: #fff;
+      background-color: #f00;
+      text-align: center;
+      font-size: 14px;
+      line-height: 18px;
+      transition: all linear 3s;
+    }
   </style>
 </head>
 
@@ -36,8 +57,13 @@
           </tr>
           <tr>
             <td>头像：</td>
-            <td><img src="../static/images/0.jpg" alt="" id="photo" width="100">
-              <input type="file" id="img"></td>
+            <td>
+              <img src="../static/images/0.jpg" alt="" id="photo" width="100">
+              <input type="file" id="img">
+              <div class="progress" hidden>
+                <div class="inner-progress"></div>
+              </div>
+            </td>
           </tr>
           <tr>
             <td></td>
@@ -47,29 +73,54 @@
       </table>
     </form>
   </div>
-
 </body>
 <script src="../static/js/jquery.js"></script>
 <script>
   //获取到跳转链接传的id
-  let heroId = location.search.substring(4);
-  console.log(heroId);
+  // let id = location.search.substring(4);
+  // console.log(heroId);
+
+  //截取地址栏?后面所有字符串
+  let search = location.search.substring(1);
+  //以&符号将字符串分割为数组
+  let arr = search.split('&');
+  //声明一个空对象
+  let prams = {};
+  //遍历分割的数组
+  arr.forEach(e => {
+    //将数组中遍历的所有值以=号分割为一个个小的数值，数组中只有两个值
+    let temp = e.split('=');
+    //声明变量存储键
+    let key = temp[0];
+    //声明变量存储值
+    let val = temp[1];
+    //对象的键=值，通过遍历填充对象
+    prams[key] = val;
+  });
+  // console.log(prams);
+  let id = prams.id;
+  // console.log(id);
+  //es6对象外面有和键名同名的变量的对象简写方法
+  let idObj = {
+    id
+  };
   //使用ajax根据id获取英雄数据
   $.ajax({
     type: 'get',
     url: 'http://127.0.0.1:8080/getHeroById',
-    data: 'id=' + heroId,
+    data: idObj,
     success: function (res) {
-      console.log(res);
+      // console.log(res);
       //将获取得到的数据填充到页面表单控件中
       //将获取得到的英雄名称填入名称表单
       $('#name').val(res.data.name);
       //判断得到的性别是男则选择男，是女则选中女
-      if (res.data.gender == '男') {
+      if (res.data.gender === '男') {
         $('#nan').prop('checked', true);
       } else {
         $('#nv').prop('checked', true);
       }
+      // $('#nv').prop('checked', res.data.gender === '女');
       //将返回的英雄id填入隐藏域id中
       $('#id').val(res.data.id);
       //将返回的英雄图片文件名填入隐藏域img中
@@ -83,7 +134,7 @@
   $('#img').on('change', function () {
     //获取上传的文件信息
     let file = this.files[0];
-    console.log(file);
+    // console.log(file);
     //将表单所有数据都打包
     let data = new FormData();
     //将文件转化为文件流
@@ -97,6 +148,22 @@
       contentType: false,
       //阻止jq改变数据格式
       processData: false,
+      xhr: function () {
+        let xhr = new XMLHttpRequest();
+        xhr.upload.onprogress = function (e) {
+          let progress = parseInt(e.loaded / e.total * 10000) / 100;
+          console.log(progress);
+          if (progress > 0) {
+            $('.progress').attr('hidden', false);
+          }
+          $('.inner-progress').css('width', progress + '%');
+          $('.inner-progress').text(progress + '%');
+          // if (progress === 100) {
+          //   $('.progress').attr('hidden', true);
+          // }
+        }
+        return xhr;
+      },
       success: function (res) {
         console.log(res);
         //将返回的图片路径拼接设置给预览img
@@ -105,6 +172,26 @@
         $('#headSrc').val(res.filePath);
       }
     });
+    // let xhr = new XMLHttpRequest();
+    // xhr.open('post', 'http://127.0.0.1:8080/uploadHeadImg');
+    // xhr.upload.onprogress = function (e) {
+    //   let bar = document.querySelector('.inner-progress');
+    //   let perent = parseInt(e.loaded / e.total * 10000) / 100 + '%'
+    //   // console.log(perent);
+    //   bar.style.width = perent;
+    //   bar.innerText = perent;
+    // }
+    // xhr.send(data);
+    // xhr.onreadystatechange = function () {
+    //   if (xhr.readyState === 4 && xhr.status === 200) {
+    //     //转化返回的字符串为对象
+    //     let res = JSON.parse(xhr.responseText);
+    //     // 将返回的图片路径拼接设置给预览img
+    //     $('#photo').attr('src', res.baseDir + res.filePath);
+    //     //将返回的图片名设置给隐藏域img
+    //     $('#headSrc').val(res.filePath);
+    //   }
+    // }
   });
 
   //给提交按钮注册点击事件
@@ -116,7 +203,7 @@
     }
     //收集表单所有控件数据
     let data = $('form').serialize();
-    console.log(data);
+    // console.log(data);
     //使用ajax请求英雄修改提交
     $.ajax({
       type: 'post',
@@ -131,38 +218,6 @@
       }
     });
   });
-
-
-
-
-  // function parseUrlParams() {
-  //     var params = location.search.substring(1);// 把?先去除
-  //     // 键=值&键=值&键=值
-  //     // console.log(params);
-  //     // 把参数以&符号分割
-  //     var arr = params.split("&");// [键=值,键=值,键=值]
-  //     // console.log(arr);
-  //     // 把键=值以=分割
-  //     // var temp = arr[0].split('=');
-  //     // console.log(temp);
-  //     // var obj = {};
-  //     // obj[temp[0]] = temp[1];
-  //     // console.log(obj);
-  //     var obj = {};
-  //     arr.forEach(function (e) {
-  //         // e === 键=值
-  //         var temp = e.split('='); //[键,值]
-  //         // console.log(temp);
-  //         obj[temp[0]] = temp[1];// obj[键] = 值
-  //     });
-  //     // console.log(obj);
-  //     return obj;
-  // }
-
-  // // console.log(parseUrlParams());
-
-  // // 直接从url参数里面，获取id
-  // var id = parseUrlParams().id;
 </script>
 
 </html>

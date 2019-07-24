@@ -192,6 +192,10 @@
 
   let data;
   let _this;
+  // function del() {
+  //   //移除页面元素
+  //   $(this).parents('tr').remove();
+  // }
   //获取删除按钮元素并注册点击事件，使用事件委托
   $('tbody').on('click', '#del', function (e) {
     //获取到要删除的数据的id
@@ -199,6 +203,8 @@
     // console.log(data);
     //使用闭包将事件源存储起来
     _this = this;
+    //将del函数改变this为当前点击的事件源
+    // del = del.bind(this);
     //提示用户确认删除
     // let sure = confirm('确认要删除吗?');
     // if (!sure) return;
@@ -214,22 +220,12 @@
       url: 'http://127.0.0.1:8080/deleteHeroById',
       data: 'id=' + data,
       success: function (res) {
-        $.ajax({
-          type: 'post',
-          url: 'http://127.0.0.1:8080/getAllHero',
-          success: function (res) {
-            //判断返回数据中code的值
-            if (res.code === 200) {
-              //显示弹出窗并改变里面的文字
-              $('#modelId1').modal('show');
-              $('#modelId1 .container-fluid').html(res.msg);
-              //移除页面元素
-              $(_this).parents('tr').remove();
-              let html = template('temp', res.data);
-              $('#tbody').html(html);
-            }
-          }
-        });
+        $('#modelId1').modal('show');
+        $('#modelId1 .container-fluid').html(res.msg);
+        //移除页面元素
+        $(_this).parents('tr').remove();
+        //调用删除元素函数
+        // del();
       }
     });
   });

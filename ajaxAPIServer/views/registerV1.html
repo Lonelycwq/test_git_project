@@ -150,23 +150,17 @@
 			}, 1000);
 		});
 	}
-	//声明一个变量表示是否停止
-	let temp;
-	//封装一个可复用的判断输入框为空函数
-	function inputNull(element, msg) {
+
+	//给用户名输入框注册失焦事件
+	$('.name').on('blur', function () {
 		//获取输入框value
-		let val = $(element).val();
+		let name = $('.name').val();
 		//判断输入框是否为空
-		if (val.trim().length === 0) {
+		if (name.trim().length === 0) {
 			//弹出提示框
-			tip(msg);
-			temp = false;
+			tip('用户名不可为空');
+			return;
 		}
-	}
-	//封装输入框失焦事件
-	function inputName() {
-		//调用判断输入框为空函数
-		inputNull('.name', '用户名不可为空');
 		//ajax判断用户名是否可用
 		$.ajax({
 			type: 'get',
@@ -180,54 +174,62 @@
 				}
 			}
 		});
-	}
-	//给用户名输入框注册失焦事件
-	$('.name').on('blur', inputName);
+	});
 
 	//声明变量存储密码
 	let pad;
-	//封装密码框失焦事件
-	function inputPsd() {
-		//调用判断输入框为空函数
-		inputNull('.pass', '密码不可为空');
-	}
 	//给输入密码框注册失焦事件
-	$('.pass').on('blur', inputPsd);
+	$('.pass').on('blur', function () {
+		//获取输入框value
+		pad = $('.pass').val();
+		//判断输入框是否为空
+		if (pad.trim().length === 0) {
+			//弹出提示框
+			tip('密码不可为空');
+			return;
+		}
+	});
 
-	//封装确认密码框失焦事件
-	function inputRepsd() {
-		//调用判断输入框为空函数
-		inputNull('.repass', '确认密码不可为空');
-	}
 	//给重复输入密码框注册失焦事件
-	$('.repass').on('blur', inputRepsd);
+	$('.repass').on('blur', function () {
+		//获取输入框value
+		let repad = $('.repass').val();
+		//判断输入框是否为空
+		if (repad.trim().length === 0) {
+			//弹出提示框
+			tip('确认密码不可为空');
+			return;
+		}
+	});
 
 	//声明变量存储手机框的值
 	let mobile;
-	//封装手机号输入框事件
-	function inputMobile() {
+	//给手机输入框注册失焦事件
+	$('.mobile').on('blur', function () {
 		//获取输入框value
 		mobile = $('.mobile').val();
 		// console.log(r.test(mobile));
-		//调用判断输入框为空函数
-		inputNull('.mobile', '手机号不可为空');
+		//判断输入框是否为空
+		if (mobile.trim().length === 0) {
+			//弹出提示框
+			tip('手机号不可为空');
+			return;
+			//判断输入的是否是手机号
+		}
 		// console.log(!/(^1[3|5|8][0-9]{9}$)/.test(mobile));
 		if (!/(^1[3|5|8][0-9]{9}$)/.test(mobile) === true) {
 			//弹出提示框
 			tip('手机号格式有误');
 		}
-	}
-	//给手机输入框注册失焦事件
-	$('.mobile').on('blur', inputMobile);
+	});
 
 	//声明变量存储验证码
 	let getCode;
 	//给获取验证码按钮注册点击事件
 	$('.verify').on('click', function () {
-		//调用手机输入框事件
-		inputMobile();
-		if (temp === false) {
-			temp = true;
+		// 判断手机框是否是11位数字
+		if (isNaN(mobile) || mobile.length != 11) {
+			tip('请输入正确的手机号码');
 			return;
 		}
 		//使按钮不可点击
@@ -265,22 +267,17 @@
 		});
 	});
 
-	//封装验证码框事件
-	function inputCode() {
+	//给验证码输入框注册失焦事件
+	$('.code').on('blur', function () {
 		//获取输入框value
 		let code = $('.code').val();
-		//调用判断输入框为空函数
-		inputNull('.code', '验证码不可为空');
-		//判断输入的验证码和获取的验证码是否一致
-		if (getCode != code) {
+		//判断输入框是否为空
+		if (code.trim().length === 0) {
 			//弹出提示框
-			tip('验证码不正确');
+			tip('验证码不可为空');
 			return;
 		}
-	}
-	//给验证码输入框注册失焦事件
-	$('.code').on('blur', inputCode);
-
+	});
 
 	//给提交按钮注册点击事件
 	$('.submit').on('click', function (e) {
@@ -288,37 +285,80 @@
 		e.preventDefault();
 		//将之前的所有失焦事件重新判断一遍
 		//用户名框判断
-		inputName();
-		if (temp === false) {
-			temp = true;
+		//获取输入框value
+		let name = $('.name').val();
+		//判断输入框是否为空
+		if (name.trim().length === 0) {
+			//弹出提示框
+			tip('用户名不可为空');
 			return;
 		}
+		//ajax判断用户名是否可用
+		$.ajax({
+			type: 'get',
+			url: 'http://127.0.0.1:8080/isUserNameExist',
+			username: name,
+			success: function (res) {
+				//判断是否响应成功
+				if (res.code !== 200) {
+					tip('此用户名不可用，请更换');
+					return;
+				}
+			}
+		});
 
 		//密码框判断
-		inputPsd();
-		if (temp === false) {
-			temp = true;
+		//获取输入框value
+		pad = $('.pass').val();
+		//判断输入框是否为空
+		if (pad.trim().length === 0) {
+			//弹出提示框
+			tip('密码不可为空');
 			return;
 		}
 
 		//确认密码框判断
-		inputRepsd();
-		if (temp === false) {
-			temp = true;
+		//获取输入框value
+		let repad = $('.repass').val();
+		//判断输入框是否为空
+		if (repad.trim().length === 0) {
+			//弹出提示框
+			tip('确认密码不可为空');
 			return;
+			//判断两次密码不一致
+		} else if (pad !== repad) {
+			//弹出提示框
+			tip('两次密码输入不一致');
 		}
 
 		//判断手机号框
-		inputMobile();
-		if (temp === false) {
-			temp = true;
+		//获取输入框value
+		mobile = $('.mobile').val();
+		//判断输入框是否为空
+		if (mobile.trim().length === 0) {
+			//弹出提示框
+			tip('手机号不可为空');
 			return;
+			//判断输入的是否是手机号
+		}
+		if (!/(^1[3|5|8][0-9]{9}$)/.test(mobile) === true) {
+			//弹出提示框
+			tip('手机号格式有误');
 		}
 
 		//判断验证码框
-		inputCode();
-		if (temp === false) {
-			temp = true;
+		//获取输入框value
+		let code = $('.code').val();
+		//判断输入框是否为空
+		if (code.trim().length === 0) {
+			//弹出提示框
+			tip('验证码不可为空');
+			return;
+		}
+		//判断输入的验证码和获取的验证码是否一致
+		if (getCode != code) {
+			//弹出提示框
+			tip('验证码不正确');
 			return;
 		}
 

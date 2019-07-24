@@ -191,21 +191,25 @@
   });
 
   let data;
-  let _this;
+  // let _this;
   //获取删除按钮元素并注册点击事件，使用事件委托
-  $('tbody').on('click', '#del', function (e) {
+  $('tbody').on('click', '#del', function fn1(e) {
     //获取到要删除的数据的id
     data = $(this).attr('data-id');
     // console.log(data);
     //使用闭包将事件源存储起来
-    _this = this;
+    // _this = this;
     //提示用户确认删除
     // let sure = confirm('确认要删除吗?');
     // if (!sure) return;
     $('#modelId').modal('show');
+    return this;
   });
+  console(fn1());
   //在模态框点击确定时删除数据
-  $('#modelId .modal-footer>button:last-child').on('click', function () {
+  $('#modelId .modal-footer>button:last-child').on('click', function fn2() {
+    fn2.bind(fn1)();
+    console.log(this);
     //隐藏弹出框
     $('#modelId').modal('hide');
     //删除服务器中对应数据
@@ -224,7 +228,7 @@
               $('#modelId1').modal('show');
               $('#modelId1 .container-fluid').html(res.msg);
               //移除页面元素
-              $(_this).parents('tr').remove();
+              $(this).parents('tr').remove();
               let html = template('temp', res.data);
               $('#tbody').html(html);
             }

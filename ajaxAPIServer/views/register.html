@@ -83,6 +83,7 @@
 			width: 100%;
 			height: 40px;
 			text-align: center;
+			padding: 0 10px;
 		}
 
 		.tips p {
@@ -135,5 +136,294 @@
 	</div>
 </body>
 <script src="../static/js/jquery.js"></script>
+<script>
+	//创建一个轻量弹窗
+	function tip(content) {
+		//给元素添加一个淡入事件
+		$('.tips > p').text(content).stop().fadeIn(100, function () {
+			//闭包将元素this存储
+			var _this = this;
+			//创建定时器
+			setTimeout(function () {
+				//一秒之后停止3秒淡出效果
+				$(_this).stop().fadeOut(2000);
+			}, 1000);
+		});
+	}
+
+	//给用户名输入框注册失焦事件
+	$('.name').on('blur', function () {
+		//获取输入框value
+		let name = $('.name').val();
+		//判断输入框是否为空
+		if (name.trim().length === 0) {
+			//弹出提示框
+			tip('用户名不可为空');
+			return;
+		}
+		//ajax判断用户名是否可用
+		$.ajax({
+			type: 'get',
+			url: 'http://127.0.0.1:8080/isUserNameExist',
+			username: name,
+			success: function (res) {
+				//判断是否响应成功
+				if (res.code !== 200) {
+					tip('此用户名不可用，请更换');
+					return;
+				}
+			}
+		});
+	});
+
+	//声明变量存储密码
+	let pad;
+	//给输入密码框注册失焦事件
+	$('.pass').on('blur', function () {
+		//获取输入框value
+		pad = $('.pass').val();
+		//判断输入框是否为空
+		if (pad.trim().length === 0) {
+			//弹出提示框
+			tip('密码不可为空');
+			return;
+		}
+	});
+
+	//给重复输入密码框注册失焦事件
+	$('.repass').on('blur', function () {
+		//获取输入框value
+		let repad = $('.repass').val();
+		//判断输入框是否为空
+		if (repad.trim().length === 0) {
+			//弹出提示框
+			tip('确认密码不可为空');
+			return;
+		}
+	});
+
+	//声明变量存储手机框的值
+	let mobile;
+	//给手机输入框注册失焦事件
+	$('.mobile').on('blur', function () {
+		//获取输入框value
+		mobile = $('.mobile').val();
+		// //手机号正则表达式
+		// let r = /^[0-9]*[1-9][0-9]*$/;
+		// console.log(r.test(mobile));
+		//判断输入框是否为空
+		if (mobile.trim().length === 0) {
+			//弹出提示框
+			tip('手机号不可为空');
+			return;
+			//判断输入的是否是手机号
+		}
+		// if (r.test(mobile) != true) {
+		// 	//弹出提示框
+		// 	tip('手机号格式有误');
+		// }
+	});
+
+	//声明变量存储验证码
+	let code;
+	//给获取验证码按钮注册点击事件
+	$('.verify').on('click', function () {
+		// 判断手机框是否是11位数字
+		if (isNaN(mobile) || mobile.length != 11) {
+			tip('请输入正确的手机号码');
+			return;
+		}
+		//使按钮不可点击
+		$(this).prop('disabled', true);
+		//设置定时器的时长
+		let time = 5;
+		// 改变按钮的文字
+		$(this).val('重新获取(' + time + ')');
+		//设置定时器并获取id
+		let dsq = setInterval(() => {
+			//使时长自减1并改变按钮文字
+			--time;
+			$(this).val('重新获取(' + time + ')');
+			//判断时长为0或者小于0 时停止定时器
+			if (time <= 0) {
+				//将按钮值更改
+				$(this).val('获取验证码');
+				//使按钮可点击
+				$(this).prop('disabled', false);
+				//清除定时器
+				clearInterval(dsq);
+			}
+		}, 1000);
+		//通过ajax请求获取随机验证码
+		$.ajax({
+			type: 'get',
+			url: 'http://127.0.0.1:8080/getCodeWithoutPhone',
+			success: function (res) {
+				//获取返回的验证码
+				code = res.code;
+				console.log(code);
+			}
+		});
+	});
+
+	//给验证码输入框注册失焦事件
+	$('.code').on('blur', function () {
+		//获取输入框value
+		let code = $('.code').val();
+		//判断输入框是否为空
+		if (code.trim().length === 0) {
+			//弹出提示框
+			tip('验证码不可为空');
+			return;
+		}
+	});
+</script>
+<script>
+	// function tip(content) {
+	// 	$('.tips > p').text(content).stop().fadeIn(100, function () {
+	// 		var _this = this;
+	// 		setTimeout(function () {
+	// 			$(_this).stop().fadeOut(3000);
+	// 		}, 1000);
+	// 	});
+	// }
+
+	// /*
+	// 	效果：
+	// 		1 验证数据是否为空 - 用户名、密码、手机、验证码
+	// 		2 验证用户名是否重复
+	// 		3 获取验证码 - 验证码还要短时间内不能重复点击
+	// 		4 实现注册
+
+	// 	步骤：
+	// 		1. 给所有的输入框，注册失去焦点，提示不能为空
+	// 		2. 用户名的输入框失去焦点的时候，到服务器请求一下，看看用户名是否重复
+	// 		3. 点击验证码的按钮，发送获取验证码的请求
+	// 		4. 点击注册按钮，把表单里面用户名，密码，手机，验证码带回服务器
+	// */
+	// $(function () {
+	// 	// 1 给用户名验证非空
+	// 	$(".name").on('blur', function () {
+	// 		// 获取当前的内容
+	// 		var currentValue = $(this).val();
+	// 		// 判断是否是空字符串
+	// 		if (currentValue.trim().length === 0) {
+	// 			$('.tips > p').text('用户名不能为空').stop().fadeIn(100, function () {
+	// 				var _this = this;
+	// 				setTimeout(function () {
+	// 					$(_this).stop().fadeOut(3000);
+	// 				}, 1000);
+	// 			});
+	// 			// 如果是空的，就不再继续往下执行了
+	// 			return;
+	// 		}
+
+	// 		// 2. 验证用户名是否重复
+	// 		// 使用ajax把接口请求一下
+	// 		var xhr = new XMLHttpRequest();
+	// 		xhr.open('get', 'http://127.0.0.1:8080/isUserNameExist?userName=' + currentValue);
+	// 		xhr.send();
+	// 		xhr.onreadystatechange = function () {
+	// 			if (xhr.readyState == 4 && xhr.status == 200) {
+	// 				// console.log(xhr.responseText); // 原生的ajax返回的响应体是一个字符串
+	// 				var resObj = JSON.parse(xhr.responseText);
+	// 				console.log(resObj);
+	// 				// 根据返回的结果，判断一下，如果用户名已经被使用，提示用户
+	// 				if (resObj.code != 200) {
+	// 					$('.tips > p').text('用户名已经存在').stop().fadeIn(100, function () {
+	// 						var _this = this;
+	// 						setTimeout(function () {
+	// 							$(_this).stop().fadeOut(3000);
+	// 						}, 1000);
+	// 					});
+	// 				}
+	// 			}
+	// 		}
+
+	// 	});
+
+	// 	// 3 点击获取验证码
+	// 	$(".verify").on('click', function () {
+	// 		// 判断该按钮是否已经禁用，如果禁用就不能点击了
+	// 		if($(this).hasClass('disabled')){
+	// 			return;
+	// 		}
+	// 		// 验证手机号
+	// 		var mobile = $(".mobile").val().trim();
+	// 		// 必须是数字，必须是11位
+	// 		if (isNaN(mobile) || mobile.length != 11) {
+	// 			tip('请输入正确的手机号码');
+	// 			return;
+	// 		}
+	// 		// 禁用按钮
+	// 		$(this).addClass('disabled');
+	// 		// 数字提示
+	// 		var seconds = 3;
+	// 		$(this).val(`获取验证码(${seconds})`);
+	// 		this.timer = setInterval((function(){
+	// 			seconds--;
+	// 			$(this).val(`获取验证码(${seconds})`);
+	// 			if(seconds <= 0){
+	// 				// 清除定时器，样式恢复原状，内容恢复原状
+	// 				clearInterval(this.timer);
+	// 				$(this).val('获取验证码').removeClass('disabled');
+	// 			}
+	// 		}).bind(this),1000);
+	// 		// 发送请求
+	// 		var xhr = new XMLHttpRequest();
+	// 		xhr.open('get','http://127.0.0.1:8080/getCodeWithoutPhone');
+	// 		xhr.send();
+	// 		xhr.onreadystatechange = function () {
+	// 			if(xhr.readyState == 4 && xhr.status == 200){
+	// 				// 把响应体转换为对象
+	// 				var resObj = JSON.parse(xhr.responseText);
+	// 				if(resObj.code){
+	// 					tip(`您的验证码是${resObj.code},来自【大前端科技】`);
+	// 					console.log(resObj.code);
+	// 				}
+	// 			}
+	// 		}
+	// 	})
+
+	// 	// 4.实现注册
+	// 	// 获取按钮，注册点击事件
+	// 	$('.submit ').on('click',function(){
+	// 		// 还是要把之前写好的验证再次验证 - 非空-是否重复
+
+	// 		// 需要把所有的数据收集起来
+	// 		var userName = $('.name').val();
+	// 		var pass = $('.pass').val();
+	// 		var repass = $(".repass").val();
+	// 		var mobile = $(".mobile").val();
+	// 		var code = $('.code').val();
+	// 		// - 一个一个的验证了 - 非空、用户是否重复
+	// 		// 密码两次要一致
+	// 		if(pass !== repass){
+	// 			tip('两次密码不一致哦！！');
+	// 			return;
+	// 		}
+	// 		// 数据全都验证完毕，就可以使用post请求发送了
+	// 		var xhr = new XMLHttpRequest();
+	// 		xhr.open('post','http://127.0.0.1:8080/doRegister');
+	// 		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+	// 		xhr.send(`userName=${userName}&password=${pass}&phone=${mobile}`);
+	// 		xhr.onreadystatechange = function(){
+	// 			if(xhr.readyState == 4 && xhr.status == 200){
+	// 				var resObj = JSON.parse(xhr.responseText);
+	// 				// 根据不同的逻辑，提示用户
+	// 				if(resObj.code != 200){
+	// 					tip('注册失败');
+	// 				}else {
+	// 					// 注册成功了，跳转到登录页面给用户进行登录
+	// 					tip('恭喜，注册成功，我们稍后将会为您自动跳转到登录页面');
+	// 					setTimeout(function(){
+	// 						location.href= './login.html';
+	// 					},2000);
+	// 				}
+	// 			}
+	// 		}
+	// 	});
+	// });
+</script>
 
 </html>

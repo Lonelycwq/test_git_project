@@ -1,155 +1,154 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Hero - Admin</title>
-    <link rel="stylesheet" href="../static/css/bootstrap.css">
-    <style>
-        .hero-list img {
-            width: 50px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Hero - Admin</title>
+  <link rel="stylesheet" href="../static/css/bootstrap.css">
+  <style>
+    .hero-list img {
+      width: 50px;
+    }
+  </style>
 </head>
 
 <body>
-    <header>
-        <div class="page-header container">
-            <h1>王者荣耀 <small>英雄管理器</small></h1>
-        </div>
-    </header>
-    <div class="container hero-list">
-        <form id='myform'>
-            <input type="hidden" name="img" id="headSrc">
-            <table class="table table-hover">
-                <tbody>
-                    <tr>
-                        <td>姓名：</td>
-                        <td><input type="text" name="name"></td>
-                    </tr>
-                    <tr>
-                        <td>性别：</td>
-                        <td><input id="nan" name="gender" value="男" type="radio" checked="checked"><label
-                                for="nan">男</label> <input name="gender" value="女" type="radio" id="nv"><label
-                                for="nv">女</label></td>
-                    </tr>
-                    <tr>
-                        <td>头像：</td>
-                        <td><img src="../static/images/0.jpg" alt="" id="photo" width="100">
-                            <input type="file" id="img"></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><input class="btn btn-primary" type="button" id="sub" value="新增"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
+  <header>
+    <div class="page-header container">
+      <h1>王者荣耀 <small>英雄管理器</small></h1>
     </div>
+  </header>
+  <div class="container hero-list">
+    <form id='myform'>
+      <input type="hidden" name="img" id="headSrc">
+      <table class="table table-hover">
+        <tbody>
+          <tr>
+            <td>姓名：</td>
+            <td><input type="text" name="name"></td>
+          </tr>
+          <tr>
+            <td>性别：</td>
+            <td><input id="nan" name="gender" value="男" type="radio" checked="checked"><label for="nan">男</label> <input
+                name="gender" value="女" type="radio" id="nv"><label for="nv">女</label></td>
+          </tr>
+          <tr>
+            <td>头像：</td>
+            <td><img src="../static/images/0.jpg" alt="" id="photo" width="100">
+              <input type="file" id="img"></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><input class="btn btn-primary" type="button" id="sub" value="新增"></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">提水</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        新增失败
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
-                </div>
-            </div>
+  <!-- Modal -->
+  <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">提水</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            新增失败
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
+        </div>
+      </div>
     </div>
+  </div>
 
 </body>
 <script src="../static/js/jquery.js"></script>
 <script src="../static/js/bootstrap.js"></script>
 <script src="../static/js/ajax.js"></script>
 <script>
-    // //获取元素注册点击事件，上传文件时使用change事件
-    // $('#img').on('change', function () {
-    //     //获取文件
-    //     let file = this.files[0];
-    //     //将所有表单控件的值用fromData获取
-    //     let data = new FormData();
-    //     console.log(data);
-    //     //把文件转化为文件流
-    //     data.append('pic', file);
-    //     //使用ajax发送请求图片上传
-    //     let xhr = new XMLHttpRequest();
-    //     xhr.open('post', 'http://127.0.0.1:8080/uploadHeadImg');
-    //     // 使用FormData对象，会自动的设置一个最合适的请求头
-    //     xhr.send(data);
-    //     xhr.onreadystatechange = function () {
-    //         if (xhr.readyState == 4 && xhr.status == 200) {
-    //             let res = JSON.parse(xhr.responseText);
-    //             if(res.code == 200){
-    //                 // 获取到了服务器返回的数据之后，把图片的地址替换一下
-    //                 $("#photo").attr('src',res.baseDir+res.filePath);
-    //             }
-    //         }
-    //     }
-    // });
-    //获取元素注册点击事件
-    $('#sub').on('click', function () {
-        console.log($('tbody input[type="text"]').val());
-        //表单数据判断是否为空
-        if ($('tbody input[type="text"]').val().trim().length === 0) {
-            alert('用户名不能为空！');
-            return;
-        }
-        //收集表单控件的所有数据
-        let data = $('form').serialize();
-        console.log(data);
-        //使用jq中的ajax请求新增
-        $.ajax({
-            type: 'post',
-            url: 'http://127.0.0.1:8080/addNewHero',
-            data: data,
-            success: function (res) {
-                if (res.code === 200) {
-                    //请求成功后提示用户并跳转
-                    alert(res.msg);
-                    location.href = './index.html';
-                }
-            }
-        });
-    })
+  // //获取元素注册点击事件，上传文件时使用change事件
+  // $('#img').on('change', function () {
+  //     //获取文件
+  //     let file = this.files[0];
+  //     //将所有表单控件的值用fromData获取
+  //     let data = new FormData();
+  //     console.log(data);
+  //     //把文件转化为文件流
+  //     data.append('pic', file);
+  //     //使用ajax发送请求图片上传
+  //     let xhr = new XMLHttpRequest();
+  //     xhr.open('post', 'http://127.0.0.1:8080/uploadHeadImg');
+  //     // 使用FormData对象，会自动的设置一个最合适的请求头
+  //     xhr.send(data);
+  //     xhr.onreadystatechange = function () {
+  //         if (xhr.readyState == 4 && xhr.status == 200) {
+  //             let res = JSON.parse(xhr.responseText);
+  //             if(res.code == 200){
+  //                 // 获取到了服务器返回的数据之后，把图片的地址替换一下
+  //                 $("#photo").attr('src',res.baseDir+res.filePath);
+  //             }
+  //         }
+  //     }
+  // });
 
-    /*
-    获取元素注册表单控件value值改变事件
-    获取上传文件
-    使用formdata将表单控件的所有value值获取
-    将文件转化为文件流
-    使用ajax发送图片上传请求
-    使用formdata之后不需要设置post方式的请求头了
-    请求成功之后将请求返回的路径和文件名拼接到预览图的src里面
-    */
-    $('#img').on('change', function () {
-        let file = this.files[0];
-        let data = new FormData();
-        data.append('pic', file);
-        $.ajax({
-            type: 'post',
-            url: 'http://127.0.0.1:8080/uploadHeadImg',
-            data: data,
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                if (res.code === 200) {
-                    $('#photo').attr('src', res.baseDir + res.filePath);
-                    $('#headSrc').val(res.filePath);
-                }
-            }
-        });
+  /*
+  获取元素注册表单控件value值改变事件
+  获取上传文件
+  使用formdata将表单控件的所有value值获取
+  将文件转化为文件流
+  使用ajax发送图片上传请求
+  使用formdata之后不需要设置post方式的请求头了
+  请求成功之后将请求返回的路径和文件名拼接到预览图的src里面
+  */
+  $('#img').on('change', function () {
+    let file = this.files[0];
+    let data = new FormData();
+    data.append('pic', file);
+    $.ajax({
+      type: 'post',
+      url: 'http://127.0.0.1:8080/uploadHeadImg',
+      data: data,
+      contentType: false,
+      processData: false,
+      success: function (res) {
+        if (res.code === 200) {
+          $('#photo').attr('src', res.baseDir + res.filePath);
+          $('#headSrc').val(res.filePath);
+        }
+      }
     });
+  });
+  //获取元素注册点击事件
+  $('#sub').on('click', function () {
+    console.log($('tbody input[type="text"]').val());
+    //表单数据判断是否为空
+    if ($('tbody input[type="text"]').val().trim().length === 0) {
+      alert('用户名不能为空！');
+      return;
+    }
+    //收集表单控件的所有数据
+    let data = $('form').serialize();
+    console.log(data);
+    //使用jq中的ajax请求新增
+    $.ajax({
+      type: 'post',
+      url: 'http://127.0.0.1:8080/addNewHero',
+      data: data,
+      success: function (res) {
+        if (res.code === 200) {
+          //请求成功后提示用户并跳转
+          alert(res.msg);
+          location.href = './index.html';
+        }
+      }
+    });
+  })
 </script>
 
 </html>

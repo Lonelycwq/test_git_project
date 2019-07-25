@@ -136,6 +136,7 @@
 	</div>
 </body>
 <script src="../static/js/jquery.js"></script>
+<script src="../static/js/kits.js"></script>
 <script>
 	//创建一个轻量弹窗
 	function tip(content) {
@@ -150,85 +151,146 @@
 			}, 1000);
 		});
 	}
-	//声明一个变量表示是否停止
-	let temp;
-	//封装一个可复用的判断输入框为空函数
-	function inputNull(element, msg) {
-		//获取输入框value
-		let val = $(element).val();
-		//判断输入框是否为空
-		if (val.trim().length === 0) {
-			//弹出提示框
+	//获取元素
+	let name = document.querySelector('.name');
+	let pad = document.querySelector('.pass');
+	let repad = document.querySelector('.repass');
+	let mobile = document.querySelector('.mobile');
+	let code = document.querySelector('.code');
+	// 创建一个实例对象
+	let vld = new Validator();
+
+	//给用户名输入框注册失焦事件
+	$('.name').on('blur', function () {
+		//以键=值的对象方式存储用户名内容
+		let nameData = {
+			userName: $('.name').val()
+		};
+		// console.log(nameData);
+		//用户名输入框规则
+		vld.add(name, [{
+				fnName: 'isNonEmpty',
+				errMsg: '名字不能为空'
+			},
+			{
+				fnName: 'minLength:6',
+				errMsg: '名字的长度不能小于6'
+			}
+		]);
+		//将所有规则都去判断一遍返回一个提示语
+		let msg = vld.start();
+		//如果有则弹出框提示用户
+		if (msg) {
+			// 提示用户 - 不一定非得是alert，使用bootstrap的提示框也是可以的
 			tip(msg);
-			temp = false;
+			return; // 如果在beforeSend函数里面return 一个false，ajax就不会继续发送了
 		}
-	}
-	//封装输入框失焦事件
-	function inputName() {
-		//调用判断输入框为空函数
-		inputNull('.name', '用户名不可为空');
 		//ajax判断用户名是否可用
 		$.ajax({
 			type: 'get',
 			url: 'http://127.0.0.1:8080/isUserNameExist',
-			username: name,
+			data: nameData,
 			success: function (res) {
 				//判断是否响应成功
 				if (res.code !== 200) {
-					tip('此用户名不可用，请更换');
+					tip(res.msg + '请更换');
 					return;
 				}
 			}
 		});
-	}
-	//给用户名输入框注册失焦事件
-	$('.name').on('blur', inputName);
+	});
 
-	//声明变量存储密码
-	let pad;
-	//封装密码框失焦事件
-	function inputPsd() {
-		//调用判断输入框为空函数
-		inputNull('.pass', '密码不可为空');
-	}
+	//声明变量存储输入的密码
+	let getPad;
 	//给输入密码框注册失焦事件
-	$('.pass').on('blur', inputPsd);
-
-	//封装确认密码框失焦事件
-	function inputRepsd() {
-		//调用判断输入框为空函数
-		inputNull('.repass', '确认密码不可为空');
-	}
-	//给重复输入密码框注册失焦事件
-	$('.repass').on('blur', inputRepsd);
-
-	//声明变量存储手机框的值
-	let mobile;
-	//封装手机号输入框事件
-	function inputMobile() {
-		//获取输入框value
-		mobile = $('.mobile').val();
-		// console.log(r.test(mobile));
-		//调用判断输入框为空函数
-		inputNull('.mobile', '手机号不可为空');
-		// console.log(!/(^1[3|5|8][0-9]{9}$)/.test(mobile));
-		if (!/(^1[3|5|8][0-9]{9}$)/.test(mobile) === true) {
-			//弹出提示框
-			tip('手机号格式有误');
+	$('.pass').on('blur', function () {
+		//获取输入的内容
+		getPad = $(this).val();
+		//密码输入框规则
+		vld.add(pad, [{
+				fnName: 'isNonEmpty',
+				errMsg: '密码不能为空'
+			},
+			{
+				fnName: 'minLength:6',
+				errMsg: '密码的长度不能小于6'
+			}
+		]);
+		//将所有规则都去判断一遍返回一个提示语
+		let msg = vld.start();
+		//如果有则弹出框提示用户
+		if (msg) {
+			// 提示用户 - 不一定非得是alert，使用bootstrap的提示框也是可以的
+			tip(msg);
+			return; // 如果在beforeSend函数里面return 一个false，ajax就不会继续发送了
 		}
-	}
+	});
+
+	//声明变量存储重复输入的密码
+	let getRepad;
+	//给重复输入密码框注册失焦事件
+	$('.repass').on('blur', function () {
+		//获取输入的内容
+		getRepad = $(this).val();
+		//确认秘密输入框规则
+		vld.add(repad, [{
+			fnName: 'isNonEmpty',
+			errMsg: '确认密码不能为空'
+		}]);
+		//将所有规则都去判断一遍返回一个提示语
+		let msg = vld.start();
+		//如果有则弹出框提示用户
+		if (msg) {
+			// 提示用户 - 不一定非得是alert，使用bootstrap的提示框也是可以的
+			tip(msg);
+			return; // 如果在beforeSend函数里面return 一个false，ajax就不会继续发送了
+		}
+	});
+
+
 	//给手机输入框注册失焦事件
-	$('.mobile').on('blur', inputMobile);
+	$('.mobile').on('blur', function () {
+		//手机号输入框规则
+		vld.add(mobile, [{
+				fnName: 'isNonEmpty',
+				errMsg: '手机号不能为空'
+			},
+			{
+				fnName: 'isMoilbe',
+				errMsg: '手机号格式不正确'
+			}
+		]);
+		//将所有规则都去判断一遍返回一个提示语
+		let msg = vld.start();
+		//如果有则弹出框提示用户
+		if (msg) {
+			// 提示用户 - 不一定非得是alert，使用bootstrap的提示框也是可以的
+			tip(msg);
+			return; // 如果在beforeSend函数里面return 一个false，ajax就不会继续发送了
+		}
+	});
 
 	//声明变量存储验证码
 	let getCode;
 	//给获取验证码按钮注册点击事件
 	$('.verify').on('click', function () {
-		//调用手机输入框事件
-		inputMobile();
-		if (temp === false) {
-			temp = true;
-			return;
+		//手机号输入框规则
+		vld.add(mobile, [{
+				fnName: 'isNonEmpty',
+				errMsg: '手机号不能为空'
+			},
+			{
+				fnName: 'isMoilbe',
+				errMsg: '手机号格式不正确'
+			}
+		]);
+		//将所有规则都去判断一遍返回一个提示语
+		let msg = vld.start();
+		//如果有则弹出框提示用户
+		if (msg) {
+			// 提示用户 - 不一定非得是alert，使用bootstrap的提示框也是可以的
+			tip(msg);
+			return; // 如果在beforeSend函数里面return 一个false，ajax就不会继续发送了
 		}
 		//使按钮不可点击
 		$(this).prop('disabled', true);
@@ -265,75 +327,118 @@
 		});
 	});
 
-	//封装验证码框事件
-	function inputCode() {
-		//获取输入框value
-		let code = $('.code').val();
-		//调用判断输入框为空函数
-		inputNull('.code', '验证码不可为空');
-		//判断输入的验证码和获取的验证码是否一致
-		if (getCode != code) {
-			//弹出提示框
-			tip('验证码不正确');
-			return;
-		}
-	}
+	//声明变量存储重复输入的验证码
+	let getCodeVal;
 	//给验证码输入框注册失焦事件
-	$('.code').on('blur', inputCode);
+	$('.code').on('blur', function () {
+		//获取输入的内容
+		getCodeVal = $(this).val();
+		//验证码输入框规则
+		vld.add(code, [{
+			fnName: 'isNonEmpty',
+			errMsg: '验证码不能为空'
+		}]);
+		//将所有规则都去判断一遍返回一个提示语
+		let msg = vld.start();
+		//如果有则弹出框提示用户
+		if (msg) {
+			// 提示用户 - 不一定非得是alert，使用bootstrap的提示框也是可以的
+			tip(msg);
+			return; // 如果在beforeSend函数里面return 一个false，ajax就不会继续发送了
+		}
+	});
 
 
 	//给提交按钮注册点击事件
 	$('.submit').on('click', function (e) {
 		//阻止默认行为
-		e.preventDefault();
-		//将之前的所有失焦事件重新判断一遍
-		//用户名框判断
-		inputName();
-		if (temp === false) {
-			temp = true;
-			return;
-		}
-
-		//密码框判断
-		inputPsd();
-		if (temp === false) {
-			temp = true;
-			return;
-		}
-
-		//确认密码框判断
-		inputRepsd();
-		if (temp === false) {
-			temp = true;
-			return;
-		}
-
-		//判断手机号框
-		inputMobile();
-		if (temp === false) {
-			temp = true;
-			return;
-		}
-
-		//判断验证码框
-		inputCode();
-		if (temp === false) {
-			temp = true;
-			return;
-		}
-
+		// e.preventDefault();
 		//收集输入框所有数据
 		let data = $('form').serialize();
-		//定义数据对象
-		let dataObj = {
-			data
-		}
-		console.log(data);
+		// console.log(data);
 		//使用ajax请求注册
 		$.ajax({
 			type: 'post',
 			url: 'http://127.0.0.1:8080/doRegister',
-			data: dataObj,
+			data: data,
+			beforeSend: function () {
+				//将之前的所有失焦事件重新判断一遍
+				//用户名输入框规则
+				vld.add(name, [{
+						fnName: 'isNonEmpty',
+						errMsg: '名字不能为空'
+					},
+					{
+						fnName: 'minLength:6',
+						errMsg: '名字的长度不能小于6'
+					}
+				]);
+				//以键=值的对象方式存储用户名内容
+				let nameData = {
+					userName: $('.name').val()
+				};
+				//ajax判断用户名是否可用
+				$.ajax({
+					type: 'get',
+					url: 'http://127.0.0.1:8080/isUserNameExist',
+					data: nameData,
+					success: function (res) {
+						//判断是否响应成功
+						if (res.code !== 200) {
+							tip(res.msg + '请更换');
+							return;
+						}
+					}
+				});
+				//密码输入框规则
+				vld.add(pad, [{
+						fnName: 'isNonEmpty',
+						errMsg: '密码不能为空'
+					},
+					{
+						fnName: 'minLength:6',
+						errMsg: '密码的长度不能小于6'
+					}
+				]);
+				//确认秘密输入框规则
+				vld.add(repad, [{
+					fnName: 'isNonEmpty',
+					errMsg: '确认密码不能为空'
+				}]);
+				//判断两次输入的密码不一致
+				if (getPad != getRepad) {
+					tip('两次密码不一致');
+					return false;
+				}
+				//手机号输入框规则
+				vld.add(mobile, [{
+						fnName: 'isNonEmpty',
+						errMsg: '手机号不能为空'
+					},
+					{
+						fnName: 'isMoilbe',
+						errMsg: '手机号格式不正确'
+					}
+				]);
+				//验证码输入框规则
+				vld.add(code, [{
+					fnName: 'isNonEmpty',
+					errMsg: '验证码不能为空'
+				}]);
+				//判断获取的验证码和输入的不一致
+				if (getCode != getCodeVal) {
+					tip('验证码不正确');
+					return false;
+				}
+				//将所有规则都去判断一遍返回一个提示语
+				let msg = vld.start();
+				//如果有则弹出框提示用户
+				if (msg) {
+					// 提示用户 - 不一定非得是alert，使用bootstrap的提示框也是可以的
+					tip(msg);
+					return false; // 如果在beforeSend函数里面return 一个false，ajax就不会继续发送了
+				}
+			},
 			success: function (res) {
 				if (res.code === 200) {
 					//提示用户注册成功并三秒跳转

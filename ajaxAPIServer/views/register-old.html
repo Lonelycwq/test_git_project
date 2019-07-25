@@ -364,16 +364,12 @@
 
 		//收集输入框所有数据
 		let data = $('form').serialize();
-		//定义数据对象
-		let dataObj = {
-			data
-		}
 		console.log(data);
 		//使用ajax请求注册
 		$.ajax({
 			type: 'post',
 			url: 'http://127.0.0.1:8080/doRegister',
-			data: dataObj,
+			data: data,
 			success: function (res) {
 				if (res.code === 200) {
 					//提示用户注册成功并三秒跳转

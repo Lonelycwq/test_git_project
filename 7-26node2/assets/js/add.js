@@ -32,6 +32,11 @@ function serialize(formSelector) {
 let btn = document.querySelector('#sub');
 btn.addEventListener('click', function () {
   //非空判断
+  let name = document.querySelector('input[type="text');
+  if (name.value === '') {
+    alert('姓名不能为空');
+    return;
+  }
   //收集数据
   let data = serialize('#myform');
   let xhr = new XMLHttpRequest();

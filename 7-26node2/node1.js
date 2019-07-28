@@ -1,27 +1,8 @@
-// //引入服务器模块
-// const http = require('http');
-// //引入读取文件模块
-// const fs = require('fs');
-// //创建一个服务器
-// const server = http.createServer();
-// //给服务器设置端口和ip
-// server.listen(8080, '127.0.0.1', () => {
-//   console.log('服务器已开启，可以通过http://127.0.0.1:8080 访问');
-// })
-// //注册一个浏览器访问服务器事件
-// server.on('request', (req, res) => {
-//   console.log('是谁在敲我的窗');
-//   //设置响应头编码格式
-//   res.setHeader('Content-Type', 'text/html;charset=utf-8');
-//   //返回值
-//   console.log(req.url);
-//   res.end('是谁在敲我的窗')
-// })
-
-//引入HTTP模版和fs模版和template模版
+//引入HTTP模版、fs模版、template模版和地址栏模版
 const http = require('http');
 const fs = require('fs');
 const template = require('art-template');
+const url = require('url');
 //创建一个服务器
 const server = http.createServer();
 //给服务器设置端口和ip
@@ -47,6 +28,8 @@ server.on('request', (req, res) => {
       res.end(data);
     });
   } else {
+    //使用url模块得到请求的方法和参数
+    let result = url.parse(req.url, true);
     // //判断请求的地址是否是要求的
     // if (req.url === '/getAllHeros') {
     //   //读取文件
@@ -67,6 +50,47 @@ server.on('request', (req, res) => {
         });
         //返回数据给浏览器
         res.end(html);
+      });
+    } else if (req.url === '/views/add.html') {
+      //读取静态资源add页面文件
+      fs.readFile('./views/add.html', (err, data) => {
+        if (err) console.log(err);
+        res.end(data);
+      })
+    }
+    //判断请求和请求方式是否一致
+    if (result.pathname === '/addHero' && req.method === 'GET') {
+      console.log('新增英雄请求进入');
+      //读取json文件
+      fs.readFile('./data/heros.json', (err, data) => {
+        if (err) console.log(err);
+        //将读取的json文件转化为数组 
+        let arr = JSON.parse(data);
+        //声明一个变量作为新增的数据的id
+        let id = 0;
+        //遍历数组
+        arr.forEach(e => {
+          //判断得出最大的id
+          if (e.id > id) {
+            id = e.id;
+          }
+        });
+        //将新增数据加一个id值
+        result.query.id = id + 1;
+        //将修改后的数据添加到数组的最后
+        arr.push(result.query);
+        //将数组转化为字符串
+        let jsonstr = JSON.stringify(arr);
+        //使用fs写入文件，将新的数据字符串重新写入文件中
+        fs.writeFile('./data/heros.json', jsonstr, 'utf-8', (err) => {
+          if (err) console.log(err);
+          //返回提示
+          let obj = {
+            code: 200,
+            msg: '添加成功'
+          }
+          res.end(JSON.stringify(obj));
+        })
       });
     }
   }

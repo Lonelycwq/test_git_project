@@ -93,6 +93,14 @@ let app = express();
 app.listen(8080, () => {
   console.log('http://127.0.0.1:8080');
 });
+// let allow = function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type');
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   next();
+// }
+// app.use(allow)
 //请求静态资源,以/assets开头的请求的数据
 app.use(bodyParser.urlencoded({
   extended: false

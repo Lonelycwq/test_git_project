@@ -37,6 +37,21 @@ router.get('/add', (req, res) => {
   controller.getAddHtml(req, res);
 });
 
+//监听edit页面请求
+router.get('/edit', (req, res) => {
+  controller.getEditHtml(req, res);
+});
+
+//监听edit页面获取对应id的英雄数据请求
+router.get('/getHeroById', (req, res) => {
+  controller.getHeroById(req, res);
+});
+
+//监听edit页面修改英雄数据的请求
+router.post('/editHeroById', (req, res) => {
+  controller.editHeroById(req, res);
+});
+
 //监听删除英雄的请求
 router.get('/delHero', (req, res) => {
   controller.delHero(req, res);

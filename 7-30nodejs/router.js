@@ -48,8 +48,8 @@ router.get('/getHeroById', (req, res) => {
 });
 
 //监听edit页面修改英雄数据的请求
-router.post('/editHeroById', (req, res) => {
-  controller.editHeroById(req, res);
+router.post('/editHero', (req, res) => {
+  controller.editHero(req, res);
 });
 
 //监听删除英雄的请求

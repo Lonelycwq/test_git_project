@@ -28,13 +28,13 @@ $(function () {
           //ajax发送新增请求
           $.ajax({
             type: 'post',
-            url: 'http://127.0.0.1:9090/editHeroById',
+            url: 'http://127.0.0.1:8080/editHero',
             data,
             success: function (res) {
               //请求成功则弹窗提示并跳转
               if (res.code === 200) {
                 alert(res.msg);
-                // location.href = './index';
+                location.href = './index';
               }
             }
           });

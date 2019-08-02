@@ -12,7 +12,7 @@ $(function () {
     //发送ajax请求
     $.ajax({
       type: 'get',
-      url: 'http://127.0.0.1:8080/deleteHeroId',
+      url: 'http://127.0.0.1:8080/delHero',
       data: {
         id
       },

@@ -1,61 +1,73 @@
 //引入fs模块
 const fs = require('fs');
-
+//引入MySQL
+const mysql = require('mysql');
+//创建一个连接对象
+let connection = mysql.createConnection({
+  host: '127.0.0.1',
+  port: 3306,
+  user: 'root',
+  password: 'root',
+  //数据库名
+  database: 'ajax35'
+});
+//连接数据库
+connection.connect();
 //获取所有英雄的方法
 function getAllHero(callback) {
-  //读取文件获取数据
-  fs.readFile('./data/heros.json', 'utf-8', (err, data) => {
+  //创建一个sql语句
+  let getAllSql = `select * from heros WHERE isDelete=0`;
+  //执行sql语句
+  connection.query(getAllSql, (err, result, fields) => {
     if (err) console.log(err);
-    //将文件转化为数组对象
-    let arr = JSON.parse(data);
-    callback(arr);
+    callback(result);
   });
 }
-//写入json文件的方法
-function writeFile(arr) {
-  //将对象转化为json格式的字符串
-  let content = JSON.stringify(arr);
-  //写入文件
-  fs.writeFile('./data/heros.json', content, 'utf-8', (err) => {
+//新增英雄数据的方法
+function AddHero(obj) {
+  //创建新增语句
+  let getAddSql = `INSERT INTO heros SET name='${obj.name}',gender='${obj.gender}',img='${obj.img}'`
+  //执行sql语句
+  connection.query(getAddSql, (err, result, fields) => {
     if (err) console.log(err);
+    console.log(result);
   });
 }
-//获取最大id的方法
-function getMaxId(callback) {
-  //调用获取数据的方法
-  this.getAllHero((arr) => {
-    //假设数组的第一个数据的id是最大id
-    let id = arr[0].id;
-    //遍历数组
-    for (let i = 1; i < arr.length; i++) {
-      //判断数组中数据的id是否大于最大id
-      if (arr[i].id > id) {
-        //谁大给最大id重新赋值
-        id = arr[i].id;
-      }
-    }
-    //回调函数返回最大id
-    callback(id);
+//编辑英雄数据的方法
+function editHero(obj) {
+  //创建编辑语句
+  let getEditSql = `UPDATE heros SET name='${obj.name}',gender='${obj.gender}',img='${obj.img}' WHERE id=${obj.id}`;
+  //执行sql语句
+  connection.query(getEditSql, (err, result, fields) => {
+    if (err) console.log(err);
   });
 }
 //通过id获取对应数据的方法
-function getHeroById(id, callback) {
-  //获取所有英雄数据
-  this.getAllHero((arr) => {
-    //查找对应id的获取数据
-    let target = arr.find((e) => {
-      return e.id == id;
-    });
-    //回调函数返回target
-    callback(target);
+function getHeroById(obj, callback) {
+  //创建一个sql语句
+  let getIdSql = `SELECT * FROM heros WHERE id=${obj.id}`;
+  //执行sql语句
+  connection.query(getIdSql, (err, result, fields) => {
+    if (err) console.log(err);
+    callback(result[0]);
+  });
+}
+//删除对应数据的方法
+function delHero(obj) {
+  //创建修改语句
+  let getDelSql = `UPDATE heros SET isDelete=1 WHERE id=${obj.id}`
+  //执行sql语句
+  connection.query(getDelSql, (err, result, fields) => {
+    if (err) console.log(err);
   });
 }
 
 let model = {
   getAllHero,
-  writeFile,
-  getMaxId,
-  getHeroById
+  AddHero,
+  editHero,
+  getHeroById,
+  delHero
 }
 
 //暴露数据层model对象

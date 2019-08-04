@@ -84,8 +84,8 @@
 //引入express模块
 const express = require('express');
 //引入路由层
-// const router = require('./router');
-const router = require('./routerOld');
+const router = require('./router');
+// const router = require('./routerOld');
 //引入body-parser中间件
 const bodyParser = require('body-parser')
 //创建一个服务器

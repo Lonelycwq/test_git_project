@@ -1,7 +1,7 @@
-# albx_35
+# myalbx
 
 #### Description
-认真写代码
+阿里百秀项目
 
 #### Software Architecture
 Software architecture description

@@ -1,6 +1,3 @@
-//引入模块
-const querystring = require('querystring');
-
 //暴露前台主页请求逻辑
 module.exports.getIndex = (req, res) => {
   res.render('index');
@@ -18,18 +15,7 @@ module.exports.getDetail = (req, res) => {
 module.exports.getAdminIndex = (req, res) => {
   res.render('admin/index');
 }
-// module.exports.getAdminIndex = (req, res) => {
-//   let mycookie = querystring.parse(req.headers.cookie);
-//   if (mycookie.isLogin && mycookie.isLogin == 'true') {
-//     res.render('admin/index');
-//   } else {
-//     //301,302重定向
-//     res.writeHead(301, {
-//       'Location': '/admin/login'
-//     });
-//     res.end();
-//   }
-// }
+
 //暴露后台其他页面请求逻辑
 module.exports.getAdminCategories = (req, res) => {
   res.render('admin/categories');

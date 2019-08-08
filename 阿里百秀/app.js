@@ -27,8 +27,8 @@ app.use(session({
   saveUninitialized: false
 }))
 //托管静态资源
-app.use('./assets', express.static('assets'));
-app.use('./uploads', express.static('uploads'));
+app.use('/assets', express.static('assets'));
+app.use('/uploads', express.static('uploads'));
 //添加全局的中间件，每次请求都会通过这个中间件
 app.use(function (req, res, next) {
   //判断三种情况下直接跳过此中间件使用下一个中间件

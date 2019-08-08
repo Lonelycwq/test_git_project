@@ -3,6 +3,7 @@ $(function () {
 
   //获取按钮元素注册事件
   $('#loginbtn').on('click', function (e) {
+    console.log(6666);
     // e.preventDefault();
     //获取表单所有控件值
     let data = $('.login-wrap').serialize();

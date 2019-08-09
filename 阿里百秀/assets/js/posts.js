@@ -16,7 +16,7 @@ $(function () {
         ...search
       },
       success: function (res) {
-        console.log(res);
+        // console.log(res);
         //渲染模版引擎
         let html = template('postTemp', res.data);
         //将模版字符串插入页面中
@@ -30,7 +30,7 @@ $(function () {
   init();
   //实现分页
   function setpagenation(total) {
-    console.log(total);
+    // console.log(total);
     //分页初始化
     $('.pagination').bootstrapPaginator({
       //配置分页
@@ -40,7 +40,7 @@ $(function () {
       //总页数
       totalPages: total,
       onPageClicked: function (event, originalEvent, type, page) {
-        console.log(type, page);
+        // console.log(type, page);
         //pageNum重新赋值为点击的页码
         pageNum = page;
         //重新获取数据生成当前页面结构
@@ -55,7 +55,7 @@ $(function () {
     url: "/getAllCate",
     dataType: "json",
     success: function (res) {
-      console.log(res);
+      // console.log(res);
       //声明选择列表总字符串，先设置一个所有分类
       let html = `<option value="all">所有分类</option>`;
       // 遍历获取到的数据数组，拼接字符串
@@ -74,7 +74,7 @@ $(function () {
       cate: $('.cateSelector').val(),
       status: $('.statusSelector').val()
     }
-    console.log(obj);
+    // console.log(obj);
     init(obj);
   })
 });

@@ -8,6 +8,8 @@ const usersController = require('./controllers/usersController');
 const postsController = require('./controllers/postsController');
 //引入文章列表分类控制器
 const cateController = require('./controllers/cateController');
+//引入文件上传控制器
+const uploadController = require('./controllers/uploadController');
 //创建路由对象
 const router = express.Router();
 
@@ -38,6 +40,12 @@ router.get('/getAllPost', postsController.getAllPost);
 
 //文章分类数据请求
 router.get('/getAllCate', cateController.getAllCate);
+
+//图片文件上传请求
+router.post('/uploadFiles', uploadController.uploadFiles);
+
+//文章分类数据请求
+router.post('/addPost', postsController.addPost);
 
 //暴露路由层
 module.exports = router;

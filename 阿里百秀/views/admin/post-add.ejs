@@ -10,10 +10,11 @@
         <strong>错误！</strong><span>发生XXX错误</span>
       </div>
       <form class="row">
+      <input type="hidden" name="id">
         <div class="col-md-9">
           <div class="form-group">
             <label for="title">标题</label>
-            <input id="title" class="form-control input-lg" name="title" type="text" placeholder="文章标题" value="文章标题">
+            <input id="title" class="form-control input-lg" name="title" type="text" placeholder="文章标题">
           </div>
           <div class="form-group">
             <label for="content">内容</label>
@@ -23,7 +24,7 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="slug">别名</label>
-            <input id="slug" class="form-control" name="slug" type="text" placeholder="slug" value="文章别名">
+            <input id="slug" class="form-control" name="slug" type="text" placeholder="slug">
             <p class="help-block">https://zce.me/post/<strong>slug</strong></p>
           </div>
           <div class="form-group">

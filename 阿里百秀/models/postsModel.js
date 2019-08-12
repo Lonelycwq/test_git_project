@@ -1,7 +1,7 @@
 //引入数据库连接
 const conn = require('../utils/myconn');
 
-//暴露查询文章列表数据方法
+//查询文章列表数据模型方法
 module.exports.getAllPost = (obj, callback) => {
   //创建sql语句
   let postSql = `SELECT posts.*, users.nickname,categories.\`name\` FROM posts
@@ -60,7 +60,7 @@ module.exports.getAllPost = (obj, callback) => {
   })
 }
 
-//暴露新增文章的数据方法
+//新增文章的数据模型方法
 module.exports.addPost = (obj, callback) => {
   //创建sql语句,新增数据使用占位符，?会根据对象中的属性名创建字段
   let addSql = `insert into posts set ?`;
@@ -72,9 +72,8 @@ module.exports.addPost = (obj, callback) => {
       // console.log(reslut);
       callback(null);
     }
-  })
+  });
 }
-
 
 // //暴露新增文章的数据方法
 // module.exports.addPost = (obj, callback) => {
@@ -90,3 +89,51 @@ module.exports.addPost = (obj, callback) => {
 //     }
 //   })
 // }
+
+//根据id查询文章数据模型方法
+module.exports.getPostById = (id, callback) => {
+  //创建sql根据id查询数据
+  let postSql = `select * from posts where id = ${id}`;
+  //执行sql语句
+  conn.query(postSql, (err, result) => {
+    if (err) {
+      // console.log(err);
+      callback(err);
+    } else {
+      // console.log(result[0]);
+      callback(null, result[0]);
+    }
+  });
+}
+
+//编辑文章的数据模型方法
+module.exports.editPostById = (obj, callback) => {
+  // console.log(obj);
+  //创建sql语句,新增数据使用占位符，?会根据对象中的属性名创建字段
+  let editSql = `UPDATE posts SET ? WHERE id = ?`;
+  //执行sql语句，传入一个对象
+  conn.query(editSql, [obj, obj.id], (err, reslut) => {
+    if (err) {
+      callback(err);
+    } else {
+      // console.log(reslut);
+      callback(null);
+    }
+  })
+}
+
+//删除文章的数据模型方法
+module.exports.delPostById = (id, callback) => {
+  //创建sql根据id查询数据
+  let postSql = `delete from posts where id = ${id}`;
+  //执行sql语句
+  conn.query(postSql, (err, result) => {
+    if (err) {
+      // console.log(err);
+      callback(err);
+    } else {
+      // console.log(result[0]);
+      callback(null);
+    }
+  });
+}

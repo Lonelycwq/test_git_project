@@ -1,4 +1,5 @@
 $(function () {
+
   //定义当前列表初始页码和一页展示多少数据
   let pageNum = 1;
   let pageSize = 2;
@@ -26,6 +27,7 @@ $(function () {
       }
     });
   }
+
   //页面一开始调用获取文章列表的方法
   init();
   //实现分页
@@ -76,5 +78,35 @@ $(function () {
     }
     // console.log(obj);
     init(obj);
-  })
+  });
+
+  //给删除按钮注册委托事件
+  $('tbody').on('click', '.btn-del', function () {
+    //使用闭包方式获取当前this
+    let _this = $(this);
+    //获取当前数据id
+    let id = $(this).data();
+    // console.log($(this));
+    //提示用户
+    if (confirm('确定删除数据吗？')) {
+      //发送ajax请求删除数据
+      $.ajax({
+        type: "get",
+        url: "/delPostById",
+        data: id,
+        dataType: "json",
+        success: function (res) {
+          console.log(res);
+          if (res.code === 200) {
+            //移除当前删除一栏tr
+            _this.parents('tr').remove();
+            //提示用户删除成功
+            $('.alert-danger').text(res.msg).fadeIn(500).delay(2000).fadeOut(500);
+            //重新加载分页
+            init();
+          }
+        }
+      });
+    }
+  });
 });

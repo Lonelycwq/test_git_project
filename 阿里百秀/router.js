@@ -44,8 +44,26 @@ router.get('/getAllCate', cateController.getAllCate);
 //图片文件上传请求
 router.post('/uploadFiles', uploadController.uploadFiles);
 
-//文章分类数据请求
+//文章新增请求
 router.post('/addPost', postsController.addPost);
+
+//根据id获取文章数据请求
+router.get('/getPostById', postsController.getPostById);
+
+//根据id编辑文章数据请求
+router.post('/editPostById', postsController.editPostById);
+
+//根据id删除文章数据请求
+router.get('/delPostById', postsController.delPostById);
+
+//新增分类数据请求
+router.get('/getAddCate', cateController.getAddCate);
+
+//新增分类数据请求
+router.get('/editCateById', cateController.editCateById);
+
+//新增分类数据请求
+router.get('/delCateById', cateController.delCateById);
 
 //暴露路由层
 module.exports = router;

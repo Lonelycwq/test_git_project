@@ -51,7 +51,7 @@ module.exports.editCateById = (obj, callback) => {
 //编辑分类数据的数据模型方法
 module.exports.delCateById = (id, callback) => {
   //创建sql语句,新增数据使用占位符，?会根据对象中的属性名创建字段
-  let editSql = `UPDATE categories SET isDelete= 1 WHERE id=${id}`;
+  let editSql = `UPDATE categories SET isDelete= 1 WHERE id in (${id})`;
   //执行sql语句，传入一个对象
   conn.query(editSql, (err, reslut) => {
     // console.log(reslut);

@@ -6,12 +6,13 @@
         <h1>导航菜单</h1>
       </div>
       <!-- 有错误信息时展示 -->
-      <!-- <div class="alert alert-danger">
-        <strong>错误！</strong>发生XXX错误
-      </div> -->
+      <div class="alert alert-danger" style="display: none">
+        <strong>错误！</strong><span>发生XXX错误</span>
+      </div>
       <div class="row">
         <div class="col-md-4">
           <form>
+          <input type="hidden" name="icon" value="fa fa-gift">
             <h2>添加新导航链接</h2>
             <div class="form-group">
               <label for="text">文本</label>
@@ -23,10 +24,10 @@
             </div>
             <div class="form-group">
               <label for="href">链接</label>
-              <input id="href" class="form-control" name="href" type="text" placeholder="链接">
+              <input id="link" class="form-control" name="link" type="text" placeholder="链接">
             </div>
             <div class="form-group">
-              <button class="btn btn-primary" type="submit">添加</button>
+              <input class="btn btn-primary btnadd" type="button" value="添加">
             </div>
           </form>
         </div>
@@ -46,33 +47,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td><i class="fa fa-glass"></i>奇趣事</td>
-                <td>奇趣事</td>
-                <td>#</td>
-                <td class="text-center">
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td><i class="fa fa-phone"></i>潮科技</td>
-                <td>潮科技</td>
-                <td>#</td>
-                <td class="text-center">
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td><i class="fa fa-fire"></i>会生活</td>
-                <td>会生活</td>
-                <td>#</td>
-                <td class="text-center">
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
+
             </tbody>
           </table>
         </div>
@@ -82,3 +57,18 @@
 
 <%- include('./layouts/admin_aside.ejs'); %>
 <%- include('./layouts/admin_footer.ejs'); %>
+<script src="/assets/vendors/template/template.js"></script>
+<script src="/assets/js/nav-menu.js"></script>
+<script type="text/template" id="menuTemp">
+  {{ each data as value index }}
+    <tr data-id="{{index}}">
+      <td class="text-center"><input type="checkbox"></td>
+      <td><i class="{{value.icon}}"></i>{{value.text}}</td>
+      <td>{{value.title}}</td>
+      <td>{{value.link}}</td>
+      <td class="text-center">
+        <a href="javascript:;" class="btn btn-danger btn-xs btndel" data-id="{{index}}">删除</a>
+      </td>
+    </tr>
+  {{/each}}
+</script>

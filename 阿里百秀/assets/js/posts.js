@@ -17,7 +17,7 @@ $(function () {
         ...search
       },
       success: function (res) {
-        // console.log(res);
+        console.log(res);
         //渲染模版引擎
         let html = template('postTemp', res.data);
         //将模版字符串插入页面中
@@ -102,8 +102,15 @@ $(function () {
             _this.parents('tr').remove();
             //提示用户删除成功
             $('.alert-danger').text(res.msg).fadeIn(500).delay(2000).fadeOut(500);
-            //重新加载分页
-            init();
+            //判断页面中表格中tr是否只有一条
+            if ($('tbody>tr').length == 1) {
+              //判断页码是否为大于1，大于则自减减
+              if (pageNum > 1) {
+                pageNum--
+              }
+              //重新加载分页
+              init();
+            }
           }
         }
       });

@@ -63,8 +63,14 @@ $(function () {
       data,
       dataType: "json",
       success: function (res) {
-        // getAllCate();
-        location.href = '/admin/categories'
+        //将所有表单清空
+        $('#id').val('');
+        $('#name').val('');
+        $('#slug').val('');
+        //将新增按钮隐藏显示编辑按钮
+        $('.btnAdd').show();
+        $('.btnEdit').hide();
+        getAllCate();
       }
     });
   })
@@ -88,8 +94,6 @@ $(function () {
         success: function (res) {
           console.log(res);
           if (res.code === 200) {
-            //移除当前删除一栏tr
-            _this.parents('tr').remove();
             //提示用户删除成功
             $('.alert-danger').text(res.msg).fadeIn(500).delay(2000).fadeOut(500);
             //重新加载分页
@@ -100,20 +104,84 @@ $(function () {
     }
   });
 
-  //全选反选
-  $('table').on('clcik', '.clecktd', function () {
-    console.log($('.clecktd'));
-    // //获取数据条数来推断复选框个数
-    // let cleckNum = $(this).parents('tr').index
+  //全选框全选反选
+  $('#checkAll').on('click', function () {
+    //获取全选框的状态
+    let status = $(this).prop('checked');
+    //将全选框的状态给tbody的复选框
+    $('tbody .checktd').prop('checked', status);
+    //判断tbody中复选框选中的个数超过1个显示批量删除
+    if ($('tbody .checktd:checked').length > 1) {
+      $('.btnDels').fadeIn(500);
+    } else {
+      $('.btnDels').fadeOut(400);
+    }
+  })
+
+  //tbody中复选框全选反选
+  $('table').on('click', '.checktd', function () {
+    //获取复选框个数
+    let cleckAll = $('tbody .checktd')
+    //获取复选框选中个数
+    let cleckNum = $('tbody .checktd:checked').length
     // //使用反证法，假设全选框是选中状态
     // let flag = true;
     // //循环单个复选框的次数来判断单个复选框是否选中
-    // for (let j = 0; j < cleckTd.length; j++) {
+    // for (let i = 0; i < cleckAll.length; i++) {
     //   //循环至有一个未选择的时候改变全选框的选中状态为不选中
-    //   if (cleckTd[j].checked == false) {
+    //   if (cleckAll[i].checked == false) {
     //     flag = false;
     //     break;
     //   }
     // }
+    // $('#checkAll').prop('checked', flag);
+    //判断选中个数等于总个数，全选框选中，否则不选中
+    if (cleckAll.length == cleckNum) {
+      $('#checkAll').prop('checked', true);
+    } else {
+      $('#checkAll').prop('checked', false);
+    }
+    //判断tbody中复选框选中的个数超过1个显示批量删除
+    if (cleckNum > 1) {
+      $('.btnDels').fadeIn(500);
+    } else {
+      $('.btnDels').fadeOut(400);
+    }
+  });
+
+  //批量删除按钮注册点击事件
+  $('.btnDels').on('click', function () {
+    //获取所有选中的元素
+    let chkOpt = $('tbody .checktd:checked');
+    // console.log(chkOpt);
+    //声明一个空数组用来存储id数组
+    let arr = [];
+    // arr = chkOpt.map((e) => {
+    //   return e.dataset.id;
+    // });
+    //循环元素数组
+    for (let i = 0; i < chkOpt.length; i++) {
+      //将所有id填入空数组中
+      arr.push(chkOpt[i].dataset.id);
+    }
+    // console.log(arr);
+    //提示用户
+    if (confirm('确定删除数据吗？')) {
+      //发送ajax请求删除数据
+      $.ajax({
+        type: "get",
+        url: "/delCateById?id=" + arr.join(','),
+        dataType: "json",
+        success: function (res) {
+          console.log(res);
+          if (res.code === 200) {
+            //提示用户删除成功
+            $('.alert-danger').text(res.msg).fadeIn(500).delay(2000).fadeOut(500);
+            //重新加载分页
+            getAllCate();
+          }
+        }
+      });
+    }
   })
 });

@@ -10,6 +10,8 @@ const postsController = require('./controllers/postsController');
 const cateController = require('./controllers/cateController');
 //引入文件上传控制器
 const uploadController = require('./controllers/uploadController');
+//引入设置模块控制器
+const optionsController = require('./controllers/optionsController');
 //创建路由对象
 const router = express.Router();
 
@@ -64,6 +66,12 @@ router.get('/editCateById', cateController.editCateById);
 
 //新增分类数据请求
 router.get('/delCateById', cateController.delCateById);
+
+//查询导航菜单请求
+router.get('/getAllMenu', optionsController.getAllMenu);
+
+//新增导航菜单请求
+router.post('/getAddMenu', optionsController.getAddMenu);
 
 //暴露路由层
 module.exports = router;

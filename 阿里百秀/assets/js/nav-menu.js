@@ -40,5 +40,35 @@ $(function () {
         getAllMenu();
       }
     });
+  });
+
+  //注册删除事件
+  $('tbody').on('click', '.btndel', function () {
+    // console.log($(this));
+    //获取删除的元素的suoyin
+    let index = $(this);
+    //创建一个空数组
+    let arr = [];
+    //遍历数据，循环获取索引
+    for (let i = 0; i < index.length; i++) {
+      //将数据存入数组
+      arr.push(index[i].dataset.id);
+    }
+    // console.log(arr);
+    ///发送ajax请求删除数据
+    $.ajax({
+      type: "get",
+      url: "/delMenuByIndex",
+      data: {
+        arr
+      },
+      dataType: "json",
+      success: function (res) {
+        //提示用户新增成功
+        $('.alert-danger').text(res.msg).fadeIn(500).delay(2000).fadeOut(500);
+        getAllMenu();
+      }
+    });
+
   })
 });

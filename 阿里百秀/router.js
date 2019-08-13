@@ -47,31 +47,34 @@ router.get('/getAllCate', cateController.getAllCate);
 router.post('/uploadFiles', uploadController.uploadFiles);
 
 //文章新增请求
-router.post('/addPost', postsController.addPost);
+router.post('/addPost', postsController.addPost)
 
-//根据id获取文章数据请求
-router.get('/getPostById', postsController.getPostById);
+  //根据id获取文章数据请求
+  .get('/getPostById', postsController.getPostById)
 
-//根据id编辑文章数据请求
-router.post('/editPostById', postsController.editPostById);
+  //根据id编辑文章数据请求
+  .post('/editPostById', postsController.editPostById)
 
-//根据id删除文章数据请求
-router.get('/delPostById', postsController.delPostById);
-
-//新增分类数据请求
-router.get('/getAddCate', cateController.getAddCate);
+  //根据id删除文章数据请求
+  .get('/delPostById', postsController.delPostById)
 
 //新增分类数据请求
-router.get('/editCateById', cateController.editCateById);
+router.get('/getAddCate', cateController.getAddCate)
 
-//新增分类数据请求
-router.get('/delCateById', cateController.delCateById);
+  //修改分类数据请求
+  .get('/editCateById', cateController.editCateById)
+
+  //新增分类数据请求
+  .get('/delCateById', cateController.delCateById);
 
 //查询导航菜单请求
-router.get('/getAllMenu', optionsController.getAllMenu);
+router.get('/getAllMenu', optionsController.getAllMenu)
 
-//新增导航菜单请求
-router.post('/getAddMenu', optionsController.getAddMenu);
+  //新增导航菜单请求
+  .post('/getAddMenu', optionsController.getAddMenu)
+
+  //删除导航菜单请求
+  .get('/delMenuByIndex', optionsController.delMenuByIndex);
 
 //暴露路由层
 module.exports = router;

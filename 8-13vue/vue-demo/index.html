@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h2>{{msg}}</h2>
+    <h3>{{fn()}}</h3>
+    <button @click='fn'>这是一个普通按钮</button>
+    <hello></hello>
+  </div>
+  <template id="template">
+    <div>
+      <h2 style="color: aqua;">二级标题</h2>
+      <p style="color: aquamarine">{{content}}</p>
+      <button @click='fn'>这是一个普通按钮</button>
+    </div>
+  </template>
+</body>
+<!-- 引入vue文件 -->
+<script src="./js/vue.js"></script>
+<script>
+  // 创建全局组件
+  // Vue.component('hello', {
+  //   //添加模版配置
+  //   template: '<h2>hello world!+1</h2> '
+  // })
+  // 创建全局组件
+  Vue.component('hello', {
+    //添加模版配置
+    template: '#template',
+    data() {
+      return {
+        content: '文本独享'
+      }
+    },
+    methods: {
+      fn() {
+        alert('这是一个按钮');
+      }
+    }
+  })
+  // 创建一个vue实例对象
+  let vm = new Vue({
+    el: '#app',
+    // data() {
+    //   return {
+
+    //   }
+    // },
+    data: {
+      msg: 'hello world!'
+    },
+    methods: {
+      fn: function () {
+        return '这是一个函数方法'
+      }
+    },
+  });
+</script>
+
+</html>

@@ -16,6 +16,7 @@
           <el-input
             prefix-icon="myicon myicon-user"
             v-model="loginForm.username"
+            placeholder="请输入用户名"
           ></el-input>
         </el-form-item>
         <el-form-item prop="password">
@@ -23,6 +24,7 @@
             prefix-icon="myicon myicon-key"
             v-model="loginForm.password"
             type="password"
+            placeholder="请输入密码"
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -75,12 +77,12 @@ export default {
               } else {
                 this.$message.error(res.data.meta.msg)
               }
-              // eslint-disable-next-line handle-callback-err
             }).catch((err) => {
               this.$message.error('服务器异常')
+              console.log(err)
             })
         } else {
-          this.$message.error('用户名或密码错误')
+          this.$message.error('服务器异常')
           // 错误则停止提交
           return false
         }

@@ -4,6 +4,8 @@ import login from './views/login.vue'
 import home from './views/home.vue'
 import welcome from './views/welcome.vue'
 import users from './views/user/users.vue'
+import rightList from './views/rights/rightList.vue'
+import roleList from './views/rights/roleList.vue'
 // import app from './App.vue'
 
 Vue.use(Router)
@@ -36,6 +38,16 @@ export default new Router({
       path: 'users',
       name: 'users',
       component: users
+    },
+    {
+      path: 'rightList',
+      name: 'rightList',
+      component: rightList
+    },
+    {
+      path: 'roleList',
+      name: 'roleList',
+      component: roleList
     }
     ]
   }

@@ -16,7 +16,7 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 // 添加导航前置守卫
 router.beforeEach((to, from, next) => {
-  console.log(to)
+  // console.log(to)
   // 获取token
   let token = localStorage.getItem('logincookie')
   // 判断是否有token

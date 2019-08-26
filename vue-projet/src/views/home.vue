@@ -6,14 +6,12 @@
           <h1 class="logo"></h1>
         </div>
         <el-col :span="24">
-          <el-menu
-            class="el-menu-vertical-demo"
+          <el-menu class="el-menu-vertical-demo"
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
             :unique-opened="true"
-            :router="true"
-          >
+            :router="true">
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-location"></i>
@@ -109,10 +107,8 @@
         <el-header>
           <span class="myicon myicon-menu toggle-btn"></span>
           <h2 class="system-title">后台管理</h2>
-          <a
-            href="javascript:void(0)"
-            class="welcome"
-          >退出</a>
+          <a href="javascript:void(0)"
+            class="welcome">退出</a>
         </el-header>
         <el-main>
           <router-view></router-view>
@@ -123,9 +119,7 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
 <style lang="less" scoped>
@@ -177,6 +171,9 @@ export default {
   }
   .welcome {
     color: white;
+    &:hover {
+      color: #f85d48;
+    }
   }
 }
 </style>

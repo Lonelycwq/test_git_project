@@ -1,38 +1,16 @@
 <template>
   <div class="login">
     <div class="container">
-      <img
-        src="@/assets/avatar.jpg"
-        alt="用户头像"
-        class="avatar"
-      >
-      <el-form
-        :model="loginForm"
-        :rules="rules"
-        ref="loginForm"
-        class="demo-ruleForm"
-      >
+      <img src="@/assets/avatar.jpg" alt="用户头像" class="avatar">
+      <el-form :model="loginForm" :rules="rules" ref="loginForm" class="demo-ruleForm">
         <el-form-item prop="username">
-          <el-input
-            prefix-icon="myicon myicon-user"
-            v-model="loginForm.username"
-            placeholder="请输入用户名"
-          ></el-input>
+          <el-input prefix-icon="myicon myicon-user" v-model="loginForm.username" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input
-            prefix-icon="myicon myicon-key"
-            v-model="loginForm.password"
-            type="password"
-            placeholder="请输入密码"
-          ></el-input>
+          <el-input prefix-icon="myicon myicon-key" v-model="loginForm.password" type="password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="login"
-            class="login-btn"
-          >登录</el-button>
+          <el-button type="primary" @click="login" class="login-btn">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -54,9 +32,7 @@ export default {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' }
-        ]
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       }
     }
   },
@@ -64,11 +40,11 @@ export default {
     // 登录按钮触发事件
     login () {
       // 通过$refs.loginForm获取元素并二次验证
-      this.$refs.loginForm.validate((valid) => {
+      this.$refs.loginForm.validate(valid => {
         if (valid) {
           // 调用登录请求方法
           login(this.loginForm)
-            .then((res) => {
+            .then(res => {
               console.log(res)
               localStorage.setItem('logincookie', res.data.data.token)
               if (res.data.meta.status === 200) {
@@ -77,7 +53,8 @@ export default {
               } else {
                 this.$message.error(res.data.meta.msg)
               }
-            }).catch((err) => {
+            })
+            .catch(err => {
               this.$message.error('服务器异常')
               console.log(err)
             })

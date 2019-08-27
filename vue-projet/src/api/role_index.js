@@ -40,3 +40,13 @@ export const editRoleById = (data) => {
     data
   })
 }
+// 修改角色方法
+export const allotRoleById = (roleId, rids) => {
+  return axios({
+    url: `roles/${roleId}/rights`,
+    method: 'post',
+    data: {
+      rids
+    }
+  })
+}

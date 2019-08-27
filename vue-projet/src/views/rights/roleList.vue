@@ -6,7 +6,8 @@
       <el-breadcrumb-item>角色列表</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <el-button type="success" @click="addmodal = true">添加角色</el-button>
+    <el-button type="success"
+      @click="addmodal = true">添加角色</el-button>
     <!-- 用户数据表格 -->
     <el-table border=""
       :data="roleList"
@@ -17,7 +18,8 @@
             :key="rights.id"
             style="margin-bottom:10px;border-bottom:1px dashed #ccc">
             <el-col :span="4">
-              <el-tag closable @close="delRight(scope.row,rights.id)">
+              <el-tag closable
+                @close="cnt=0;delRight(scope.row,rights.id)">
                 {{rights.authName}}</el-tag>
             </el-col>
             <el-col :span="20">
@@ -27,7 +29,7 @@
                   <el-tag type="success"
                     closable
                     style="margin-bottom:15px;margin-right:10px;"
-                    @close="delRight(scope.row,tag.id)">{{tag.authName}}</el-tag>
+                    @close="cnt=0;delRight(scope.row,tag.id)">{{tag.authName}}</el-tag>
                 </el-col>
                 <el-col :span="20">
                   <el-tag type="info"
@@ -35,7 +37,7 @@
                     :key="tagmin.id"
                     closable
                     style="margin-bottom:15px;margin-right:10px;"
-                    @close="delRight(scope.row,tagmin.id)">
+                    @close="cnt=0;delRight(scope.row,tagmin.id)">
                     {{tagmin.authName}}</el-tag>
                 </el-col>
               </el-row>
@@ -144,10 +146,10 @@
     <!-- 角色分配权限模态框 -->
     <el-dialog title="分配权限"
       :visible.sync="rightmodal">
-      <el-tree
-        :data="treedata"
+      <el-tree :data="treedata"
         show-checkbox
         node-key="id"
+        ref="tree"
         :default-expand-all='true'
         :default-checked-keys="clickroleList"
         :props="defaultProps">
@@ -164,24 +166,33 @@
 
 <script>
 // 引入获取角色列表的方法
-import { getRoleList, addRole, delRightByRid, delRoleById, editRoleById } from '@/api/role_index.js'
+import { getRoleList, addRole, delRightByRid, delRoleById, editRoleById, allotRoleById } from '@/api/role_index.js'
 // 引入获取权限列表方法
 import { getAllRightList } from '@/api/right_index.js'
 
 export default {
   data () {
     return {
+      // 角色数据源数组
       roleList: [],
+      // 树状结构数据源数组
       treedata: [],
+      // 默认选中的叶子支点数组
       clickroleList: [],
+      // 新增、分配角色、修改模态框
       addmodal: false,
       rightmodal: false,
       editmodal: false,
+      // 当前角色id用于分配角色
+      roleid: '',
+      // 用于删除角色权限提示
+      cnt: 0,
       // 角色表单
       roleobj: {
         roleName: '',
         roleDesc: ''
       },
+      // 修改角色表单
       editroleobj: {
         id: '',
         roleName: '',
@@ -208,9 +219,9 @@ export default {
     init () {
       getRoleList()
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           if (res.data.meta.status === 200) {
-          // 给角色列表数组赋值
+            // 给角色列表数组赋值
             this.roleList = res.data.data
           }
         }).catch((err) => {
@@ -221,11 +232,26 @@ export default {
     delRight (row, rightId) {
       delRightByRid(row.id, rightId)
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           if (res.data.meta.status === 200) {
-            this.$message.success(res.data.meta.msg)
+            if (this.cnt === 0) {
+              this.$message.success(res.data.meta.msg)
+              this.cnt++
+            }
             // this.init()
             row.children = res.data.data
+            // console.log(row)
+            row.children.forEach((e, i) => {
+              if (e.children.length === 0) {
+                this.delRight(row, e.id)
+              } else {
+                e.children.forEach((e1, i1) => {
+                  if (e1.children.length === 0) {
+                    this.delRight(row, e1.id)
+                  }
+                })
+              }
+            })
           }
         }).catch((err) => {
           console.log(err)
@@ -237,7 +263,6 @@ export default {
       this.$refs[formName].resetFields()
       // 隐藏模态框
       this[modal] = false
-      // this.clickroleList = []
     },
     // 新增角色方法
     addrole (formName) {
@@ -266,41 +291,55 @@ export default {
     },
     // 分配角色
     allotrole (row) {
-      console.log(row)
       getAllRightList('tree')
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           this.treedata = res.data.data
         }).catch((err) => {
           console.log(err)
         })
-      let newarr = []
-      console.log(this.clickroleList)
-      function fn (arr) {
-        // for (let i = 0; i < arr.length; i++) {
-        //   // this.clickroleList.push(arr[i].id)
-        //   newarr.push(arr[i].id)
-        //   // console.log(arr[i].id)
-        //   if (arr[i].children) {
-        //     fn(arr[i].children)
-        //   }
-        // }
-        arr.forEach((e) => {
-          newarr.push(e.id)
-          if (e.children) {
-            fn(e.children)
-          }
-        })
-      }
-      fn(row.children)
+      // 进行要分配权限的角色id的存储
+      this.roleid = row.id
       this.clickroleList.length = 0
-      // row.children.filter(function (val) {
-      //   console.log(val.id)
-      //   return val.id
-      // })
-      this.clickroleList = [...newarr]
+      row.children.forEach(e => {
+        if (e.children.length > 0) {
+          e.children.forEach(e2 => {
+            if (e2.children.length > 0) {
+              e2.children.forEach(e3 => {
+                this.clickroleList.push(e3.id)
+              })
+            }
+          })
+        }
+      })
       console.log(this.clickroleList)
+      // console.log(this.clickroleList)
       this.rightmodal = true
+    },
+    changeright () {
+      let nullarr = []
+      let arr = this.$refs.tree.getCheckedNodes()
+      arr.forEach(e => {
+        nullarr.push(e.id + ',' + e.pid)
+      })
+      nullarr = nullarr.join(',').split(',')
+      nullarr = [...new Set(nullarr)]
+      let rids = nullarr.join(',')
+      // console.log(rids)
+      allotRoleById(this.roleid, rids)
+        .then((res) => {
+          console.log(res)
+          if (res.data.meta.status === 200) {
+            this.rightmodal = false
+            this.$message.success(res.data.meta.msg)
+            this.init()
+          } else {
+            this.$message.error(res.data.meta.msg)
+          }
+        }).catch((err) => {
+          console.log(err)
+          this.$message.error('新增角色失败')
+        })
     },
     openedit (row) {
       this.editroleobj.roleDesc = row.roleDesc

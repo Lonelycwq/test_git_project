@@ -5,7 +5,7 @@
       <el-breadcrumb-item>权限管理</el-breadcrumb-item>
       <el-breadcrumb-item>权限列表</el-breadcrumb-item>
     </el-breadcrumb>
-    <!-- 用户数据表格 -->
+    <!-- 权限数据表格 -->
     <el-table border=""
       :data="rightList"
       style="width: 100%;margin-bottom:15px">

@@ -12,90 +12,20 @@
             active-text-color="#ffd04b"
             :unique-opened="true"
             :router="true">
-            <el-submenu index="1">
+            <el-submenu :index="item.order+''"
+              v-for="item in menuList"
+              :key="item.id">
               <template slot="title">
                 <i class="el-icon-location"></i>
-                <span>用户管理</span>
+                <span>{{item.authName}}</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="/home/users">
+                <el-menu-item :index="'/home/'+subitem.path"
+                  v-for="subitem in item.children"
+                  :key="subitem.id">
                   <template slot="title">
                     <i class="el-icon-location"></i>
-                    <span>用户列表</span>
-                  </template>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>权限管理</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="/home/roleList">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>角色列表</span>
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="/home/rightList">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>权限列表</span>
-                  </template>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="3">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>商品管理</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="3-1">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>商品列表</span>
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="3-2">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>分类参数</span>
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="3-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>商品分类</span>
-                  </template>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="4">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>订单管理</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="4-1">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>订单列表</span>
-                  </template>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="5">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>数据统计</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="5-1">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>数据报表</span>
+                    <span>{{subitem.authName}}</span>
                   </template>
                 </el-menu-item>
               </el-menu-item-group>
@@ -108,7 +38,8 @@
           <span class="myicon myicon-menu toggle-btn"></span>
           <h2 class="system-title">后台管理</h2>
           <a href="javascript:void(0)"
-            class="welcome">退出</a>
+            class="welcome"
+            @click="exit">退出</a>
         </el-header>
         <el-main>
           <router-view></router-view>
@@ -119,7 +50,41 @@
 </template>
 
 <script>
-export default {}
+// 引入获取左侧菜单方法
+import { getLeftList } from '@/api/right_index'
+export default {
+  data () {
+    return {
+      menuList: []
+    }
+  },
+  methods: {
+    exit () {
+      // 确认提示框确认退出
+      this.$confirm('此操作将退出当前帐号, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        localStorage.removeItem('logincookie')
+        this.$router.push({ name: 'login' })
+      }).catch(() => {
+        this.$message.success('取消退出')
+      })
+    }
+  },
+  mounted () {
+    getLeftList()
+      .then((res) => {
+        // console.log(res)
+        if (res.data.meta.status === 200) {
+          this.menuList = res.data.data
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+  }
+}
 </script>
 
 <style lang="less" scoped>

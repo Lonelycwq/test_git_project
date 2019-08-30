@@ -4,8 +4,11 @@ import login from './views/login.vue'
 import home from './views/home.vue'
 import welcome from './views/welcome.vue'
 import users from './views/user/users.vue'
-import rightList from './views/rights/rightList.vue'
-import roleList from './views/rights/roleList.vue'
+import rights from './views/rights/rightList.vue'
+import roles from './views/rights/roleList.vue'
+import goods from './views/goods/goods.vue'
+import add from './views/goods/add.vue'
+import list from './views/goods/list.vue'
 // import app from './App.vue'
 
 Vue.use(Router)
@@ -40,14 +43,33 @@ export default new Router({
       component: users
     },
     {
-      path: 'rightList',
-      name: 'rightList',
-      component: rightList
+      path: 'rights',
+      name: 'rights',
+      component: rights
     },
     {
-      path: 'roleList',
-      name: 'roleList',
-      component: roleList
+      path: 'roles',
+      name: 'roles',
+      component: roles
+    },
+    {
+      path: 'goods',
+      name: 'goods',
+      component: goods,
+      redirect: {
+        name: 'list'
+      },
+      children: [{
+        path: 'add',
+        name: 'add',
+        component: add
+      },
+      {
+        path: 'list',
+        name: 'list',
+        component: list
+      }
+      ]
     }
     ]
   }

@@ -273,9 +273,10 @@ export default {
           } else if (res.data.meta.status === 400) {
             // 失败则提示用户
             this.$message.error(res.data.meta.msg)
-          } else {
             // 异常则跳转至登录页
             this.$router.push({ name: 'login' })
+          } else if (res.data.meta.status === 401) {
+            this.$message.error('权限不足')
           }
         })
         .catch(err => {
